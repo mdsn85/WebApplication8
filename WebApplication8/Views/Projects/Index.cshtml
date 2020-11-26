@@ -160,6 +160,9 @@
             <th>
                 Created In
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QuotationRef)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -167,107 +170,110 @@
 
         @foreach (var item in Model)
         {
-            <tr>
+        <tr>
 
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Code)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProjectStatus.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SalesMan.Name)
-                </td>
-                <td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectStatus.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalesMan.Name)
+            </td>
+            <td>
 
-                    @Html.DisplayFor(modelItem => item.SalesType.Name)
-                </td>
+                @Html.DisplayFor(modelItem => item.SalesType.Name)
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Customer.Name)
-                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer.Name)
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.CustomersType.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Designer.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProjectPaymentTerm.Name)
-                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomersType.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Designer.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectPaymentTerm.Name)
+            </td>
 
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.SalesDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Value)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Discount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Vat)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Total)
-                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalesDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Discount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Deduction)
-                </td>
-                <td>
-                    @{
-                        float x = @item.Total - @item.Deduction ?? 0;
-                    }
+            <td>
+                @Html.DisplayFor(modelItem => item.Deduction)
+            </td>
+            <td>
+                @{
+                    float x = @item.Total - @item.Deduction ?? 0;
+                }
 
-                    @Html.Raw(x)
-                </td>
+                @Html.Raw(x)
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DeliveryDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ActualDeliveryDate)
-                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeliveryDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActualDeliveryDate)
+            </td>
 
-                <td>
+            <td>
 
-                    @{
-                        if (item.AccountApproval == true)
-                        {
-                            @Html.Raw("Approved")
-
-                        }
-                        else
-                        {
-                            @Html.Raw("Pendding")
-                        }
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StampDate)
-                </td>
-                <td>
-
-                    @if (User.IsInRole("Admin"))
+                @{
+                    if (item.AccountApproval == true)
                     {
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ProjectId })
-                        @Html.Raw("|");
+                        @Html.Raw("Approved")
+
                     }
-                    @Html.ActionLink("Details", "Details", new { id = item.ProjectId })
-                    @*@Html.ActionLink("Delete", "Delete", new { id = item.ProjectId })*@
-                </td>
-            </tr>
+                    else
+                    {
+                        @Html.Raw("Pendding")
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StampDate)
+            </td>
+            <td>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ProjectId })
+                    @Html.Raw("|");
+                }
+                @Html.ActionLink("Details", "Details", new { id = item.ProjectId })
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.ProjectId })*@
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuotationRef)
+            </td>
+        </tr>
         }
     </tbody>
 </table>
