@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div class="row">
+    <div class="col-sm-12" style="padding-bottom:20px">
+        <div class="col-sm-2">
+            <span>Select File  :</span>
+        </div>
+        <div class="col-sm-3">
+            <input class="form-control" type="file" name="importFile" id="importFile" />
+        </div>
+        <div class="col-sm-3">
+            <input class="btn btn-primary" id="btnUpload" type="button" value="Upload" />
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+
+
+        $(document).on("click", "#btnUpload", function () {
+            var files = $("#importFile").get(0).files;
+
+            var formData = new FormData();
+            formData.append('importFile', files[0]);
+
+            $.ajax({
+                url: '/Employee/ImportFile',
+                data: formData,
+                type: 'POST',
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data.Status === 1) {
+                        alert(data.Message);
+                    } else {
+                        alert("Failed to Import");
+                    }
+                }
+            });
+        });
+    </script>
+}
+

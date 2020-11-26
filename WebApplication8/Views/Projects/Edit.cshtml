@@ -1,0 +1,423 @@
+﻿@model WebApplication8.Models.Project
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+
+
+<link href="~/Content/css-DATETIME/jquery.datepick.css" rel="stylesheet" />
+
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "myForm", enctype = "multipart/form-data" }))
+
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ProjectId)
+    @Html.HiddenFor(model => model.Deduction)
+    @Html.HiddenFor(model => model.DeductionReason)
+
+    @Html.HiddenFor(model => model.UserCreate)
+    @Html.HiddenFor(model => model.CreateDate)
+
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Code, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProjectStatus, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("ProjectStatusId", null, "Please Select", htmlAttributes: new { @class = "form-control", @id = "SalesTypeId" })
+            @Html.ValidationMessageFor(model => model.ProjectStatus, "", new { @class = "text-danger" })
+
+
+
+
+
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <label for="SalesDate" class="col-md-2 control-label">Sales Date</label>
+        <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="SalesDate" data-link-format="yyyy-mm-dd">
+            <input class="form-control" size="16" type="text" value="@Model.SalesDate.ToString("dd MMMM yyyy")  " readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+        <input type="hidden" id="SalesDate" name="SalesDate" value="@Model.SalesDate.ToString("dd MMMM yyyy") " /><br />
+
+        @Html.ValidationMessageFor(model => model.SalesDate, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SalesTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("SalesTypeId", null, "Please Select", htmlAttributes: new { @class = "form-control", @id = "SalesTypeId" })
+            @Html.ValidationMessageFor(model => model.SalesTypeId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SalesManId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("SalesManId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.SalesManId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CustomersTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("CustomersTypeId", null, "Please Select", htmlAttributes: new { @class = "form-control", @id = "CustomersTypeId" })
+            @Html.ValidationMessageFor(model => model.CustomersTypeId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Customer Name", htmlAttributes: new { @class = "control-label col-md-2" })        <div class="col-md-10">
+            @Html.DropDownList("CustomerId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DesignerId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("DesignerId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.DesignerId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control", @id = "Value" } })
+            @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Discount, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control", @id = "Discount" } })
+            @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Vat, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Vat, new { htmlAttributes = new { @class = "form-control", @id = "Vat" } })
+            @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control", @id = "Total" } })
+            @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.SalePrice, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SalePrice, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SalePrice, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProjectPaymentTermId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @if (Model.AccountApproval != true)
+            {
+                @Html.DropDownList("ProjectPaymentTermId", null, "Please Select", htmlAttributes: new { @class = "form-control", @id = "ProjectPaymentTermId" })
+            }
+            else
+            {
+
+                <input type="hidden" name="ProjectPaymentTermId" value="@ViewBag.PaymentTermId1" />
+                <input type="text" value="@ViewBag.PaymentTermName1" class="form-control" id="PaymentTermName1" />
+            }
+            @Html.ValidationMessageFor(model => model.ProjectPaymentTermId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="DeliveryDate" class="col-md-2 control-label">Delivery Date</label>
+        <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="DeliveryDate" data-link-format="yyyy-mm-dd">
+            <input class="form-control" size="16" type="text" value="@Model.DeliveryDate.ToString("dd MMMM yyyy")" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+        <input type="hidden" id="DeliveryDate" name="DeliveryDate" value="@Model.DeliveryDate.ToString("dd MMMM yyyy")" /><br />
+
+        @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
+    </div>
+
+    @{
+
+        DateTime aa = Model.ActualDeliveryDate ?? DateTime.Now;
+    }
+    <div class="form-group">
+        <label for="ActualDeliveryDate" class="col-md-2 control-label">Delivery Date</label>
+        <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="ActualDeliveryDate" data-link-format="yyyy-mm-dd">
+            <input class="form-control" size="16" type="text" value="@aa.ToString("dd MMMM yyyy")" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+        <input type="hidden" id="ActualDeliveryDate" name="ActualDeliveryDate" value="@aa.ToString("dd MMMM yyyy")" /><br />
+
+        @Html.ValidationMessageFor(model => model.ActualDeliveryDate, "", new { @class = "text-danger" })
+    </div>
+
+
+
+
+
+    @if (User.IsInRole("Account"))
+    {
+
+        <div class="form-group">
+            @Html.Label(" ", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <p>
+                    <input type="checkbox" id="test5" name="AccountApproval" />
+                    <label for="test5">AccountApproval</label>
+                </p>
+            </div>
+        </div>
+    }
+    else
+    {
+      @Html.HiddenFor(model => model.AccountApproval)
+
+    }
+
+
+    <p>
+
+
+    </p>
+
+
+    <div class="form-group">
+
+        @Html.Label(" Upload Document ", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+
+
+            <div>@{ Html.RenderPartial("~/Views/UploadFile/IndexGoCaseEdit1.cshtml"); }</div>
+            @*display name of uploaded files*@
+            <div class="info" id="info" style="margin-right:25px">
+
+                @{
+                    int i = 1;
+                    if (@Model.ProjectFiles != null)
+                    {
+
+                        foreach (var a in Model.ProjectFiles)
+                        {
+                            string fff = "FileNameTxt" + i;
+                            <p id="@fff" name="FileNameTXT" class="FileNameTXT">@a.Name</p>
+                            <p style='color:red;  padding-left:50px; padding-right:50px' id='FileNameSpan' @*onclick="ResetFile(this)"*@ class="@i">      remove </p>
+
+                            i++;
+                        }
+                    }
+
+                }
+
+            </div>
+
+            <div class="filesList" id="filesList">
+                @{
+                    if (Model.ProjectFiles != null)
+                    {
+                        i = 1;
+                        foreach (var a in Model.ProjectFiles)
+                        {
+                            string fff = "FileNameH" + i;
+
+                            <p id="@fff"><input type="hidden" name="FileName" class="FileName" value="@a.Name"></p>
+                            i++;
+                        }
+                    }
+                }
+            </div>
+
+        </div>
+
+
+
+
+        <div class="form-group" style="margin-top:10px ; margin-left:10%">
+            <div class="col-md-offset-3 col-md-9" style="margin-left:30px">
+                <input type="submit" value="Save" class="btn btn-primary" id="btnSaveAll" style="padding-left:30px ; padding-right:30px" />
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script src="~/Scripts/datetimepicker_css.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script src="~/Scripts/js-DATETIME/jquery.plugin.min.js"></script>
+    <script src="~/Scripts/js-DATETIME/jquery.datepick.js"></script>
+
+
+
+    <script>
+
+
+
+
+    </script>
+
+
+    <script>
+        $("body").on("click", "#btnSaveAll", function () {
+
+            document.getElementById("myForm").submit();
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+
+            $("form").submit(function (e) {
+                // alert('submit intercepted');
+
+                e.preventDefault(e);
+            });
+
+
+            var acc = '@Model.AccountApproval';
+            if (acc == 'True') {
+                $('#Value').prop("readonly", true);
+                $('#Discount').prop("readonly", true);
+                $('#Vat').prop("readonly", true);
+                $('#Total').prop("readonly", true);
+                $('#PaymentTermName1').prop("readonly", true);
+
+            } 
+        })
+
+
+        $(document).on("click", "#FileNameSpan", function () {
+
+            var c = $(this).attr('class');
+            var n = "FileNameTxt" + c;
+            var nh = "FileNameH" + c;
+
+
+            var element_info = document.getElementById("info");
+            var cildtext = document.getElementById(n);
+            // alert(cildtext.innerHTML);
+            element_info.removeChild(cildtext);
+            element_info.removeChild(this);
+
+            //alert(nh);
+            var element = document.getElementById("filesList");
+            var cildtexth = document.getElementById(nh);
+            element.removeChild(cildtexth);
+
+        });
+
+    </script>
+
+    <script>
+    $("#Discount").change(function () {
+
+    var subTotal = $("#Value").val();
+    var Discount = $("#Discount").val();
+    var t = subTotal - Discount
+    //$("#Total").val(t);
+
+
+    var v = t * 0.05
+    $("#Vat").val(v);
+
+
+
+
+
+    var g = 0;
+    g = t + v;
+
+    $("#Total").val(g);
+
+    });
+
+    $("#Value").change(function () {
+
+    var subTotal = $("#Value").val();
+    var v = subTotal * 0.05
+    $("#Vat").val(v);
+
+
+    var Discount = $("#Discount").val();
+
+    var t = subTotal - Discount
+
+
+    var g = 0;
+    g = t + v;
+
+    $("#Total").val(g);
+
+
+
+    });
+
+
+
+
+    </script>
+}
+

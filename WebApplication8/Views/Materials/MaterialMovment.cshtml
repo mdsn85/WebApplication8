@@ -1,0 +1,157 @@
+﻿@model IEnumerable<WebApplication8.Models.StockIssueDetail>
+
+@{
+    ViewBag.Title = "MaterialMovment";
+}
+
+<h2>Material Movment</h2>
+
+
+<div style="padding:40px">
+
+    <div class="form-group">
+        @Html.Label("Material Code", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+
+            <input type="text" class="form-control" value="@(ViewBag.Code ?? String.Empty)">
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        @Html.Label("Material Name", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+
+
+            <input type="text" class="form-control" value="@(ViewBag.Name ?? String.Empty)">
+        </div>
+    </div>
+
+    <div class="form-group">
+
+
+        @Html.Label("Material Dimension", htmlAttributes: new { @class = "control-label col-md-2" })
+
+        <div class="col-md-10">
+
+            <input type="text" class="form-control" value="@(ViewBag.Dimension ?? String.Empty)">
+        </div>
+    </div>
+
+</div>
+<div style="margin:40px">Details:</div>
+
+    <table class="table" style="margin:40px">
+        <tr>
+            <th>
+                Issue Date
+            </th>
+
+            <th>
+                Transaction
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Material.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Material.Dimension)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.InQty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OutQty)
+            </th>
+            <th>
+                Avg Price
+            </th>
+            <th>
+                Latest Price
+            </th>
+            <th></th>
+        </tr>
+
+        <tr>
+            <td>
+                @ViewBag.Date
+            </td>
+            <td>
+                Opening Qty
+            </td>
+            <td>
+                @ViewBag.Name
+            </td>
+            <td>
+                -
+            </td>
+
+            <td>
+                @ViewBag.OpenQty
+            </td>
+            <td>
+                0
+            </td>
+            <td>
+                @ViewBag.AvgPrice
+            </td>
+            <td>
+                @ViewBag.latestPrice
+            </td>
+            <td></td>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StockIssue.IssueDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StockIssue.StockIssueType.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Material.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Material.Dimension)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.InQty)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OutQty)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Material.AvgPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Material.latestPrice)
+                </td>
+                <td>
+
+                    @Html.ActionLink("Details", "Details", new { id = item.StockIssueDetailId }) |
+                </td>
+            </tr>
+        }
+
+
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+
+
+
+            <td>
+                Total Qty
+            </td>
+            <td>
+                @ViewBag.qty
+            </td>
+            <td></td>
+        </tr>
+
+    </table>
+

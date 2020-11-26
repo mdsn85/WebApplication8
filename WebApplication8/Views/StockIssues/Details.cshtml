@@ -1,0 +1,152 @@
+﻿@model WebApplication8.Models.StockIssue
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2> StockIssue Details</h2>
+
+<div>
+    <h4></h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StockIssueType.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StockIssueType.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Warehouse.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Warehouse.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lpo.code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lpo.code)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CuttingSheet.code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CuttingSheet.code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ref)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ref)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserCreate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserCreate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IssueDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IssueDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Note)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Note)
+        </dd>
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LpoId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lpo.code)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CuttingSheetId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CuttingSheet.code)
+        </dd>
+    </dl>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            Material Name
+        </th>
+        <th>
+            Unit
+        </th>
+        <th>
+            In Qty
+        </th>
+        <th>
+            Out Qty
+        </th>
+        <th>
+            Price
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.StockIssueDetails)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Material.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Material.Unit.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InQty)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OutQty)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+    </tr>
+    }
+
+</table>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.StockIssueId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

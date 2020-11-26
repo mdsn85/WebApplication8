@@ -1,0 +1,1719 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D9E8DAA6-29CE-4155-84E9-E0368D885916}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WebApplication8</RootNamespace>
+    <AssemblyName>WebApplication8</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelDataReader, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.3.6.0\lib\net45\ExcelDataReader.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelDataReader.DataSet, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.DataSet.3.6.0\lib\net35\ExcelDataReader.DataSet.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.2\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.2\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.4.0.0\lib\net451\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.0.0\lib\net451\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.4.0.0\lib\net451\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.4.0.0\lib\net451\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.4.0.0\lib\net451\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.4.0.0\lib\net451\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.4.0.0\lib\net451\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.4.0.0\lib\net451\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.4.0.0\lib\net451\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CreditTerms1Controller.cs" />
+    <Compile Include="Controllers\CreditTermsController.cs" />
+    <Compile Include="Controllers\CustomersController.cs" />
+    <Compile Include="Controllers\CustomersTypesController.cs" />
+    <Compile Include="Controllers\CuttingSheetsController.cs" />
+    <Compile Include="Controllers\DesignersController.cs" />
+    <Compile Include="Controllers\EmployeesController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LpoesController.cs" />
+    <Compile Include="Controllers\LpoStatusController.cs" />
+    <Compile Include="Controllers\LpoTermsController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MaterialsController.cs" />
+    <Compile Include="Controllers\PaymentsController.cs" />
+    <Compile Include="Controllers\PermissionUsersController.cs" />
+    <Compile Include="Controllers\Project2Controller.cs" />
+    <Compile Include="Controllers\ProjectPaymentTerms1Controller.cs" />
+    <Compile Include="Controllers\ProjectPaymentTerms2Controller.cs" />
+    <Compile Include="Controllers\ProjectPaymentTerms3Controller.cs" />
+    <Compile Include="Controllers\ProjectPaymentTermsController.cs" />
+    <Compile Include="Controllers\ProjectsController.cs" />
+    <Compile Include="Controllers\ProjectStatusController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\RequestApprovalsController.cs" />
+    <Compile Include="Controllers\SalesMenController.cs" />
+    <Compile Include="Controllers\SalesTypesController.cs" />
+    <Compile Include="Controllers\StockIssuesController.cs" />
+    <Compile Include="Controllers\StockIssueTypesController.cs" />
+    <Compile Include="Controllers\suppliersController.cs" />
+    <Compile Include="Controllers\UnitsController.cs" />
+    <Compile Include="Controllers\UploadFileController.cs" />
+    <Compile Include="Controllers\WarehousesController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009011230532_init.cs" />
+    <Compile Include="Migrations\202009011230532_init.Designer.cs">
+      <DependentUpon>202009011230532_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009011236333_init2.cs" />
+    <Compile Include="Migrations\202009011236333_init2.Designer.cs">
+      <DependentUpon>202009011236333_init2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009011245459_sdaf.cs" />
+    <Compile Include="Migrations\202009011245459_sdaf.Designer.cs">
+      <DependentUpon>202009011245459_sdaf.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009011403439_sdafw.cs" />
+    <Compile Include="Migrations\202009011403439_sdafw.Designer.cs">
+      <DependentUpon>202009011403439_sdafw.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009050809255_hj.cs" />
+    <Compile Include="Migrations\202009050809255_hj.Designer.cs">
+      <DependentUpon>202009050809255_hj.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009050814116_sss.cs" />
+    <Compile Include="Migrations\202009050814116_sss.Designer.cs">
+      <DependentUpon>202009050814116_sss.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009060929522_djdj.cs" />
+    <Compile Include="Migrations\202009060929522_djdj.Designer.cs">
+      <DependentUpon>202009060929522_djdj.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009060930201_djdj1.cs" />
+    <Compile Include="Migrations\202009060930201_djdj1.Designer.cs">
+      <DependentUpon>202009060930201_djdj1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009061042290_djdjp.cs" />
+    <Compile Include="Migrations\202009061042290_djdjp.Designer.cs">
+      <DependentUpon>202009061042290_djdjp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009061314183_djdjpsd.cs" />
+    <Compile Include="Migrations\202009061314183_djdjpsd.Designer.cs">
+      <DependentUpon>202009061314183_djdjpsd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009061334456_djdjpsdf.cs" />
+    <Compile Include="Migrations\202009061334456_djdjpsdf.Designer.cs">
+      <DependentUpon>202009061334456_djdjpsdf.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009061339088_djdjpsdfs.cs" />
+    <Compile Include="Migrations\202009061339088_djdjpsdfs.Designer.cs">
+      <DependentUpon>202009061339088_djdjpsdfs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009071125332_dhfdh.cs" />
+    <Compile Include="Migrations\202009071125332_dhfdh.Designer.cs">
+      <DependentUpon>202009071125332_dhfdh.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009071227242_dhfdhl.cs" />
+    <Compile Include="Migrations\202009071227242_dhfdhl.Designer.cs">
+      <DependentUpon>202009071227242_dhfdhl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009071243544_dhfdhlas.cs" />
+    <Compile Include="Migrations\202009071243544_dhfdhlas.Designer.cs">
+      <DependentUpon>202009071243544_dhfdhlas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009071302244_issue.cs" />
+    <Compile Include="Migrations\202009071302244_issue.Designer.cs">
+      <DependentUpon>202009071302244_issue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009071314543_issuesw.cs" />
+    <Compile Include="Migrations\202009071314543_issuesw.Designer.cs">
+      <DependentUpon>202009071314543_issuesw.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009080823340_jj.cs" />
+    <Compile Include="Migrations\202009080823340_jj.Designer.cs">
+      <DependentUpon>202009080823340_jj.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009081427572_hjj.cs" />
+    <Compile Include="Migrations\202009081427572_hjj.Designer.cs">
+      <DependentUpon>202009081427572_hjj.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009091237222_djd.cs" />
+    <Compile Include="Migrations\202009091237222_djd.Designer.cs">
+      <DependentUpon>202009091237222_djd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009100947204_sdjlak.cs" />
+    <Compile Include="Migrations\202009100947204_sdjlak.Designer.cs">
+      <DependentUpon>202009100947204_sdjlak.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009101023441_sdjlakws.cs" />
+    <Compile Include="Migrations\202009101023441_sdjlakws.Designer.cs">
+      <DependentUpon>202009101023441_sdjlakws.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009101044417_dhjdjh.cs" />
+    <Compile Include="Migrations\202009101044417_dhjdjh.Designer.cs">
+      <DependentUpon>202009101044417_dhjdjh.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009101129033_dhjdjhk.cs" />
+    <Compile Include="Migrations\202009101129033_dhjdjhk.Designer.cs">
+      <DependentUpon>202009101129033_dhjdjhk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009101152551_dhjdjhkjkj.cs" />
+    <Compile Include="Migrations\202009101152551_dhjdjhkjkj.Designer.cs">
+      <DependentUpon>202009101152551_dhjdjhkjkj.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009101242158_dhjdjhkjkjw.cs" />
+    <Compile Include="Migrations\202009101242158_dhjdjhkjkjw.Designer.cs">
+      <DependentUpon>202009101242158_dhjdjhkjkjw.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009120907112_dhjdw.cs" />
+    <Compile Include="Migrations\202009120907112_dhjdw.Designer.cs">
+      <DependentUpon>202009120907112_dhjdw.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009120908233_dhjdww.cs" />
+    <Compile Include="Migrations\202009120908233_dhjdww.Designer.cs">
+      <DependentUpon>202009120908233_dhjdww.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009121004391_dhjdwww.cs" />
+    <Compile Include="Migrations\202009121004391_dhjdwww.Designer.cs">
+      <DependentUpon>202009121004391_dhjdwww.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009140812131_fhf.cs" />
+    <Compile Include="Migrations\202009140812131_fhf.Designer.cs">
+      <DependentUpon>202009140812131_fhf.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009140820161_fhf1.cs" />
+    <Compile Include="Migrations\202009140820161_fhf1.Designer.cs">
+      <DependentUpon>202009140820161_fhf1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009141007340_fhfw.cs" />
+    <Compile Include="Migrations\202009141007340_fhfw.Designer.cs">
+      <DependentUpon>202009141007340_fhfw.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009141107385_fhfwk.cs" />
+    <Compile Include="Migrations\202009141107385_fhfwk.Designer.cs">
+      <DependentUpon>202009141107385_fhfwk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009141417110_fhfwkl.cs" />
+    <Compile Include="Migrations\202009141417110_fhfwkl.Designer.cs">
+      <DependentUpon>202009141417110_fhfwkl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009141443138_fhfwklk.cs" />
+    <Compile Include="Migrations\202009141443138_fhfwklk.Designer.cs">
+      <DependentUpon>202009141443138_fhfwklk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009141542366_fhfwklkw.cs" />
+    <Compile Include="Migrations\202009141542366_fhfwklkw.Designer.cs">
+      <DependentUpon>202009141542366_fhfwklkw.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009141619398_dgdg.cs" />
+    <Compile Include="Migrations\202009141619398_dgdg.Designer.cs">
+      <DependentUpon>202009141619398_dgdg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009151017129_s.cs" />
+    <Compile Include="Migrations\202009151017129_s.Designer.cs">
+      <DependentUpon>202009151017129_s.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009151504514_dh.cs" />
+    <Compile Include="Migrations\202009151504514_dh.Designer.cs">
+      <DependentUpon>202009151504514_dh.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009161405247_fjf.cs" />
+    <Compile Include="Migrations\202009161405247_fjf.Designer.cs">
+      <DependentUpon>202009161405247_fjf.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009171136597_dfhf.cs" />
+    <Compile Include="Migrations\202009171136597_dfhf.Designer.cs">
+      <DependentUpon>202009171136597_dfhf.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009171149304_dfhfl.cs" />
+    <Compile Include="Migrations\202009171149304_dfhfl.Designer.cs">
+      <DependentUpon>202009171149304_dfhfl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009171241497_dfhflds.cs" />
+    <Compile Include="Migrations\202009171241497_dfhflds.Designer.cs">
+      <DependentUpon>202009171241497_dfhflds.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009171317250_dfhfldss.cs" />
+    <Compile Include="Migrations\202009171317250_dfhfldss.Designer.cs">
+      <DependentUpon>202009171317250_dfhfldss.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009171336112_jjw.cs" />
+    <Compile Include="Migrations\202009171336112_jjw.Designer.cs">
+      <DependentUpon>202009171336112_jjw.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009171338203_jjwss.cs" />
+    <Compile Include="Migrations\202009171338203_jjwss.Designer.cs">
+      <DependentUpon>202009171338203_jjwss.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009190913135_dfhj.cs" />
+    <Compile Include="Migrations\202009190913135_dfhj.Designer.cs">
+      <DependentUpon>202009190913135_dfhj.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009190927022_dfhjk.cs" />
+    <Compile Include="Migrations\202009190927022_dfhjk.Designer.cs">
+      <DependentUpon>202009190927022_dfhjk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009190947207_dfhjk1.cs" />
+    <Compile Include="Migrations\202009190947207_dfhjk1.Designer.cs">
+      <DependentUpon>202009190947207_dfhjk1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191014542_dfhjksw.cs" />
+    <Compile Include="Migrations\202009191014542_dfhjksw.Designer.cs">
+      <DependentUpon>202009191014542_dfhjksw.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191035477_dfhjksw1.cs" />
+    <Compile Include="Migrations\202009191035477_dfhjksw1.Designer.cs">
+      <DependentUpon>202009191035477_dfhjksw1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191046201_dfhjksw2.cs" />
+    <Compile Include="Migrations\202009191046201_dfhjksw2.Designer.cs">
+      <DependentUpon>202009191046201_dfhjksw2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191048445_dfhjksw3.cs" />
+    <Compile Include="Migrations\202009191048445_dfhjksw3.Designer.cs">
+      <DependentUpon>202009191048445_dfhjksw3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191050159_dfhjksw4.cs" />
+    <Compile Include="Migrations\202009191050159_dfhjksw4.Designer.cs">
+      <DependentUpon>202009191050159_dfhjksw4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191051207_dfhjksw5.cs" />
+    <Compile Include="Migrations\202009191051207_dfhjksw5.Designer.cs">
+      <DependentUpon>202009191051207_dfhjksw5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191052103_dfhjksw6.cs" />
+    <Compile Include="Migrations\202009191052103_dfhjksw6.Designer.cs">
+      <DependentUpon>202009191052103_dfhjksw6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191053256_dfhjksw7.cs" />
+    <Compile Include="Migrations\202009191053256_dfhjksw7.Designer.cs">
+      <DependentUpon>202009191053256_dfhjksw7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191054483_dfhjksw8.cs" />
+    <Compile Include="Migrations\202009191054483_dfhjksw8.Designer.cs">
+      <DependentUpon>202009191054483_dfhjksw8.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191056318_dfhjksw9.cs" />
+    <Compile Include="Migrations\202009191056318_dfhjksw9.Designer.cs">
+      <DependentUpon>202009191056318_dfhjksw9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191057189_dfhjksw10.cs" />
+    <Compile Include="Migrations\202009191057189_dfhjksw10.Designer.cs">
+      <DependentUpon>202009191057189_dfhjksw10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191058341_dfhjksw11.cs" />
+    <Compile Include="Migrations\202009191058341_dfhjksw11.Designer.cs">
+      <DependentUpon>202009191058341_dfhjksw11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191100182_dfhjksw12.cs" />
+    <Compile Include="Migrations\202009191100182_dfhjksw12.Designer.cs">
+      <DependentUpon>202009191100182_dfhjksw12.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191102057_dfhjksw13.cs" />
+    <Compile Include="Migrations\202009191102057_dfhjksw13.Designer.cs">
+      <DependentUpon>202009191102057_dfhjksw13.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191103090_dfhjksw14.cs" />
+    <Compile Include="Migrations\202009191103090_dfhjksw14.Designer.cs">
+      <DependentUpon>202009191103090_dfhjksw14.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191104168_dfhjksw15.cs" />
+    <Compile Include="Migrations\202009191104168_dfhjksw15.Designer.cs">
+      <DependentUpon>202009191104168_dfhjksw15.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191105028_dfhjksw16.cs" />
+    <Compile Include="Migrations\202009191105028_dfhjksw16.Designer.cs">
+      <DependentUpon>202009191105028_dfhjksw16.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191107144_dfhjksw17.cs" />
+    <Compile Include="Migrations\202009191107144_dfhjksw17.Designer.cs">
+      <DependentUpon>202009191107144_dfhjksw17.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191109094_dfhjksw18.cs" />
+    <Compile Include="Migrations\202009191109094_dfhjksw18.Designer.cs">
+      <DependentUpon>202009191109094_dfhjksw18.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191111082_dfhjksw19.cs" />
+    <Compile Include="Migrations\202009191111082_dfhjksw19.Designer.cs">
+      <DependentUpon>202009191111082_dfhjksw19.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191114540_dfhjksw20.cs" />
+    <Compile Include="Migrations\202009191114540_dfhjksw20.Designer.cs">
+      <DependentUpon>202009191114540_dfhjksw20.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191116186_dfhjksw21.cs" />
+    <Compile Include="Migrations\202009191116186_dfhjksw21.Designer.cs">
+      <DependentUpon>202009191116186_dfhjksw21.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191118291_dfhjksw22.cs" />
+    <Compile Include="Migrations\202009191118291_dfhjksw22.Designer.cs">
+      <DependentUpon>202009191118291_dfhjksw22.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191134122_dfhjksw23.cs" />
+    <Compile Include="Migrations\202009191134122_dfhjksw23.Designer.cs">
+      <DependentUpon>202009191134122_dfhjksw23.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009191201308_dfhjksw24.cs" />
+    <Compile Include="Migrations\202009191201308_dfhjksw24.Designer.cs">
+      <DependentUpon>202009191201308_dfhjksw24.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009200838038_gg.cs" />
+    <Compile Include="Migrations\202009200838038_gg.Designer.cs">
+      <DependentUpon>202009200838038_gg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009200853248_ggs.cs" />
+    <Compile Include="Migrations\202009200853248_ggs.Designer.cs">
+      <DependentUpon>202009200853248_ggs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009201118121_ggslk.cs" />
+    <Compile Include="Migrations\202009201118121_ggslk.Designer.cs">
+      <DependentUpon>202009201118121_ggslk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009201134373_ggslks.cs" />
+    <Compile Include="Migrations\202009201134373_ggslks.Designer.cs">
+      <DependentUpon>202009201134373_ggslks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009201210334_ggslksl.cs" />
+    <Compile Include="Migrations\202009201210334_ggslksl.Designer.cs">
+      <DependentUpon>202009201210334_ggslksl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009221104346_ffgnggmnanvfm.cs" />
+    <Compile Include="Migrations\202009221104346_ffgnggmnanvfm.Designer.cs">
+      <DependentUpon>202009221104346_ffgnggmnanvfm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009221112127_sss1.cs" />
+    <Compile Include="Migrations\202009221112127_sss1.Designer.cs">
+      <DependentUpon>202009221112127_sss1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009221113249_sss2.cs" />
+    <Compile Include="Migrations\202009221113249_sss2.Designer.cs">
+      <DependentUpon>202009221113249_sss2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009230932348_Payment.cs" />
+    <Compile Include="Migrations\202009230932348_Payment.Designer.cs">
+      <DependentUpon>202009230932348_Payment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009240814213_ssggs.cs" />
+    <Compile Include="Migrations\202009240814213_ssggs.Designer.cs">
+      <DependentUpon>202009240814213_ssggs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009240845368_ssggss.cs" />
+    <Compile Include="Migrations\202009240845368_ssggss.Designer.cs">
+      <DependentUpon>202009240845368_ssggss.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009240951181_hdhd.cs" />
+    <Compile Include="Migrations\202009240951181_hdhd.Designer.cs">
+      <DependentUpon>202009240951181_hdhd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009241433126_hdhdk.cs" />
+    <Compile Include="Migrations\202009241433126_hdhdk.Designer.cs">
+      <DependentUpon>202009241433126_hdhdk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009281229560_dsckj.cs" />
+    <Compile Include="Migrations\202009281229560_dsckj.Designer.cs">
+      <DependentUpon>202009281229560_dsckj.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009290917162_djddfj.cs" />
+    <Compile Include="Migrations\202009290917162_djddfj.Designer.cs">
+      <DependentUpon>202009290917162_djddfj.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009291211088_djddfj1.cs" />
+    <Compile Include="Migrations\202009291211088_djddfj1.Designer.cs">
+      <DependentUpon>202009291211088_djddfj1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010030904449_fdhjf.cs" />
+    <Compile Include="Migrations\202010030904449_fdhjf.Designer.cs">
+      <DependentUpon>202010030904449_fdhjf.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010031001533_smns.cs" />
+    <Compile Include="Migrations\202010031001533_smns.Designer.cs">
+      <DependentUpon>202010031001533_smns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010031829129_ss.cs" />
+    <Compile Include="Migrations\202010031829129_ss.Designer.cs">
+      <DependentUpon>202010031829129_ss.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010070635517_ffh.cs" />
+    <Compile Include="Migrations\202010070635517_ffh.Designer.cs">
+      <DependentUpon>202010070635517_ffh.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010071053357_ddj.cs" />
+    <Compile Include="Migrations\202010071053357_ddj.Designer.cs">
+      <DependentUpon>202010071053357_ddj.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010071112320_ddj1.cs" />
+    <Compile Include="Migrations\202010071112320_ddj1.Designer.cs">
+      <DependentUpon>202010071112320_ddj1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010071159337_ddj2.cs" />
+    <Compile Include="Migrations\202010071159337_ddj2.Designer.cs">
+      <DependentUpon>202010071159337_ddj2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010100734479_fdhf.cs" />
+    <Compile Include="Migrations\202010100734479_fdhf.Designer.cs">
+      <DependentUpon>202010100734479_fdhf.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010100738381_fdhfr.cs" />
+    <Compile Include="Migrations\202010100738381_fdhfr.Designer.cs">
+      <DependentUpon>202010100738381_fdhfr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010100748381_dsklfd.cs" />
+    <Compile Include="Migrations\202010100748381_dsklfd.Designer.cs">
+      <DependentUpon>202010100748381_dsklfd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010100814287_hl.cs" />
+    <Compile Include="Migrations\202010100814287_hl.Designer.cs">
+      <DependentUpon>202010100814287_hl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010100826373_hl1.cs" />
+    <Compile Include="Migrations\202010100826373_hl1.Designer.cs">
+      <DependentUpon>202010100826373_hl1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010100832133_hghj.cs" />
+    <Compile Include="Migrations\202010100832133_hghj.Designer.cs">
+      <DependentUpon>202010100832133_hghj.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010101204410_hghjk.cs" />
+    <Compile Include="Migrations\202010101204410_hghjk.Designer.cs">
+      <DependentUpon>202010101204410_hghjk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010111554573_request.cs" />
+    <Compile Include="Migrations\202010111554573_request.Designer.cs">
+      <DependentUpon>202010111554573_request.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010111603102_request1.cs" />
+    <Compile Include="Migrations\202010111603102_request1.Designer.cs">
+      <DependentUpon>202010111603102_request1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010111603422_requessss.cs" />
+    <Compile Include="Migrations\202010111603422_requessss.Designer.cs">
+      <DependentUpon>202010111603422_requessss.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010111609491_hh.cs" />
+    <Compile Include="Migrations\202010111609491_hh.designer.cs">
+      <DependentUpon>202010111609491_hh.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010111649483_hhh.cs" />
+    <Compile Include="Migrations\202010111649483_hhh.designer.cs">
+      <DependentUpon>202010111649483_hhh.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010111745557_hhhol.cs" />
+    <Compile Include="Migrations\202010111745557_hhhol.designer.cs">
+      <DependentUpon>202010111745557_hhhol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010120929196_sjhs.cs" />
+    <Compile Include="Migrations\202010120929196_sjhs.designer.cs">
+      <DependentUpon>202010120929196_sjhs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010120944117_sjhss.cs" />
+    <Compile Include="Migrations\202010120944117_sjhss.designer.cs">
+      <DependentUpon>202010120944117_sjhss.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010141229337_ddmk.cs" />
+    <Compile Include="Migrations\202010141229337_ddmk.designer.cs">
+      <DependentUpon>202010141229337_ddmk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011250902360_ss1.cs" />
+    <Compile Include="Migrations\202011250902360_ss1.designer.cs">
+      <DependentUpon>202011250902360_ss1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011260719031_modifyProject.cs" />
+    <Compile Include="Migrations\202011260719031_modifyProject.designer.cs">
+      <DependentUpon>202011260719031_modifyProject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ApprovalType.cs" />
+    <Compile Include="Models\ContractFile.cs" />
+    <Compile Include="Models\CreditTerm.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\CustomersType.cs" />
+    <Compile Include="Models\CuttingSheet.cs" />
+    <Compile Include="Models\CuttingSheetDetail.cs" />
+    <Compile Include="Models\CuttingSheetSequense.cs" />
+    <Compile Include="Models\Designer.cs" />
+    <Compile Include="Models\EmailServer.cs" />
+    <Compile Include="Models\EmailSetting.cs" />
+    <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\EmployeeUser.cs" />
+    <Compile Include="Models\FolderPath.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Lpo.cs" />
+    <Compile Include="Models\LpoDetail.cs" />
+    <Compile Include="Models\LpoSequense.cs" />
+    <Compile Include="Models\LpoStatus.cs" />
+    <Compile Include="Models\LpoTerms.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Material.cs" />
+    <Compile Include="Models\MaterialUnit.cs" />
+    <Compile Include="Models\Payment.cs" />
+    <Compile Include="Models\PaymentSequense.cs" />
+    <Compile Include="Models\Permission.cs" />
+    <Compile Include="Models\PermissionNames.cs" />
+    <Compile Include="Models\PermissionUser.cs" />
+    <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\Project2.cs" />
+    <Compile Include="Models\ProjectFile.cs" />
+    <Compile Include="Models\ProjectPaymentTerm.cs" />
+    <Compile Include="Models\ProjectSequense.cs" />
+    <Compile Include="Models\ProjectStatus.cs" />
+    <Compile Include="Models\Quotation.cs" />
+    <Compile Include="Models\RequestApproval.cs" />
+    <Compile Include="Models\RoleNames.cs" />
+    <Compile Include="Models\SalesMan.cs" />
+    <Compile Include="Models\SalesTeam.cs" />
+    <Compile Include="Models\SalesType.cs" />
+    <Compile Include="Models\StockIssue.cs" />
+    <Compile Include="Models\StockIssueDetail.cs" />
+    <Compile Include="Models\StockIssueSequense.cs" />
+    <Compile Include="Models\StockIssueType.cs" />
+    <Compile Include="Models\StringExtensions.cs" />
+    <Compile Include="Models\supplier.cs" />
+    <Compile Include="Models\Unit.cs" />
+    <Compile Include="Models\Warehouse.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\css\bootstrap-theme.min.css" />
+    <Content Include="assets\css\bootstrap.css" />
+    <Content Include="assets\css\custom-styles.css" />
+    <Content Include="assets\css\font-awesome.css" />
+    <Content Include="assets\css\materialize.min.css" />
+    <Content Include="assets\font-awesome\fonts\fontawesome-webfontba72.svg" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="assets\img\bg-img.jpg" />
+    <Content Include="assets\img\Highmoon - LOGO %281%29.jfif" />
+    <Content Include="assets\img\img-DATETIME\calendar-blue.gif" />
+    <Content Include="assets\img\img-DATETIME\calendar-green.gif" />
+    <Content Include="assets\img\img-DATETIME\calendar.gif" />
+    <Content Include="assets\img\interior-bright-living-room-with-pillows-sofa-armchair-plants-lamp-empty-blue-wall-background_41470-708.jpg" />
+    <Content Include="assets\js\bootstrap.min.js" />
+    <Content Include="assets\js\chart-data.js" />
+    <Content Include="assets\js\chart.min.js" />
+    <Content Include="assets\js\custom-scripts.js" />
+    <Content Include="assets\js\dataTables\dataTables.bootstrap.css" />
+    <Content Include="assets\js\dataTables\dataTables.bootstrap.js" />
+    <Content Include="assets\js\dataTables\jquery.dataTables.js" />
+    <Content Include="assets\js\easypiechart-data.js" />
+    <Content Include="assets\js\easypiechart.js" />
+    <Content Include="assets\js\jquery-1.10.2.js" />
+    <Content Include="assets\js\jquery.metisMenu.js" />
+    <Content Include="assets\js\Lightweight-Chart\chart.js" />
+    <Content Include="assets\js\Lightweight-Chart\cssCharts.css" />
+    <Content Include="assets\js\Lightweight-Chart\index - Copy.html" />
+    <Content Include="assets\js\Lightweight-Chart\index.html" />
+    <Content Include="assets\js\Lightweight-Chart\jquery.chart.js" />
+    <Content Include="assets\js\Lightweight-Chart\jquery.chart.min.js" />
+    <Content Include="assets\js\morris\morris-0.4.3.min.css" />
+    <Content Include="assets\js\morris\morris.js" />
+    <Content Include="assets\js\morris\raphael-2.1.0.min.js" />
+    <Content Include="assets\materialize\css\materialize.css" />
+    <Content Include="assets\materialize\css\materialize.min.css" />
+    <Content Include="assets\materialize\js\materialize.js" />
+    <Content Include="assets\materialize\js\materialize.min.js" />
+    <Content Include="Content\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css-DATETIME\flora.datepick.css" />
+    <Content Include="Content\css-DATETIME\humanity.datepick.css" />
+    <Content Include="Content\css-DATETIME\jquery.datepick.css" />
+    <Content Include="Content\css-DATETIME\redmond.datepick.css" />
+    <Content Include="Content\css-DATETIME\smoothness.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-black-tie.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-blitzer.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-cupertino.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-dark-hive.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-dot-luv.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-eggplant.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-excite-bike.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-flick.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-hot-sneaks.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-humanity.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-le-frog.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-mint-choc.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-overcast.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-pepper-grinder.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-redmond.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-smoothness.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-south-street.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-start.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-sunny.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-swanky-purse.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-trontastic.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-ui-darkness.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-ui-lightness.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui-vader.datepick.css" />
+    <Content Include="Content\css-DATETIME\ui.datepick.css" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\icons\cal.gif" />
+    <Content Include="Content\icons\cal_close.gif" />
+    <Content Include="Content\icons\cal_fastforward.gif" />
+    <Content Include="Content\icons\cal_fastreverse.gif" />
+    <Content Include="Content\icons\cal_forward.gif" />
+    <Content Include="Content\icons\cal_minus.gif" />
+    <Content Include="Content\icons\cal_plus.gif" />
+    <Content Include="Content\icons\cal_reverse.gif" />
+    <Content Include="Content\themes\base\accordion.css" />
+    <Content Include="Content\themes\base\all.css" />
+    <Content Include="Content\themes\base\autocomplete.css" />
+    <Content Include="Content\themes\base\base.css" />
+    <Content Include="Content\themes\base\button.css" />
+    <Content Include="Content\themes\base\core.css" />
+    <Content Include="Content\themes\base\datepicker.css" />
+    <Content Include="Content\themes\base\dialog.css" />
+    <Content Include="Content\themes\base\draggable.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\menu.css" />
+    <Content Include="Content\themes\base\progressbar.css" />
+    <Content Include="Content\themes\base\resizable.css" />
+    <Content Include="Content\themes\base\selectable.css" />
+    <Content Include="Content\themes\base\selectmenu.css" />
+    <Content Include="Content\themes\base\slider.css" />
+    <Content Include="Content\themes\base\sortable.css" />
+    <Content Include="Content\themes\base\spinner.css" />
+    <Content Include="Content\themes\base\tabs.css" />
+    <Content Include="Content\themes\base\theme.css" />
+    <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="assets\font-awesome\fonts\fontawesome-webfontba72.eot" />
+    <Content Include="assets\font-awesome\fonts\fontawesome-webfontba72.ttf" />
+    <Content Include="assets\font-awesome\fonts\fontawesome-webfontba72.woff" />
+    <Content Include="assets\font-awesome\fonts\fontawesome-webfontd41d.eot" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="assets\fonts\glyphicons-halflings-regulard41d.eot" />
+    <Content Include="assets\js\Lightweight-Chart\README.md" />
+    <Content Include="assets\materialize\fonts\roboto\Roboto-Bold.eot" />
+    <Content Include="assets\materialize\fonts\roboto\Roboto-Bold.ttf" />
+    <Content Include="assets\materialize\fonts\roboto\Roboto-Bold.woff" />
+    <Content Include="assets\materialize\fonts\roboto\Roboto-Bold.woff2" />
+    <Content Include="assets\materialize\fonts\roboto\Roboto-Light.eot" />
+    <Content Include="assets\materialize\fonts\roboto\Roboto-Light.ttf" />
+    <Content Include="assets\materialize\fonts\roboto\Roboto-Light.woff" />
+    <Content Include="assets\materialize\fonts\roboto\Roboto-Light.woff2" />
+    <Content Include="assets\materialize\fonts\roboto\Roboto-Medium.eot" />
+    <Content Include="assets\materialize\fonts\roboto\Roboto-Medium.ttf" />
+    <Content Include="assets\materialize\fonts\roboto\Roboto-Medium.woff" />
+    <Content Include="assets\materialize\fonts\roboto\Roboto-Medium.woff2" />
+    <Content Include="assets\materialize\fonts\roboto\Roboto-Regular.eot" />
+    <Content Include="assets\materialize\fonts\roboto\Roboto-Regular.ttf" />
+    <Content Include="assets\materialize\fonts\roboto\Roboto-Regular.woff" />
+    <Content Include="assets\materialize\fonts\roboto\Roboto-Regular.woff2" />
+    <Content Include="assets\materialize\fonts\roboto\Roboto-Thin.eot" />
+    <Content Include="assets\materialize\fonts\roboto\Roboto-Thin.ttf" />
+    <Content Include="assets\materialize\fonts\roboto\Roboto-Thin.woff" />
+    <Content Include="assets\materialize\fonts\roboto\Roboto-Thin.woff2" />
+    <Content Include="assets\materialize\LICENSE" />
+    <Content Include="assets\materialize\README.md" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap\wells.less" />
+    <Content Include="Content\bootstrap\variables.less" />
+    <Content Include="Content\bootstrap\utilities.less" />
+    <Content Include="Content\bootstrap\type.less" />
+    <Content Include="Content\bootstrap\tooltip.less" />
+    <Content Include="Content\bootstrap\thumbnails.less" />
+    <Content Include="Content\bootstrap\theme.less" />
+    <Content Include="Content\bootstrap\tables.less" />
+    <Content Include="Content\bootstrap\scaffolding.less" />
+    <Content Include="Content\bootstrap\responsive-utilities.less" />
+    <Content Include="Content\bootstrap\responsive-embed.less" />
+    <Content Include="Content\bootstrap\progress-bars.less" />
+    <Content Include="Content\bootstrap\print.less" />
+    <Content Include="Content\bootstrap\popovers.less" />
+    <Content Include="Content\bootstrap\panels.less" />
+    <Content Include="Content\bootstrap\pagination.less" />
+    <Content Include="Content\bootstrap\pager.less" />
+    <Content Include="Content\bootstrap\normalize.less" />
+    <Content Include="Content\bootstrap\navs.less" />
+    <Content Include="Content\bootstrap\navbar.less" />
+    <Content Include="Content\bootstrap\modals.less" />
+    <Content Include="Content\bootstrap\mixins\vendor-prefixes.less" />
+    <Content Include="Content\bootstrap\mixins\text-overflow.less" />
+    <Content Include="Content\bootstrap\mixins\text-emphasis.less" />
+    <Content Include="Content\bootstrap\mixins\table-row.less" />
+    <Content Include="Content\bootstrap\mixins\tab-focus.less" />
+    <Content Include="Content\bootstrap\mixins\size.less" />
+    <Content Include="Content\bootstrap\mixins\responsive-visibility.less" />
+    <Content Include="Content\bootstrap\mixins\resize.less" />
+    <Content Include="Content\bootstrap\mixins\reset-text.less" />
+    <Content Include="Content\bootstrap\mixins\reset-filter.less" />
+    <Content Include="Content\bootstrap\mixins\progress-bar.less" />
+    <Content Include="Content\bootstrap\mixins\panels.less" />
+    <Content Include="Content\bootstrap\mixins\pagination.less" />
+    <Content Include="Content\bootstrap\mixins\opacity.less" />
+    <Content Include="Content\bootstrap\mixins\nav-vertical-align.less" />
+    <Content Include="Content\bootstrap\mixins\nav-divider.less" />
+    <Content Include="Content\bootstrap\mixins\list-group.less" />
+    <Content Include="Content\bootstrap\mixins\labels.less" />
+    <Content Include="Content\bootstrap\mixins\image.less" />
+    <Content Include="Content\bootstrap\mixins\hide-text.less" />
+    <Content Include="Content\bootstrap\mixins\grid.less" />
+    <Content Include="Content\bootstrap\mixins\grid-framework.less" />
+    <Content Include="Content\bootstrap\mixins\gradients.less" />
+    <Content Include="Content\bootstrap\mixins\forms.less" />
+    <Content Include="Content\bootstrap\mixins\clearfix.less" />
+    <Content Include="Content\bootstrap\mixins\center-block.less" />
+    <Content Include="Content\bootstrap\mixins\buttons.less" />
+    <Content Include="Content\bootstrap\mixins\border-radius.less" />
+    <Content Include="Content\bootstrap\mixins\background-variant.less" />
+    <Content Include="Content\bootstrap\mixins\alerts.less" />
+    <Content Include="Content\bootstrap\mixins.less" />
+    <Content Include="Content\bootstrap\media.less" />
+    <Content Include="Content\bootstrap\list-group.less" />
+    <Content Include="Content\bootstrap\labels.less" />
+    <Content Include="Content\bootstrap\jumbotron.less" />
+    <Content Include="Content\bootstrap\input-groups.less" />
+    <Content Include="Content\bootstrap\grid.less" />
+    <Content Include="Content\bootstrap\glyphicons.less" />
+    <Content Include="Content\bootstrap\forms.less" />
+    <Content Include="Content\bootstrap\dropdowns.less" />
+    <Content Include="Content\bootstrap\component-animations.less" />
+    <Content Include="Content\bootstrap\code.less" />
+    <Content Include="Content\bootstrap\close.less" />
+    <Content Include="Content\bootstrap\carousel.less" />
+    <Content Include="Content\bootstrap\buttons.less" />
+    <Content Include="Content\bootstrap\button-groups.less" />
+    <Content Include="Content\bootstrap\breadcrumbs.less" />
+    <Content Include="Content\bootstrap\bootstrap.less" />
+    <Content Include="Content\bootstrap\badges.less" />
+    <Content Include="Content\bootstrap\alerts.less" />
+    <Content Include="Content\_bootstrap-datetimepicker.less" />
+    <Content Include="Content\bootstrap-datetimepicker-build.less" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <Content Include="Scripts\datetime\bootstrap\css\bootstrap-datetimepicker.css" />
+    <Content Include="Scripts\datetime\bootstrap\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="Scripts\datetime\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\datetime\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Scripts\datetime\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\css\selectsearch\select2.min.css" />
+    <Content Include="Scripts\datetimepicker_css.js" />
+    <Content Include="Scripts\datetime\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\datetime\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\datetime\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="Scripts\datetime\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="Scripts\datetime\bootstrap\css\bootstrap.css" />
+    <Content Include="Scripts\datetime\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Scripts\datetime\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Scripts\datetime\bootstrap\js\bootstrap.js" />
+    <Content Include="Scripts\datetime\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Scripts\datetime\jquery-1.8.3.min.js" />
+    <Content Include="Scripts\googlejquery.min.js" />
+    <Content Include="Scripts\images2\cal.gif" />
+    <Content Include="Scripts\images2\cal_close.gif" />
+    <Content Include="Scripts\images2\cal_fastforward.gif" />
+    <Content Include="Scripts\images2\cal_fastreverse.gif" />
+    <Content Include="Scripts\images2\cal_forward.gif" />
+    <Content Include="Scripts\images2\cal_minus.gif" />
+    <Content Include="Scripts\images2\cal_plus.gif" />
+    <Content Include="Scripts\images2\cal_reverse.gif" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-af.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-am.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-ar-DZ.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-ar-EG.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-ar.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-az.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-bg.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-bs.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-ca.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-cs.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-da.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-de-CH.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-de.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-el.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-en-AU.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-en-GB.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-en-NZ.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-eo.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-es-AR.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-es-PE.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-es.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-et.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-eu.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-fa.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-fi.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-fo.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-fr-CH.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-fr.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-gl.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-gu.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-he.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-hi-IN.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-hi.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-hr.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-hu.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-hy.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-id.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-is.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-it.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-ja.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-ka.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-km.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-ko.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-lt.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-lv.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-me-ME.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-me.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-mk.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-ml.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-ms.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-mt.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-nl-BE.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-nl.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-no.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-pl.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-pt-BR.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-pt.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-rm.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-ro.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-ru.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-sk.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-sl.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-sq.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-sr-SR.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-sr.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-sv.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-ta.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-th.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-tr.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-tt.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-uk.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-ur.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-vi.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-zh-CN.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-zh-HK.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick-zh-TW.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick.ext.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick.ext.min.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick.lang.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick.lang.min.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick.min.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick.validation.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick.validation.min.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.plugin.js" />
+    <Content Include="Scripts\js-DATETIME\jquery.plugin.min.js" />
+    <Content Include="Scripts\js\jquery1.7.1Google.min.js" />
+    <Content Include="Scripts\js\selectSearch\select2.min.js" />
+    <Content Include="Scripts\js\shortcutKey\jquery.keyboard-shortcuts.js" />
+    <Content Include="Scripts\js\shortcutKey\jquery.keyboard-shortcuts.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\SendCode.cshtml" />
+    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Units\Create.cshtml" />
+    <Content Include="Views\Units\Delete.cshtml" />
+    <Content Include="Views\Units\Details.cshtml" />
+    <Content Include="Views\Units\Edit.cshtml" />
+    <Content Include="Views\Units\Index.cshtml" />
+    <Content Include="Views\Materials\Delete.cshtml" />
+    <Content Include="Views\Materials\Details.cshtml" />
+    <Content Include="Views\Materials\Index.cshtml" />
+    <Content Include="Views\CuttingSheets\Create.cshtml" />
+    <Content Include="Views\CuttingSheets\Delete.cshtml" />
+    <Content Include="Views\CuttingSheets\Details.cshtml" />
+    <Content Include="Views\CuttingSheets\Edit.cshtml" />
+    <Content Include="Views\CuttingSheets\Index.cshtml" />
+    <Content Include="Views\Account\RoleCreate.cshtml" />
+    <Content Include="Views\Materials\ImportFile.cshtml" />
+    <Content Include="Views\Materials\IndexShort.cshtml" />
+    <Content Include="Views\Materials\Create.cshtml" />
+    <Content Include="Views\Lpoes\Create.cshtml" />
+    <Content Include="Views\Lpoes\Delete.cshtml" />
+    <Content Include="Views\Lpoes\Details.cshtml" />
+    <Content Include="Views\Lpoes\Edit.cshtml" />
+    <Content Include="Views\Lpoes\Index.cshtml" />
+    <Content Include="Views\suppliers\Create.cshtml" />
+    <Content Include="Views\suppliers\Delete.cshtml" />
+    <Content Include="Views\suppliers\Details.cshtml" />
+    <Content Include="Views\suppliers\Edit.cshtml" />
+    <Content Include="Views\suppliers\Index.cshtml" />
+    <Content Include="Views\CreditTerms\Create.cshtml" />
+    <Content Include="Views\CreditTerms\Delete.cshtml" />
+    <Content Include="Views\CreditTerms\Details.cshtml" />
+    <Content Include="Views\CreditTerms\Edit.cshtml" />
+    <Content Include="Views\CreditTerms\Index.cshtml" />
+    <Content Include="Views\StockIssueTypes\Create.cshtml" />
+    <Content Include="Views\StockIssueTypes\Delete.cshtml" />
+    <Content Include="Views\StockIssueTypes\Details.cshtml" />
+    <Content Include="Views\StockIssueTypes\Edit.cshtml" />
+    <Content Include="Views\StockIssueTypes\Index.cshtml" />
+    <Content Include="Views\StockIssues\Create.cshtml" />
+    <Content Include="Views\StockIssues\Delete.cshtml" />
+    <Content Include="Views\StockIssues\Details.cshtml" />
+    <Content Include="Views\StockIssues\Edit.cshtml" />
+    <Content Include="Views\StockIssues\Index.cshtml" />
+    <Content Include="Views\Materials\MaterialMovment.cshtml" />
+    <Content Include="Views\Warehouses\Create.cshtml" />
+    <Content Include="Views\Warehouses\Delete.cshtml" />
+    <Content Include="Views\Warehouses\Details.cshtml" />
+    <Content Include="Views\Warehouses\Edit.cshtml" />
+    <Content Include="Views\Warehouses\Index.cshtml" />
+    <Content Include="Views\Lpoes\PrintNewTable.cshtml" />
+    <Content Include="Views\LpoTerms\Create.cshtml" />
+    <Content Include="Views\LpoTerms\Delete.cshtml" />
+    <Content Include="Views\LpoTerms\Details.cshtml" />
+    <Content Include="Views\LpoTerms\Edit.cshtml" />
+    <Content Include="Views\LpoTerms\Index.cshtml" />
+    <Content Include="Views\Materials\Edit.cshtml" />
+    <Content Include="Views\CreditTerms1\Create.cshtml" />
+    <Content Include="Views\CreditTerms1\Delete.cshtml" />
+    <Content Include="Views\CreditTerms1\Details.cshtml" />
+    <Content Include="Views\CreditTerms1\Edit.cshtml" />
+    <Content Include="Views\CreditTerms1\Index.cshtml" />
+    <Content Include="Views\CuttingSheets\PrintNewTable.cshtml" />
+    <Content Include="Views\Lpoes\Revised.cshtml" />
+    <Content Include="Views\LpoStatus\Create.cshtml" />
+    <Content Include="Views\LpoStatus\Delete.cshtml" />
+    <Content Include="Views\LpoStatus\Details.cshtml" />
+    <Content Include="Views\LpoStatus\Edit.cshtml" />
+    <Content Include="Views\LpoStatus\Index.cshtml" />
+    <Content Include="Views\Lpoes\ErrorPermission.cshtml" />
+    <Content Include="Views\SalesMen\Create.cshtml" />
+    <Content Include="Views\SalesMen\Delete.cshtml" />
+    <Content Include="Views\SalesMen\Details.cshtml" />
+    <Content Include="Views\SalesMen\Edit.cshtml" />
+    <Content Include="Views\SalesMen\Index.cshtml" />
+    <Content Include="Views\Customers\Create.cshtml" />
+    <Content Include="Views\Customers\Delete.cshtml" />
+    <Content Include="Views\Customers\Details.cshtml" />
+    <Content Include="Views\Customers\Edit.cshtml" />
+    <Content Include="Views\Customers\Index.cshtml" />
+    <Content Include="Views\ProjectPaymentTerms\Create.cshtml" />
+    <Content Include="Views\ProjectPaymentTerms\Delete.cshtml" />
+    <Content Include="Views\ProjectPaymentTerms\Details.cshtml" />
+    <Content Include="Views\ProjectPaymentTerms\Edit.cshtml" />
+    <Content Include="Views\ProjectPaymentTerms\Index.cshtml" />
+    <Content Include="Views\Class1\Create.cshtml" />
+    <Content Include="Views\Class1\Delete.cshtml" />
+    <Content Include="Views\Class1\Details.cshtml" />
+    <Content Include="Views\Class1\Edit.cshtml" />
+    <Content Include="Views\Class1\Index.cshtml" />
+    <Content Include="Views\ProjectPaymentTerms1\Create.cshtml" />
+    <Content Include="Views\ProjectPaymentTerms1\Delete.cshtml" />
+    <Content Include="Views\ProjectPaymentTerms1\Details.cshtml" />
+    <Content Include="Views\ProjectPaymentTerms1\Edit.cshtml" />
+    <Content Include="Views\ProjectPaymentTerms1\Index.cshtml" />
+    <Content Include="Views\Projects\Create.cshtml" />
+    <Content Include="Views\Projects\Delete.cshtml" />
+    <Content Include="Views\Projects\Details.cshtml" />
+    <Content Include="Views\Projects\Edit.cshtml" />
+    <Content Include="Views\Projects\Index.cshtml" />
+    <Content Include="Views\Project2\Create.cshtml" />
+    <Content Include="Views\Project2\Delete.cshtml" />
+    <Content Include="Views\Project2\Details.cshtml" />
+    <Content Include="Views\Project2\Edit.cshtml" />
+    <Content Include="Views\Project2\Index.cshtml" />
+    <Content Include="Views\CustomersTypes\Create.cshtml" />
+    <Content Include="Views\CustomersTypes\Delete.cshtml" />
+    <Content Include="Views\CustomersTypes\Details.cshtml" />
+    <Content Include="Views\CustomersTypes\Edit.cshtml" />
+    <Content Include="Views\CustomersTypes\Index.cshtml" />
+    <Content Include="Views\SalesTypes\Create.cshtml" />
+    <Content Include="Views\SalesTypes\Delete.cshtml" />
+    <Content Include="Views\SalesTypes\Details.cshtml" />
+    <Content Include="Views\SalesTypes\Edit.cshtml" />
+    <Content Include="Views\SalesTypes\Index.cshtml" />
+    <Content Include="Views\Designers\Create.cshtml" />
+    <Content Include="Views\Designers\Delete.cshtml" />
+    <Content Include="Views\Designers\Details.cshtml" />
+    <Content Include="Views\Designers\Edit.cshtml" />
+    <Content Include="Views\Designers\Index.cshtml" />
+    <Content Include="Views\ProjectStatus\Create.cshtml" />
+    <Content Include="Views\ProjectStatus\Delete.cshtml" />
+    <Content Include="Views\ProjectStatus\Details.cshtml" />
+    <Content Include="Views\ProjectStatus\Edit.cshtml" />
+    <Content Include="Views\ProjectStatus\Index.cshtml" />
+    <Content Include="Views\UploadFile\IndexGoLegalCase.cshtml" />
+    <Content Include="Views\UploadFile\IndexGoCaseEdit1.cshtml" />
+    <Content Include="Views\Shared\_Layout - Temp.cshtml" />
+    <Content Include="Views\Shared\_Layout - Temp - Table.cshtml" />
+    <Content Include="Views\Shared\_Layout - Temp - form.cshtml" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick.ext.min.map" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick.lang.min.map" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick.min.map" />
+    <Content Include="Scripts\js-DATETIME\jquery.datepick.validation.min.map" />
+    <Content Include="Scripts\js-DATETIME\jquery.plugin.min.map" />
+    <Content Include="Views\Projects\AccountApproval.cshtml" />
+    <Content Include="Views\Shared\_Layout - Temp - Table - Short.cshtml" />
+    <Content Include="Views\Employees\Create.cshtml" />
+    <Content Include="Views\Employees\Delete.cshtml" />
+    <Content Include="Views\Employees\Details.cshtml" />
+    <Content Include="Views\Employees\Edit.cshtml" />
+    <Content Include="Views\Employees\Index.cshtml" />
+    <Content Include="Views\Payments\Create.cshtml" />
+    <Content Include="Views\Payments\Delete.cshtml" />
+    <Content Include="Views\Payments\Details.cshtml" />
+    <Content Include="Views\Payments\Edit.cshtml" />
+    <Content Include="Views\Payments\Index.cshtml" />
+    <Content Include="Views\Payments\IndexByProject.cshtml" />
+    <Content Include="Views\Payments\Create1.cshtml" />
+    <Content Include="Views\Payments\CreateByProject.cshtml" />
+    <Content Include="Views\Account\ListOfUsers.cshtml" />
+    <Content Include="Views\Projects\AddDeduction.cshtml" />
+    <Content Include="Views\PermissionUsers\Create.cshtml" />
+    <Content Include="Views\PermissionUsers\Delete.cshtml" />
+    <Content Include="Views\PermissionUsers\Details.cshtml" />
+    <Content Include="Views\PermissionUsers\Edit.cshtml" />
+    <Content Include="Views\PermissionUsers\Index.cshtml" />
+    <Content Include="Views\RequestApprovals\Create.cshtml" />
+    <Content Include="Views\RequestApprovals\Delete.cshtml" />
+    <Content Include="Views\RequestApprovals\Details.cshtml" />
+    <Content Include="Views\RequestApprovals\Edit.cshtml" />
+    <Content Include="Views\RequestApprovals\Index.cshtml" />
+    <Content Include="Views\RequestApprovals\Approve.cshtml" />
+    <Content Include="Views\ProjectPaymentTerms2\Create.cshtml" />
+    <Content Include="Views\ProjectPaymentTerms2\Delete.cshtml" />
+    <Content Include="Views\ProjectPaymentTerms2\Details.cshtml" />
+    <Content Include="Views\ProjectPaymentTerms2\Edit.cshtml" />
+    <Content Include="Views\ProjectPaymentTerms2\Index.cshtml" />
+    <Content Include="Views\ProjectPaymentTerms3\Create.cshtml" />
+    <Content Include="Views\ProjectPaymentTerms3\Delete.cshtml" />
+    <Content Include="Views\ProjectPaymentTerms3\Details.cshtml" />
+    <Content Include="Views\ProjectPaymentTerms3\Edit.cshtml" />
+    <Content Include="Views\ProjectPaymentTerms3\Index.cshtml" />
+    <Content Include="Views\Report\SalesaGraph.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\Account\EditRegister.cshtml" />
+    <Content Include="Views\UploadFile\UploadFileMulti.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="assets\plugins\" />
+    <Folder Include="Uploads\CustomerDoc\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202009011230532_init.resx">
+      <DependentUpon>202009011230532_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009011236333_init2.resx">
+      <DependentUpon>202009011236333_init2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009011245459_sdaf.resx">
+      <DependentUpon>202009011245459_sdaf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009011403439_sdafw.resx">
+      <DependentUpon>202009011403439_sdafw.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009050809255_hj.resx">
+      <DependentUpon>202009050809255_hj.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009050814116_sss.resx">
+      <DependentUpon>202009050814116_sss.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009060929522_djdj.resx">
+      <DependentUpon>202009060929522_djdj.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009060930201_djdj1.resx">
+      <DependentUpon>202009060930201_djdj1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009061042290_djdjp.resx">
+      <DependentUpon>202009061042290_djdjp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009061314183_djdjpsd.resx">
+      <DependentUpon>202009061314183_djdjpsd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009061334456_djdjpsdf.resx">
+      <DependentUpon>202009061334456_djdjpsdf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009061339088_djdjpsdfs.resx">
+      <DependentUpon>202009061339088_djdjpsdfs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009071125332_dhfdh.resx">
+      <DependentUpon>202009071125332_dhfdh.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009071227242_dhfdhl.resx">
+      <DependentUpon>202009071227242_dhfdhl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009071243544_dhfdhlas.resx">
+      <DependentUpon>202009071243544_dhfdhlas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009071302244_issue.resx">
+      <DependentUpon>202009071302244_issue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009071314543_issuesw.resx">
+      <DependentUpon>202009071314543_issuesw.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009080823340_jj.resx">
+      <DependentUpon>202009080823340_jj.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009081427572_hjj.resx">
+      <DependentUpon>202009081427572_hjj.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009091237222_djd.resx">
+      <DependentUpon>202009091237222_djd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009100947204_sdjlak.resx">
+      <DependentUpon>202009100947204_sdjlak.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009101023441_sdjlakws.resx">
+      <DependentUpon>202009101023441_sdjlakws.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009101044417_dhjdjh.resx">
+      <DependentUpon>202009101044417_dhjdjh.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009101129033_dhjdjhk.resx">
+      <DependentUpon>202009101129033_dhjdjhk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009101152551_dhjdjhkjkj.resx">
+      <DependentUpon>202009101152551_dhjdjhkjkj.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009101242158_dhjdjhkjkjw.resx">
+      <DependentUpon>202009101242158_dhjdjhkjkjw.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009120907112_dhjdw.resx">
+      <DependentUpon>202009120907112_dhjdw.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009120908233_dhjdww.resx">
+      <DependentUpon>202009120908233_dhjdww.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009121004391_dhjdwww.resx">
+      <DependentUpon>202009121004391_dhjdwww.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009140812131_fhf.resx">
+      <DependentUpon>202009140812131_fhf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009140820161_fhf1.resx">
+      <DependentUpon>202009140820161_fhf1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009141007340_fhfw.resx">
+      <DependentUpon>202009141007340_fhfw.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009141107385_fhfwk.resx">
+      <DependentUpon>202009141107385_fhfwk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009141417110_fhfwkl.resx">
+      <DependentUpon>202009141417110_fhfwkl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009141443138_fhfwklk.resx">
+      <DependentUpon>202009141443138_fhfwklk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009141542366_fhfwklkw.resx">
+      <DependentUpon>202009141542366_fhfwklkw.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009141619398_dgdg.resx">
+      <DependentUpon>202009141619398_dgdg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009151017129_s.resx">
+      <DependentUpon>202009151017129_s.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009151504514_dh.resx">
+      <DependentUpon>202009151504514_dh.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009161405247_fjf.resx">
+      <DependentUpon>202009161405247_fjf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009171136597_dfhf.resx">
+      <DependentUpon>202009171136597_dfhf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009171149304_dfhfl.resx">
+      <DependentUpon>202009171149304_dfhfl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009171241497_dfhflds.resx">
+      <DependentUpon>202009171241497_dfhflds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009171317250_dfhfldss.resx">
+      <DependentUpon>202009171317250_dfhfldss.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009171336112_jjw.resx">
+      <DependentUpon>202009171336112_jjw.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009171338203_jjwss.resx">
+      <DependentUpon>202009171338203_jjwss.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009190913135_dfhj.resx">
+      <DependentUpon>202009190913135_dfhj.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009190927022_dfhjk.resx">
+      <DependentUpon>202009190927022_dfhjk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009190947207_dfhjk1.resx">
+      <DependentUpon>202009190947207_dfhjk1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191014542_dfhjksw.resx">
+      <DependentUpon>202009191014542_dfhjksw.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191035477_dfhjksw1.resx">
+      <DependentUpon>202009191035477_dfhjksw1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191046201_dfhjksw2.resx">
+      <DependentUpon>202009191046201_dfhjksw2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191048445_dfhjksw3.resx">
+      <DependentUpon>202009191048445_dfhjksw3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191050159_dfhjksw4.resx">
+      <DependentUpon>202009191050159_dfhjksw4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191051207_dfhjksw5.resx">
+      <DependentUpon>202009191051207_dfhjksw5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191052103_dfhjksw6.resx">
+      <DependentUpon>202009191052103_dfhjksw6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191053256_dfhjksw7.resx">
+      <DependentUpon>202009191053256_dfhjksw7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191054483_dfhjksw8.resx">
+      <DependentUpon>202009191054483_dfhjksw8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191056318_dfhjksw9.resx">
+      <DependentUpon>202009191056318_dfhjksw9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191057189_dfhjksw10.resx">
+      <DependentUpon>202009191057189_dfhjksw10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191058341_dfhjksw11.resx">
+      <DependentUpon>202009191058341_dfhjksw11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191100182_dfhjksw12.resx">
+      <DependentUpon>202009191100182_dfhjksw12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191102057_dfhjksw13.resx">
+      <DependentUpon>202009191102057_dfhjksw13.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191103090_dfhjksw14.resx">
+      <DependentUpon>202009191103090_dfhjksw14.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191104168_dfhjksw15.resx">
+      <DependentUpon>202009191104168_dfhjksw15.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191105028_dfhjksw16.resx">
+      <DependentUpon>202009191105028_dfhjksw16.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191107144_dfhjksw17.resx">
+      <DependentUpon>202009191107144_dfhjksw17.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191109094_dfhjksw18.resx">
+      <DependentUpon>202009191109094_dfhjksw18.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191111082_dfhjksw19.resx">
+      <DependentUpon>202009191111082_dfhjksw19.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191114540_dfhjksw20.resx">
+      <DependentUpon>202009191114540_dfhjksw20.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191116186_dfhjksw21.resx">
+      <DependentUpon>202009191116186_dfhjksw21.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191118291_dfhjksw22.resx">
+      <DependentUpon>202009191118291_dfhjksw22.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191134122_dfhjksw23.resx">
+      <DependentUpon>202009191134122_dfhjksw23.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191201308_dfhjksw24.resx">
+      <DependentUpon>202009191201308_dfhjksw24.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009200838038_gg.resx">
+      <DependentUpon>202009200838038_gg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009200853248_ggs.resx">
+      <DependentUpon>202009200853248_ggs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009201118121_ggslk.resx">
+      <DependentUpon>202009201118121_ggslk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009201134373_ggslks.resx">
+      <DependentUpon>202009201134373_ggslks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009201210334_ggslksl.resx">
+      <DependentUpon>202009201210334_ggslksl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009221104346_ffgnggmnanvfm.resx">
+      <DependentUpon>202009221104346_ffgnggmnanvfm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009221112127_sss1.resx">
+      <DependentUpon>202009221112127_sss1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009221113249_sss2.resx">
+      <DependentUpon>202009221113249_sss2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009230932348_Payment.resx">
+      <DependentUpon>202009230932348_Payment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009240814213_ssggs.resx">
+      <DependentUpon>202009240814213_ssggs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009240845368_ssggss.resx">
+      <DependentUpon>202009240845368_ssggss.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009240951181_hdhd.resx">
+      <DependentUpon>202009240951181_hdhd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009241433126_hdhdk.resx">
+      <DependentUpon>202009241433126_hdhdk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009281229560_dsckj.resx">
+      <DependentUpon>202009281229560_dsckj.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009290917162_djddfj.resx">
+      <DependentUpon>202009290917162_djddfj.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009291211088_djddfj1.resx">
+      <DependentUpon>202009291211088_djddfj1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010030904449_fdhjf.resx">
+      <DependentUpon>202010030904449_fdhjf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010031001533_smns.resx">
+      <DependentUpon>202010031001533_smns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010031829129_ss.resx">
+      <DependentUpon>202010031829129_ss.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010070635517_ffh.resx">
+      <DependentUpon>202010070635517_ffh.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010071053357_ddj.resx">
+      <DependentUpon>202010071053357_ddj.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010071112320_ddj1.resx">
+      <DependentUpon>202010071112320_ddj1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010071159337_ddj2.resx">
+      <DependentUpon>202010071159337_ddj2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010100734479_fdhf.resx">
+      <DependentUpon>202010100734479_fdhf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010100738381_fdhfr.resx">
+      <DependentUpon>202010100738381_fdhfr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010100748381_dsklfd.resx">
+      <DependentUpon>202010100748381_dsklfd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010100814287_hl.resx">
+      <DependentUpon>202010100814287_hl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010100826373_hl1.resx">
+      <DependentUpon>202010100826373_hl1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010100832133_hghj.resx">
+      <DependentUpon>202010100832133_hghj.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010101204410_hghjk.resx">
+      <DependentUpon>202010101204410_hghjk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010111554573_request.resx">
+      <DependentUpon>202010111554573_request.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010111603102_request1.resx">
+      <DependentUpon>202010111603102_request1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010111603422_requessss.resx">
+      <DependentUpon>202010111603422_requessss.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010111609491_hh.resx">
+      <DependentUpon>202010111609491_hh.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010111649483_hhh.resx">
+      <DependentUpon>202010111649483_hhh.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010111745557_hhhol.resx">
+      <DependentUpon>202010111745557_hhhol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010120929196_sjhs.resx">
+      <DependentUpon>202010120929196_sjhs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010120944117_sjhss.resx">
+      <DependentUpon>202010120944117_sjhss.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010141229337_ddmk.resx">
+      <DependentUpon>202010141229337_ddmk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011250902360_ss1.resx">
+      <DependentUpon>202011250902360_ss1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011260719031_modifyProject.resx">
+      <DependentUpon>202011260719031_modifyProject.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>52461</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:52461/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

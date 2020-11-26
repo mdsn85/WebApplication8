@@ -1,0 +1,291 @@
+﻿@model WebApplication8.Models.Project
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Project Details</h2>
+<h4 style="color:red">@ViewBag.Error</h4>
+<div style=" width:100% ;height:100%">
+
+    <hr />
+    <div style="float:left; width:40% ">
+        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Code)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.Code)
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.Name)
+                </td>
+
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.ProjectStatusId)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.ProjectStatus.Name)
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.SalesDate)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.SalesDate)
+                </td>
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    @Html.DisplayNameFor(model => model.SalesType.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.SalesType.Name)
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.SalesMan.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.SalesMan.Name)
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    @Html.DisplayNameFor(model => model.CustomersType.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.CustomersType.Name)
+                </td>
+            </tr>
+
+
+            <tr>
+
+
+                <td>
+                    @Html.DisplayNameFor(model => model.Customer.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.Customer.Name)
+                </td>
+            </tr>
+
+
+            <tr>
+
+
+                <td>
+                    @Html.DisplayNameFor(model => model.Designer.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.Designer.Name)
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+
+
+                <td>
+                    @Html.DisplayNameFor(model => model.Value)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.Value)
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Discount)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.Discount)
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Vat)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.Vat)
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Total)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.Total)
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.ProjectPaymentTerm.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.ProjectPaymentTerm.Name)
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Description)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.Description)
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.DeliveryDate)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.DeliveryDate)
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.ActualDeliveryDate)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.ActualDeliveryDate)
+                </td>
+            </tr>
+
+
+
+
+
+        </table>
+
+        <div>
+            @if (@ViewBag.AttachedFiles == null)
+            {<p> Contract Copy:Not upload</p>}
+            else
+            {
+
+                @*<a href="~/Uploads/CustomerDoc/@ViewBag.Contract_Copy.Name" target="_blank">@ViewBag.Contract_Copy.Name</a>   ,
+            <span> valid until: @ViewBag.Contract_Copy.ValidUntil</span>*@
+                @Html.Raw("  Production Sheet  :")
+                foreach (var f in ViewBag.AttachedFiles)
+                {
+
+                    <a href="~/Uploads/CustomerDoc/@f.Name" target="_blank">@f.Name</a>
+                }
+
+            }
+
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "SearchForm" }))
+            {
+                @Html.AntiForgeryToken();
+                <!-- START SEARCH -->
+                <div class="panel panel-default">
+                    <div class="panel-body">
+
+                        @if (User.IsInRole("Account"))
+                        {
+
+                            <div class="form-group">
+                                @Html.Label(" ", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    <p>
+                                        <input type="hidden" value="@Model.ProjectId" name="ProjectId" />
+                                        <input type="checkbox" id="test5" name="AccountApprovalCk" value="true"/>
+                                        <label for="test5">Account Approval</label>
+                                    </p>
+                                    <button class="btn btn-primary">Save</button>
+
+                                </div>
+                            </div>
+                        }
+
+
+                    </div>
+
+                </div>
+                <!-- END SEARCH -->
+            }
+        </div>
+
+    </div>
+
+
+    <div style="float:left ;height:100%  ; padding-left:50px; width:60%">
+
+        dsjkcj
+    </div>
+
+    <div style="height:1980px">
+        <p>
+
+        </p>
+    </div>
+
+</div>
+
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ProjectId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+    }
+

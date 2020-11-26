@@ -1,0 +1,147 @@
+﻿@model WebApplication8.Models.Payment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Payment Details</h2>
+
+<div>
+    <h4></h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Project.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Project.Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Receipt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Receipt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModOfPayment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModOfPayment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CollectedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CollectedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CollectionDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CollectionDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChqNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChqNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChqDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChqDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TransBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TransBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfCredit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfCredit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ToBankHM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ToBankHM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ACHM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ACHM)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PosRef)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PosRef)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserCreate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserCreate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Remarks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Remarks)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PaymentId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

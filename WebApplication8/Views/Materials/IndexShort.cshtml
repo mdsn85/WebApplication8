@@ -1,0 +1,238 @@
+﻿@model IEnumerable<WebApplication8.Models.Material>
+
+@{
+    ViewBag.Title = "Material List";
+}
+
+@{
+
+    Layout = "~/Views/Shared/_Layout - Temp - Table - Short.cshtml";
+}
+<h2>Material List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+    <div class="input-group push-down-4 inner col-md-3" style="float:left">
+        <div class="input-group-btn">
+            <div class=""> @Html.ActionLink("create New", "CreateN", "Customers", new { @class = " " @*, @target = "_blank"*@})</div>
+        </div>
+    </div>
+</p>
+
+<!-- START SEARCH -->
+<!-- START SEARCH -->
+@using (Html.BeginForm())
+{
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row stacked  ">
+                <div style="display:;vertical-align: middle;">
+                    <div class="input-group push-down-3 inner col-md-3 " style="float:left">
+                        <span class="input-group-addon"><span class="fa fa-search"></span></span>
+
+
+                        <input type="text" name="searchStringName" class="form-control" placeholder="Material Name..." />
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary">Search</button>
+                        </div>
+                    </div>
+
+                    <div class="input-group push-down-4 inner col-md-3" style="float:left">
+                        <span class="input-group-addon"><span class="fa fa-search"></span></span>
+
+
+                        <input type="text" name="searchStringBarcode" class="form-control" placeholder="Barcode" />
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary">Search</button>
+                        </div>
+                    </div>
+
+                    <div class="input-group push-down-4 inner col-md-3" style="float:left">
+                        <span class="input-group-addon"><span class="fa fa-search"></span></span>
+
+
+                        <input type="text" name="searchStringCode" class="form-control" placeholder="Code..." />
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary">Search</button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<!-- END SEARCH -->
+
+<table class="table">
+    <tr>
+        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.code)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.WareHouse.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Dimension)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Unit.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.qty)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Resevedqty)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.MinReOrder)
+        </th>
+
+        <th>
+            @Html.ActionLink("Available Qty", "IndexShort", new { sortOrder = ViewBag.AvalableQty })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AvgPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.latestPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.barcode)
+        </th>
+
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <span class="btn btn-info cid" id="@item.MaterialId">@item.MaterialId </span>
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WareHouse.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Dimension)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Unit.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.qty)
+            </td>
+            <td>
+                @{float x = item.Resevedqty ?? 0;}
+                @x
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MinReOrder)
+            </td>
+
+            <td>
+                @{float? a = 0;
+                    a = @item.qty - @item.Resevedqty - @item.MinReOrder;}
+
+                @Html.DisplayFor(modelItem => item.AvalableQty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AvgPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.latestPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.barcode)
+            </td>
+
+
+        </tr>
+    }
+
+</table>
+
+<script src="~/Scripts/js/jquery1.7.1Google.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $(".cid").click(function () {
+
+            var name = "";
+            var unit = "";
+            var oVal = this.id;
+
+            $.ajax({
+                type: "GET",
+                traditional: true,
+                async: false,
+                cache: false,
+                url: '/Materials/get',
+                context: JSON,
+                data: { "id": oVal /* add other additional parameters */ },
+
+                //data: '{ enquery:' + JSON.stringify(Enquery) + '}',
+                success: function (result) {
+                    name = result.Name;
+                    unit = result.Unit;
+                    unit2 = result.Unit2;
+                    Dimension = result.Dimension;
+                    Price = result.Price;
+                    QtyApproved = result.QtyApproved;
+                    Approval = result.QtyApproved;
+                },
+                error: function (xhr) {
+                    //debugger;
+                    console.log(xhr.responseText);
+                    alert("Error has occurred..");
+                }
+            });
+
+            //alert(oVal);
+
+            window.opener.setValue(oVal, name, unit, Dimension, Price, QtyApproved, Approval);
+
+            window.close();
+
+            return false;
+        });
+    });
+</script>
+
+<script type="text/javascript">
+
+    function OnClose() {
+
+        if (window.opener != null && !window.opener.closed) {
+
+            window.opener.HideModalDiv();
+
+        }
+
+    }
+
+    window.onunload = OnClose;
+     //   window.close = OnClose;
+</script>
+
+

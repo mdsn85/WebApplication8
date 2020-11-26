@@ -1,0 +1,303 @@
+﻿@model IEnumerable<WebApplication8.Models.Project>
+@{
+
+    Layout = "~/Views/Shared/_Layout - Temp - Table.cshtml";
+}
+@{
+    ViewBag.Title = "Index";
+}
+
+<link href="~/Scripts/css/selectsearch/select2.min.css" rel="stylesheet" />
+
+
+<p>
+    @if (User.IsInRole("Sales Coordinator") || User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Create New", "Create")
+    }
+</p>
+
+
+
+
+@using (Html.BeginForm(null, null, FormMethod.Get, new { id = "SearchForm" }))
+{
+    <!-- START SEARCH -->
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+
+
+            <div class="input-group push-down-4 inner col-md-2" style="float:left">
+                <span class="input-group-addon"><span class="fa fa-search"></span></span>
+                <input type="text" name="SearchCode" class="form-control" placeholder="Project Code..." value="@ViewBag.SearchCode" />
+
+            </div>
+
+
+
+
+            <div class="input-group push-down-4 inner col-md-2" style="float:left;padding-left:30px">
+                <span class="input-group-addon"><span class="fa fa-search"></span></span>
+                @Html.DropDownList("StatusId", null, "status ...", htmlAttributes: new { @class = " form-control selectpicker", @Name = "StatusId", @Id = "StatusId" })
+            </div>
+
+
+
+            <div class="input-group push-down-4 inner col-md-2" style="float:left;padding-left:30px">
+                <span class="input-group-addon"><span class="fa fa-search"></span></span>
+                @Html.DropDownList("CustomerId", null, "Customers ...", htmlAttributes: new { @class = " form-control", @Name = "CustomerId", @Id = "CustomerId" })
+            </div>
+
+
+            <div class="input-group push-down-4 inner col-md-2" style="float:left;padding-left:30px">
+                <span class="input-group-addon"><span class="fa fa-search"></span></span>
+                <input type="text" name="SearchValue1" class="form-control" placeholder="Project Value From..." value="@ViewBag.SearchValue1" />
+
+            </div>
+
+
+            <div class="input-group push-down-4 inner col-md-2" style="float:left;padding-left:30px">
+                <span class="input-group-addon"><span class="fa fa-search"></span></span>
+                <input type="text" name="SearchValue2" class="form-control" placeholder="Project Value To..." value="@ViewBag.SearchValue2" />
+
+            </div>
+
+            <div class="input-group push-down-4 inner col-md-2" style="float:left;padding-left:30px">
+                <input type="checkbox" id="NotApproved" name="NotApproved" value="true" />
+                <label for="NotApproved">Not Approved</label>
+            </div>
+
+
+            <div class="input-group-btn">
+                <button class="btn btn-primary">Search</button>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- END SEARCH -->
+}
+
+
+
+
+
+
+<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectStatusId)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.SalesMan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalesType)
+            </th>
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.Customer.Name)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.CustomersType)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Designer.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectPaymentTermId)
+            </th>
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.SalesDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Value)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Discount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Deduction)
+            </th>
+            <th>
+                @Html.DisplayName("Net Value")
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeliveryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActualDeliveryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountApproval)
+            </th>
+            <th>
+                Created In
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectStatus.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SalesMan.Name)
+                </td>
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.SalesType.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomersType.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Designer.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectPaymentTerm.Name)
+                </td>
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.SalesDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Value)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Discount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Total)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Deduction)
+                </td>
+                <td>
+                    @{
+                        float x = @item.Total - @item.Deduction ?? 0;
+                    }
+
+                    @Html.Raw(x)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveryDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActualDeliveryDate)
+                </td>
+
+                <td>
+
+                    @{
+                        if (item.AccountApproval == true)
+                        {
+                            @Html.Raw("Approved")
+
+                        }
+                        else
+                        {
+                            @Html.Raw("Pendding")
+                        }
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StampDate)
+                </td>
+                <td>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ProjectId })
+                        @Html.Raw("|");
+                    }
+                    @Html.ActionLink("Details", "Details", new { id = item.ProjectId })
+                    @*@Html.ActionLink("Delete", "Delete", new { id = item.ProjectId })*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/js/jquery1.7.1Google.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="~/Scripts/js/selectSearch/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable({
+                "order": [[20, "desc"]]
+            });
+        });
+
+
+
+        $("#CustomerId").select2({
+            placeholder: "Select salesman",
+            allowClear: true
+        });
+
+
+
+
+    </script>
+    @*<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>*@
+}

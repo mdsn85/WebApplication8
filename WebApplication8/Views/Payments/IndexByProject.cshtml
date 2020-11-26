@@ -1,0 +1,193 @@
+﻿@model IEnumerable<WebApplication8.Models.Payment>
+
+@{
+    Layout = null;
+}
+@{
+    ViewBag.Title = "IndexByProject";
+}
+
+<h2>Payments</h2>
+
+<p>
+    @{ if (User.IsInRole("Account") || User.IsInRole("Admin"))
+        {
+            <div style="float: left;padding-left:10%">
+                <br />
+                <button id="calculate" type="button" onclick="openChild1()" class="fa fa-plus-square" style="margin-right:10px">Add Payment</button>
+                <button id="Refresh" type="button" onclick="Refresh()" class="fa fa-plus-square">Refresh</button><br>
+                <br />
+            </div>
+            }
+        }
+</p>
+<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.TypeOfPayment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Receipt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModOfPayment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CollectedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CollectionDate)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeOfPayment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Receipt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModOfPayment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CollectedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CollectionDate)
+            </td>
+
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.PaymentId }) |*@
+                @Html.ActionLink("More", "Details", new { id = item.PaymentId }) 
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.PaymentId })*@
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<script>
+
+        function openChild1() {
+            //alert(@ViewBag.ProjectId);
+
+            var myurl = "/Payments/CreateByProject?ProjectId=" + '@ViewBag.ProjectId' ; //etc
+
+
+            showModalPopUp(myurl)
+           // showModalPopUp('/Payments/CreateByProject/'+@ViewBag.ProjectId);
+
+        }
+
+</script>
+
+<script type="text/javascript">
+
+    var popUpObj;
+
+    function showModalPopUp(url) {
+
+        popUpObj = window.open(url,
+
+            "ModalPopUp",
+
+            "toolbar=no," +
+
+            "scrollbars=no," +
+
+            "location=no," +
+
+            "statusbar=no," +
+
+            "menubar=no," +
+
+            "resizable=0," +
+
+            "width=960," +
+
+            "height=480," +
+
+            "left = 290," +
+
+            "top=200"
+
+        );
+
+        popUpObj.focus();
+
+        LoadModalDiv();
+
+    }
+
+</script>
+
+
+<script>
+    function Refresh() {
+
+        //  alert($("#DeliveryDet").val());
+        var ProjectId = $('#ProjectId').val();
+
+
+
+        $.ajax({
+            type: "GET",
+
+            url: "/Payments/IndexByProject",
+            data: { "ProjectId": ProjectId  /* add other additional parameters */ },
+            success: function (data) {
+                $("#paymentDiv").empty();
+                $("#paymentDiv").html(data);
+
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            },
+            Error: function (data) {
+                $("#paymentDiv").val("data");
+            }
+        });
+
+
+    };
+</script>
+
+
+<script>
+    function RefreshValue( totalPayment) {
+
+        Refresh();
+        //alert(totalPayment);
+
+        Total = $('#Total').html();
+        //Total = Total.trim();
+        //alert(Total);
+
+        Deduction = $('#Deduction').html();
+        //Deduction = Deduction.trim();
+        //alert(Deduction);
+
+        $('#totalPayment').html(totalPayment);
+   
+        var balance = parseFloat(Total) - parseFloat(totalPayment) - parseFloat(Deduction);
+
+        $('#balance').html(balance);
+
+     }
+
+
+</script>
+

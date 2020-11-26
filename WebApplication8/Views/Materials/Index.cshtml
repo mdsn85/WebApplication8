@@ -1,0 +1,207 @@
+﻿@model IEnumerable<WebApplication8.Models.Material>
+@{
+    Layout = "~/Views/Shared/_Layout - Temp - Table.cshtml";
+}
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>@ViewBag.Title - My ASP.NET Application</title>
+@*@Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")*@
+@*<link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">*@
+
+
+
+
+
+<h2>Material List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+
+    <thead>
+
+
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.Dimension)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Unit.Name)
+            </th>
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.qty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Resevedqty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MinReOrder)
+            </th>
+            <th>
+                Available Qty
+                @*@Html.ActionLink("Available Qty", "Index", new { sortOrder = ViewBag.AvalableQty })*@
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvgPrice)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.latestPrice)
+            </th>
+
+
+            <th>
+                @Html.DisplayName("Total")
+            </th>
+            <th>
+                @Html.DisplayName("Total Avg")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.barcode)
+            </th>
+
+            <th>
+                Location
+            </th>
+
+            <th></th>
+
+        </tr>
+    </thead>
+    @{Double Sumtotal = 0;
+        Double SumtotalAvg = 0;}
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dimension)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Unit.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.qty)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Resevedqty)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.MinReOrder)
+                </td>
+
+                <td>
+                    @{float? a = 0;
+                        a = @item.qty - @item.Resevedqty - @item.MinReOrder;}
+
+                    @Html.DisplayFor(modelItem => item.AvalableQty)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvgPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.latestPrice)
+                </td>
+
+
+                <td>
+                    @{
+                        double total = item.qty * item.latestPrice ?? 0;
+                        Sumtotal += total;
+                    }
+                    @total.ToString()
+                </td>
+                <td>
+                    @{
+                        double totalAvg = item.qty * item.AvgPrice ?? 0;
+                        SumtotalAvg += totalAvg;
+                    }
+                    @totalAvg.ToString()
+                </td>
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.barcode)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.WareHouse.Name)
+                </td>
+
+
+
+
+
+
+                <td>
+
+                    @Html.ActionLink("Movment", "MaterialMovment", new { id = item.MaterialId }) |
+
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.MaterialId })
+                        @Html.Raw("|")
+
+                    }
+                    @Html.ActionLink("Details", "Details", new { id = item.MaterialId }) |
+                    @*@Html.ActionLink("Delete", "Delete", new { id = item.MaterialId })*@
+
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+<div class="panel-info alert-success"><b>Store Value (Latest Price): @Sumtotal AED </b>  <br /></div>
+
+<div class="panel-info alert-success" style="padding-top:10px"><b>Store Value (Avrege Price): @SumtotalAvg AED </b> </div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+
+
+
+    <!-- DATA TABLE SCRIPTS -->
+
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+        });
+
+    </script>
+}

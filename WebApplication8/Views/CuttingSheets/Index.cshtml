@@ -1,0 +1,125 @@
+﻿@model IEnumerable<WebApplication8.Models.CuttingSheet>
+@{
+
+    Layout = "~/Views/Shared/_Layout - Temp - Table.cshtml";
+}
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+
+
+@using (Html.BeginForm(null, null, FormMethod.Get, new { id = "SearchForm" }))
+{
+    <!-- START SEARCH -->
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+
+
+            <div class="input-group push-down-4 inner col-md-2" style="float:left">
+                <span class="input-group-addon"><span class="fa fa-search"></span></span>
+                <input type="text" name="SearchCode" class="form-control" placeholder="Cutting Sheet Code..." value="@ViewBag.SearchCode" />
+
+            </div>
+
+
+            <div class="input-group push-down-4 inner col-md-2" style="float:left;margin-left:20px">
+                <span class="input-group-addon"><span class="fa fa-search"></span></span>
+                <input type="text" name="SearchProjectCode" class="form-control" placeholder="Project Code..." value="@ViewBag.SearchProjectCode" />
+
+            </div>
+
+
+
+
+            <div class="input-group-btn" style="float:left;margin-left:20px">
+                <button class="btn btn-primary">Search</button>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- END SEARCH -->
+}
+
+<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.project.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.project.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserCreate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreateDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.project.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.project.Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserCreate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateDate)
+                </td>
+                <td>
+                    @Html.ActionLink("Print", "PrintNewTable", new { id = item.CuttingSheetId }) |
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.CuttingSheetId })
+                        @Html.Raw("|")
+                    }
+                    @Html.ActionLink("Details", "Details", new { id = item.CuttingSheetId })
+
+
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CuttingSheetId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+
+
+
+    <!-- DATA TABLE SCRIPTS -->
+
+    <script>
+        $(document).ready(function () {
+
+            $('#dataTables-example').dataTable();
+        });
+
+    </script>
+}

@@ -1,0 +1,126 @@
+﻿
+<style>
+    .red {
+        color: red;
+    }
+</style>
+<form id="uploader">
+    <div class="files" id="files">
+        <div class="col-sm-6">
+            <input id="fileInput" type="file" class="form-control" multiple>
+
+
+            <table class="table" id="FilesList1" style="visibility:hidden">
+                <tr>
+                    <th>
+                        Attachment(s)
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+            </table>
+            <input type="button" id="btnupload" value="Upload" style="float:right"  class="form-control" />
+
+        </div>
+    </div>
+</form>
+
+
+<script src="~/Scripts/googlejquery.min.js"></script>
+
+
+<script>
+    var formdata = new FormData(); //FormData object
+    $(document).ready(function () {
+
+        $("#fileInput").on("change", function () {
+            var fileInput = document.getElementById('fileInput');
+            //Iterating through each files selected in fileInput
+            for (i = 0; i < fileInput.files.length; i++) {
+
+                var sfilename = fileInput.files[i].name;
+                let srandomid = Math.random().toString(36).substring(7);
+
+                formdata.append(sfilename, fileInput.files[i]);
+
+                var markup = "<tr id='" + srandomid + "'><td>" + sfilename + "</td><td class='deleteRow'><a href='#' onclick='DeleteFile(\"" + srandomid + "\",\"" + sfilename +
+                    "\")'><span id='removeFile' class='glyphicon glyphicon-remove'></span></a></td></tr>"; // Binding the file name
+                $("#FilesList1 tbody").append(markup);
+
+            }
+            chkatchtbl();
+            $('#fileInput').val('');
+        });
+
+        $("#btnupload").click(function () {
+
+            $.ajax({
+                url: '/UploadFile/UploadFiles',
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: formdata,
+                async: false,
+                success: function (result) {
+
+                   // alert(result.length);
+                    //add input of hidden  to hold filename
+                    //alert(result.length);
+                    for (var j = 0; j < result.length; j++) {
+                        //alert(result[j]);
+
+
+                        var input = document.createElement("input");
+                        input.setAttribute("type", "hidden");
+                        input.setAttribute("name", "FileName");
+                        input.setAttribute("id", "FileName" + i);
+                        input.setAttribute("class", "FileName");
+                        input.setAttribute("value", result[j]);
+                        //get display area
+                        var element = document.getElementById("filesList");
+                        element.appendChild(input);
+
+
+                        //show to user
+                        //add name of  uploaded file to list
+                        var para = document.createElement("p");
+                        para.setAttribute("id", "FileNameTxt" + i);
+                        para.setAttribute("name", "FileNameTXT");
+                        para.setAttribute("class", "FileNameTXT");
+                        var node = document.createTextNode(result[j]);
+                        para.appendChild(node);
+                        //get display area
+                        var ppp = "FileNameTxt" + i;
+                        var pp = "FileNameSpan" + i;
+
+                       // element = document.getElementById("info");
+                        //element.appendChild(para);
+
+                        i++;
+                    }
+                    $('span[id^="removeFile"]').remove();
+
+                    var markup = "<span id='removeFile' class='glyphicon glyphicon-cloud'></span>"; // Binding the file name
+                    $(".deleteRow").append(markup);
+
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            });
+        });
+    });
+    function DeleteFile(Fileid, FileName) {
+        formdata.delete(FileName)
+        $("#" + Fileid).remove();
+        chkatchtbl();
+    }
+    function chkatchtbl() {
+        if ($('#FilesList1 tr').length > 1) {
+            $("#FilesList1").css("visibility", "visible");
+        } else {
+            $("#FilesList1").css("visibility", "hidden");
+        }
+    }
+</script> 

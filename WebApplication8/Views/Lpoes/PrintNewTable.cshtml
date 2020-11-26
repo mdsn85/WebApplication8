@@ -1,0 +1,511 @@
+﻿@model WebApplication8.Models.Lpo
+@{
+    Layout = null;
+}
+<head>
+    <title>@Model.Supplier.Name  @Model.code   </title>
+    <link href="~/Content/Print.css" rel="stylesheet" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+    <style>
+
+        .TopTable {
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+            .TopTable td {
+                /* css-3 */
+                white-space: -o-pre-wrap;
+                word-wrap: break-word;
+                white-space: pre-wrap;
+                white-space: -moz-pre-wrap;
+                white-space: -pre-wrap;
+            }
+
+        .ACCEPTANCE {
+            font-family: "Times New Roman", Times, serif;
+            /*font-family: "Calibri (Body) ";*/
+            font-size: 10pt;
+            line-height: 1.4;
+        }
+
+        .Condition {
+            font-family: "Times New Roman", Times, serif;
+            /**/
+            font-size: 9pt;
+            line-height: 1.4;
+        }
+
+
+        TD {
+            font-family: "Times New Roman", Times, serif;
+            /*font-family: "Calibri (Body)";*/
+            font-size: 11pt;
+            padding-left: 6px;
+        }
+
+        #mainTable td {
+            padding: 0px;
+            height: 0px;
+            padding-left: 6px;
+            height: 30px;
+            font-size: 12.5px;
+        }
+
+        #termsTable {
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+        #termsTable td {
+            padding: 0px;
+            height: 0px;
+            padding-left: 6px;
+            height: 15px;
+            font-size: 12.5px;
+        }
+
+        #maintable2 td {
+            padding: 0px;
+            height: 0px;
+            padding-left: 6px;
+        }
+
+        @@media print {
+            html, body, page {
+                width: 230mm;
+                height: 297mm;
+            }
+
+            .CUSTOMER_ACCEPTANCE {
+                page-break-before: always;
+            }
+
+            tbody {
+                margin-left: 50px;
+            }
+
+            .content {
+                margin-left: 0px;
+                margin-right: 0px;
+                margin-top: -65px;
+            }
+
+            td {
+                padding-top: 0px;
+                padding-bottom: 0px;
+            }
+        }
+        /*page {
+                background-image: url('../../img/Mrskips Waste Services.jpg');
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center center;
+                padding-top: 2.8cm;
+                padding-left: 1cm;
+            }*/
+
+        .fo .he {
+            width: 210mm;
+            height: 8mm;
+        }
+
+        /*p {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 14px;
+        }*/
+
+        .footer, .footer-space {
+            height: 17mm;
+        }
+
+        .header, .header-space {
+            height: 46mm;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+        }
+
+
+
+        .borderless td, .borderless th {
+            border: none;
+        }
+
+        .bordered td, .bordered th {
+            border: 1px solid black;
+        }
+
+        @@page {
+            margin-left: 15mm
+        }
+
+        footer {
+            border: none !important;
+        }
+
+        tbody {
+            border: none !important;
+        }
+
+        header {
+            border: none !important;
+        }
+
+        tfoot tr td {
+            border: none !important;
+        }
+
+        thead tr td th {
+            border: none !important;
+        }
+
+        thead th {
+            border: none !important;
+        }
+
+        tbody th {
+            border: none !important;
+        }
+
+        table th {
+            border: none !important;
+        }
+
+
+
+        tbody tr:first-child td {
+            border-top: 0;
+        }
+
+        /* tableq tr:first-child td {
+            border-top: 1;
+        }*/
+
+
+        th, td {
+            padding-left: 30px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+    </style>
+</head>
+
+
+<body style="align-content:center">
+
+    <table cellspacing="0" cellpadding="0" class="table borderless " style="margin-left:10mm">
+        <thead>
+            <tr>
+                <td>
+                    <div class="header-space">&nbsp;</div>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="">
+                        <div style=" width:99% ; text-align:center ; padding-bottom:1Px ">
+                            <b>
+                                <u>
+                                    MR High Moon Furnitures Trading LLC
+                                </u>
+                            </b>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+
+            <tr >
+                
+                <table style="width:90%">
+                    <tr>
+                        <td>
+                            Email :accounts@highmoon.ae<br />
+
+                            Purchase From<br />
+                            @Model.Supplier.Name<br />
+                            @Model.Supplier.Address - UAE<br />
+                            <br />
+
+                            Attention To : @Model.Supplier.Attention.<br />
+                            Tel: @Model.Supplier.tel<br />
+                            Mobile:  @Model.Supplier.mobile<br />
+                            Email : @Model.Supplier.mobile<br />
+
+
+                        </td>
+
+                        <td>
+                            Al Quoz Ind-Area<br />
+                            <br />
+
+                            Attention To : Ms. Asma Mansoor<br />
+                            Tel: 00971 4 3794989<br />
+                            Email:asma@mrskips.net<br />
+
+
+                        </td>
+
+                        <td>
+                            P. O. No# : @Model.code<br />
+
+                            Date : @Model.LpoDate<br />
+                            Your Ref# :  @Model.SupplierRef<br />
+
+                            Job #<br />
+                            Credit Term : @Model.CreditTerm.Name<br />
+
+
+                        </td>
+                    </tr>
+                </table>
+            </tr>
+
+            <tr>
+                <td>
+
+                    <table class="bordered" style="width:90% ;margin-left:28px ;margin-top:50px" id="mainTable">
+                        <tr>
+                            <td>
+                                Sr. #.
+                            </td>
+                            <td>
+                                Code
+                            </td>
+                            <td>
+                                Description
+                            </td>
+                            <td>
+                                Unit
+                            </td>
+                            <td>
+                                Quantity
+                            </td>
+                            <td>
+                                Unit
+                            </td>
+                            <td>
+                                Price
+                            </td>
+
+                            <td>
+                                Amount
+                            </td>
+                        </tr>
+                        @{int i = 0;
+                            float Amount = 0;}
+                        @foreach (var item in Model.LpoDetails)
+                        {
+                            i++;
+                            Amount = item.Qty * item.Price;
+                        <tr>
+                            <td>@i </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Material.code)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Material.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Material.Unit.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Qty)
+                            </td>
+
+                            <td>
+                                EA
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Price)
+                            </td>
+
+                            <td>
+                                @Amount
+                            </td>
+                        </tr>
+                        }
+
+                        <tr>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td>
+                                Sub Total :
+                            </td>
+                            <td>
+                                0.0
+                            </td>
+                        </tr>
+                        <tr>
+
+
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td>
+                                Less Discount:
+                            </td>
+                            <td>
+                                @Model.Discount
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td>
+                                Total:
+                            </td>
+                            <td>
+                                @Model.SubTotal-@Model.Discount
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td>
+                                Vat 5%
+                            </td>
+                            <td>
+                                @Model.Vat
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td>
+                                Grand Total:
+                            </td>
+                            <td>
+                                @Model.GrandTotal
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="  border: 1px solid black;">
+                    <table >
+                        <tr>
+                            <td>
+                                Notes: ___________________________________________
+                                <br />
+                                __________________________________________________
+                                <br />
+                                <br />
+
+                                Location: ________________________________________
+                                <br />
+                                __________________________________________________
+                                <br />
+                            </td>
+                        </tr>
+                    </table>
+
+                </td>
+            </tr>
+
+            <tr style="padding:20px">
+                <td style="padding:20px">
+                    <table id="termsTable">
+                        <tr>
+                            <td>
+                                Terms & Conditions
+                            </td>
+                        </tr>
+
+                        @foreach (var item in (List<WebApplication8.Models.LpoTerms>)ViewBag.LpoTerms)
+                        {
+                            <tr>
+                                <td>
+                                    <li>
+                                        @item.Text
+                                    </li>
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <table style="margin-top: 60px"
+                           <tr>
+                            <td>MR High Moon Furnitures Trading LLC</td>
+                            <td>
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                            </td>
+                            <td>
+                                Auth. Signatory<br />
+                                (Buyer)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>(ACCEPTANCE OF PO)</td>
+                            <td>
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                            </td>
+                            <td>
+                                Auth. Signatory<br />
+                                (Vendor/Seller/Service Provider)
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+           
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>
+                    <div class="footer-space">&nbsp;</div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <div class="header"></div>
+    <div class="footer"></div>
+</body>

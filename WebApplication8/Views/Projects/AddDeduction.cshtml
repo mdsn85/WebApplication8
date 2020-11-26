@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "AddDeduction";
+}
+
+<h2>Add Deduction</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    <input type="hidden" value="@ViewBag.ProjectId" name="ProjectId" />
+
+    <div class="form-group">
+        @Html.Label("Amount", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+
+            <input type="text" name="deduction" class="control-label " />
+
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.Label("Reason", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <textarea name="reason" class="control-label " rows="3"></textarea>
+
+
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+
+    <script>
+        $(document).ready(function () {
+
+
+
+            var close = "@ViewBag.close";
+            var a = "@ViewBag.a";
+            var r = "@ViewBag.r";
+
+            if (close == 1) {
+                window.opener.setValue(a,r);
+                window.close();
+            }
+        })
+    </script>
+    }
+

@@ -1,0 +1,138 @@
+﻿@model WebApplication8.Models.CuttingSheet
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details Cutting Sheet</h2>
+
+<div>
+    <h4></h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.code)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.project.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.project.Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.project.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.project.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserCreate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserCreate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+        <dt>
+            @Html.DisplayName("Stock In (Puchase Invoice)")
+        </dt>
+
+        <dd>
+            @foreach (var si in Model.StockIssues)
+            {
+                @Html.ActionLink(si.Code, "Details", "StockIssues", new { id = si.StockIssueId }, new { target = "_blank" });
+
+                @Html.Raw("<br/>");
+            }
+        </dd>
+
+
+    </dl>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            Material Code
+        </th>
+        <th>
+            Material Name
+        </th>
+        <th>
+            Dimension
+        </th>
+        <th>
+            Unit
+        </th>
+        <th>
+           Request Qty
+        </th>
+
+        <th>
+           Issue Qty
+        </th>
+        <th>
+            Balance
+        </th>
+        <th>
+            Status
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.CuttingSheetDetails)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.material.code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.material.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.material.Dimension)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.material.Unit.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.qty)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IssueQty)
+        </td>
+        <td>
+            @{double x = item.qty - item.IssueQty ?? 0;}
+            @x
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.status)
+        </td>
+
+    </tr>
+    }
+
+</table>
+
+
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CuttingSheetId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

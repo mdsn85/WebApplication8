@@ -1,0 +1,115 @@
+﻿@model IEnumerable<WebApplication8.Models.ListUsersViewModel>
+
+@{
+    ViewBag.Title = "ListOfUsers";
+}
+<style>
+    .inner {
+        vertical-align: middle;
+        margin-right: 20px;
+        padding: 3px 5px;
+    }
+</style>
+
+<h2>List Of Users</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Register")
+</p>
+
+@using (Html.BeginForm())
+{
+    <!-- START SEARCH -->
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row stacked  ">
+                <div style="display: inline-block;vertical-align: middle;">
+                    <div class="input-group push-down-3 inner col-md-3 " style="float:left">
+                        <span class="input-group-addon"><span class="fa fa-search"></span></span>
+
+                        <input type="text" name="searchStringName" class="form-control" placeholder="User Name..." />
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary">Search</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END SEARCH -->
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserRoles)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserRoles)
+
+
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+
+
+
+        <td>
+            @Html.ActionLink("Edit", "EditRegister", new { id = item.UserName })|
+            @Html.ActionLink("Reset Password", "ResetPasswordCust", new { id = item.UserName })
+            @*@Html.ActionLink("Edit", "Edit1", new { id = item.UserName }) |*@
+            @*@Html.ActionLink("Details","Register", "DetailsRegister", new { id = item.UserName }) |*@
+
+        </td>
+    </tr>
+    }
+</table>
+
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jquery")
+
+
+    <script async src="~/js/jsfiddle.js"></script>
+    <script src="~/js/bootstrap-select.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+
+
+
+    <script>
+        $(document).ready(function () {
+            $('.selectpicker').selectpicker({
+                liveSearch: true,
+                showSubtext: true
+            });
+
+            $('#JSFEMB_17958').hide();
+            //    $('#JSFEMB_17958').toggle();
+        });
+        $('.selectpicker').attr('data-live-search', true);
+    </script>
+
+}
+

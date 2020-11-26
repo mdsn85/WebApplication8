@@ -1,0 +1,200 @@
+﻿@model WebApplication8.Models.Payment
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create Payment</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h5 style=" color:red">   @Html.Raw(@ViewBag.error)</h5>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Receipt, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Receipt, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Receipt, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ModOfPayment, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EnumDropDownListFor(model => model.ModOfPayment, htmlAttributes: new { @class = "form-control", @id = "ModOfPayment" })
+            @Html.ValidationMessageFor(model => model.ModOfPayment, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CollectedBy, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CollectedBy, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CollectedBy, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CollectionDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+
+            <input type="Text" id="CollectionDate" name="CollectionDate" value="@ViewBag.CollectionDate" readonly />
+            <img src="~/Scripts/images2/cal.gif" onclick="javascript:NewCssCal ('CollectionDate','yyyyMMdd')" style="cursor:pointer" />
+
+            @Html.ValidationMessageFor(model => model.CollectionDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group" id="ChqNoDiv">
+        @Html.LabelFor(model => model.ChqNo, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ChqNo, new { htmlAttributes = new { @class = "form-control", id = "ChqNo" } })
+            @Html.ValidationMessageFor(model => model.ChqNo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" id="ChqDateDiv">
+        @Html.LabelFor(model => model.ChqDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ChqDate, new { htmlAttributes = new { @class = "form-control", @id = "ChqDate" } })
+            @Html.ValidationMessageFor(model => model.ChqDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" id="TransByDiv">
+        @Html.LabelFor(model => model.TransBy, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TransBy, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TransBy, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" id="DateOfCreditDiv">
+        @Html.LabelFor(model => model.DateOfCredit, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DateOfCredit, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DateOfCredit, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" id="ToBankHMDiv">
+        @Html.LabelFor(model => model.ToBankHM, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ToBankHM, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ToBankHM, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" id="ACHMDiv">
+        @Html.LabelFor(model => model.ACHM, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ACHM, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ACHM, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    @*<input type="text" value="@ViewBag.Code" class="form-control" readonly />*@
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProjectId, "ProjectId", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+
+            <input type="text" value="@ViewBag.Code" class="form-control" readonly />
+
+            <input type="text" value="@ViewBag.ProjectId" class="form-control" readonly />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script>
+        $(document).ready(function () {
+            $("#ChqNoDiv").hide();
+            $("#ChqDateDiv").hide();
+
+            $("#ToBankHMDiv").hide();
+            $("#ACHMDiv").hide();
+            $("#DateOfCreditDiv").hide();
+
+            $("#TransByDiv").hide();
+        });
+
+        $("#ModOfPayment").change(function () {
+            var i = this.value
+
+            if (i == 0) {
+                $("#ChqNoDiv").hide();
+                $("#ChqDateDiv").hide();
+
+
+                $("#ToBankHMDiv").hide();
+                $("#ACHMDiv").hide();
+
+                $("#DateOfCreditDiv").hide();
+                
+                $("#TransByDiv").hide();
+
+                
+
+            }
+
+            if (i == 1) {
+                $("#ChqNoDiv").show();
+                $("#ChqDateDiv").show();
+
+                $("#ToBankHMDiv").hide();
+                $("#ACHMDiv").hide();
+
+                $("#DateOfCreditDiv").hide();
+
+                $("#TransByDiv").hide();
+            }
+
+            if (i == 2) {
+                $("#ChqNoDiv").hide();
+                $("#ChqDateDiv").hide();
+
+                $("#ToBankHMDiv").show();
+                $("#ACHMDiv").show();
+
+                $("#DateOfCreditDiv").show();
+
+                $("#TransByDiv").show();
+                
+            }
+
+
+        });
+    </script>
+    }
+
+    

@@ -1,0 +1,428 @@
+﻿@model WebApplication8.Models.Project
+
+@{
+    ViewBag.Title = "Create";
+}
+<link href="~/Scripts/css/selectsearch/select2.min.css" rel="stylesheet" />
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new
+{
+    id = "myForm",
+    enctype = "multipart/form-data"@*, onsubmit = "return validateForm()"*@ }))
+
+
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h5 style="color:red">@ViewBag.Error </h5>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Code, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.code, @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+
+    <div class="form-group">
+        <label for="SalesDate" class="col-md-2 control-label">Sales Date</label>
+        <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="SalesDate" data-link-format="yyyy-mm-dd">
+            <input class="form-control" size="16" type="text" value="@ViewBag.SalesDate" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+        <input type="hidden" id="SalesDate" name="SalesDate" value="@ViewBag.SalesDate" /><br />
+
+        @Html.ValidationMessageFor(model => model.SalesDate, "", new { @class = "text-danger" })
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SalesTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("SalesTypeId", null, "Please Select", htmlAttributes: new { @class = "form-control", @id = "SalesTypeId" })
+            @Html.ValidationMessageFor(model => model.SalesTypeId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.SalesManId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("SalesManId", null, "Please Select", htmlAttributes: new { @class = "form-control", @id = "SalesManId" })
+            @Html.ValidationMessageFor(model => model.SalesManId, "", new { @class = "text-danger" })
+        </div>
+
+
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CustomersTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("CustomersTypeId", null, "Please Select", htmlAttributes: new { @class = "form-control", @id = "CustomersTypeId" })
+            @Html.ValidationMessageFor(model => model.CustomersTypeId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.Label("Customer Name", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("CustomerId", null, "Please Select", htmlAttributes: new { @class = "form-control", @id = "CustomerId" })
+            @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DesignerId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("DesignerId", null, "Please Select", htmlAttributes: new { @class = "form-control", @id = "DesignerId" })
+            @Html.ValidationMessageFor(model => model.DesignerId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control", @id = "Value" } })
+            @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Discount, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control", @id = "Discount", @Value = "0" } })
+            @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Vat, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Vat, new { htmlAttributes = new { @class = "form-control", @id = "Vat" } })
+            @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control", @id = "Total" } })
+            @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.SalePrice, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SalePrice, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SalePrice, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProjectPaymentTermId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("ProjectPaymentTermId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ProjectPaymentTermId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.QuotationRef, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.QuotationRef, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.QuotationRef, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.QuotationAgreementApprovedby, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.QuotationAgreementApprovedby, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.QuotationAgreementApprovedby, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="form-group">
+        <label for="SalesDate" class="col-md-2 control-label">Delivery Date</label>
+        <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="DeliveryDate" data-link-format="yyyy-mm-dd">
+            <input class="form-control" size="16" type="text" value="@ViewBag.DeliveryDate" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+        <input type="hidden" id="DeliveryDate" name="DeliveryDate" value="@ViewBag.DeliveryDate" /><br />
+
+        @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
+    </div>
+
+
+    <div class="form-group">
+        <label for="SalesDate" class="col-md-2 control-label">Delivery Date</label>
+        <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="ActualDeliveryDate" data-link-format="yyyy-mm-dd">
+            <input class="form-control" size="16" type="text" value="@ViewBag.ActualDeliveryDate" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+        <input type="hidden" id="ActualDeliveryDate" name="ActualDeliveryDate" value="@ViewBag.ActualDeliveryDate" /><br />
+
+        @Html.ValidationMessageFor(model => model.ActualDeliveryDate, "", new { @class = "text-danger" })
+    </div>
+
+
+
+
+
+    <div class="form-group">
+
+        @Html.Label(" Upload Documents", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+
+            <p style="color:crimson">@ViewBag.message</p>
+
+            @{ Html.RenderPartial("~/Views/UploadFile/UploadFileMulti.cshtml"); }
+            <div style="padding: 10px 2px">
+                @foreach (var e in ViewBag.ext)
+                {
+                    @Html.Raw(e + ", ");
+                }
+            </div>
+            @*display name of uploaded files*@
+
+
+            @*hidden input (name is FileName ) conatin name of uploaded files to submit*@
+            <div class="filesList" id="filesList"> </div>
+        </div>
+    </div>
+    <br />
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.AccountApproval, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.AccountApproval)
+                    @Html.ValidationMessageFor(model => model.AccountApproval, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>*@
+
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Create" class="btn btn-primary" id="submit_btn" />
+    </div>
+
+    @*<div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>*@
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <!--Select Search-->
+
+    <script src="~/Scripts/js/jquery1.7.1Google.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="~/Scripts/js/selectSearch/select2.min.js"></script>
+
+    <!--Select Search-->
+
+
+
+    <script>
+        $("#SalesManId").select2({
+            placeholder: "Select salesman",
+            allowClear: true
+        });
+
+
+        $("#CustomerId").select2({
+            placeholder: "Select Customer",
+            allowClear: true
+        });
+
+        $("#DesignerId").select2({
+            placeholder: "Select Designer",
+            allowClear: true
+        });
+
+        $(document).ready(function () {
+        ///alert(" @ViewBag.code");
+
+
+        });
+
+
+
+
+        $("#Discount").change(function () {
+
+            var subTotal = $("#Value").val();
+            var Discount = $("#Discount").val();
+            var t = subTotal - Discount
+            //$("#Total").val(t);
+
+
+            var v = t * 0.05
+            $("#Vat").val(v);
+
+
+
+
+
+            var g = 0;
+            g = t + v;
+
+            $("#Total").val(g);
+
+        });
+
+        $("#Value").change(function () {
+
+            var subTotal = $("#Value").val();
+            var v = subTotal * 0.05
+            $("#Vat").val(v);
+
+
+            var Discount = $("#Discount").val();
+
+            var t = subTotal - Discount
+
+
+            var g = 0;
+            g = t + v;
+
+            $("#Total").val(g);
+
+
+
+        });
+
+
+
+
+    </script>
+
+    <script>
+        $("body").on("click", "#submit_btn", function () {
+            if (validateForm()) {
+                document.getElementById("myForm").submit();
+            }
+
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            // alert('ss');
+
+            $("form").submit(function (e) {
+                e.preventDefault(e);
+            });
+        })
+    </script>
+
+    <script type="text/javascript">
+        function validateForm() {
+
+
+
+            //var ContractDate = $("#ContractDate").val();
+            //var Valid1 = $("#Valid1").val();
+            //var KYCId = $("#KYCId").val();
+            //var CustomerId = $("#CustomerId").val();
+            //var CustomerFileTypeId = $('#CustomerFileTypeId :selected').text();
+            //var TallyCode = $("#TallyCode").val();
+            //var isTallyCodeUsed = 0;
+
+            //var ContractDate = $("#ContractDate").val();
+            //var Valid1 = $("#Valid1").val();
+            //if (ContractDate == Valid1) { alert(" Please choose Validate Date"); return false; }
+            //$.ajax({
+            //    type: "GET",
+            //    //url: "http://server2018/CRM/LocationMasters/getArea",
+            //    url: "/Contracts/isTallyCodeUsed",
+            //    method: "getArea",
+            //    data: { "TallyCode": TallyCode /* add other additional parameters */ },
+            //    success: function (data) {
+
+            //        isTallyCodeUsed = data;
+
+            //    }
+            //});
+            //console.log("p:" + CustomerFileTypeId);
+
+            //if (isTallyCodeUsed) { alert(" Tally Code is linked to an other Contract"); return false; }
+            //if (CustomerId == "") { alert(" Please choose customer"); return false; }
+            ////if (KYCId == "") { alert(" Please choose customer"); return false; }
+            ////if (CustomerFileTypeId == "Please Select Type of file") {alert(" Please choose file type"); return false; }
+            //if (ContractDate == "") { alert(" Please choose Contract Date"); return false; }
+            //if (Valid1 == "") { alert(" Please choose Valid date"); return false; }
+
+            return true
+        }
+    </script>
+
+    @*<script>
+        $('.monthpicker').datepicker({
+            "format": "yyyy-mm",
+            'startView': 1
+        }).on('changeMonth', function (e) {
+            var dp = $(e.currentTarget).data('datepicker');
+            dp.date = e.date;
+            dp.setValue();
+            dp.hide();
+        });
+
+        $('.yearpicker').datepicker({
+            "format": "yyyy",
+            'startView': 2
+        }).on('changeYear', function (e) {
+            var dp = $(e.currentTarget).data('datepicker');
+            dp.date = e.date;
+            dp.setValue();
+            dp.hide();
+        });
+    </script>*@
+
+}
+

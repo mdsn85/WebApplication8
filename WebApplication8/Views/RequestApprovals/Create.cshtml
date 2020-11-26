@@ -1,0 +1,859 @@
+﻿@model WebApplication8.Models.RequestApproval
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<!--Select Search-->
+<link href="~/Scripts/css/selectsearch/select2.min.css" rel="stylesheet" />
+<link href="~/Scripts/css/selectsearch/select2.min.css" rel="stylesheet" />
+
+<style>
+    .bootstrap-select .dropdown-menu > li > a small.muted {
+        display: none;
+    }
+
+    .bootstrap-select .dropdown-toggle .filter-option {
+        position: relative;
+        padding-left: 38px;
+    }
+
+        .bootstrap-select .dropdown-toggle .filter-option:before {
+            /*font-size: 14px;*/
+            /*font-weight: 700;*/
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+</style>
+@*******************@
+<h2>Create</h2>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "Issueform" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div style="float:left" class="col-md-2"><h4>Request Approval for :</h4></div>
+            <div class="col-md-10">@Html.DropDownList("ApprovalTypeId", null, "-- Please select --", htmlAttributes: new { @class = "form-control " })</div>
+        </div>
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RequestDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="Text" id="RequestDate" name="RequestDate" value="@ViewBag.RequestDate" readonly />
+                @*<img src="~/Scripts/images2/cal.gif" onclick="javascript:NewCssCal ('RequestDate','yyyyMMdd')" style="cursor:pointer" />*@
+                @Html.ValidationMessageFor(model => model.RequestDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.RequestApprovalTypeId, "RequestApprovalTypeId", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("RequestApprovalTypeId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RequestApprovalTypeId, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        @*<div class="form-group" id="QuotationId">
+                @Html.LabelFor(model => model.QuotationId, "Quotation Code", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("QuotationId", null, "--Please select--", htmlAttributes: new { @class = "form-control selectCustomerGroup selectpicker" })
+                    @Html.ValidationMessageFor(model => model.QuotationId, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group" id="ContractId">
+            @Html.LabelFor(model => model.CuttingSheet, "Cutting Sheet Code", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CuttingSheetId", null, "--Please select--", htmlAttributes: new { @class = "form-control  ", @id = "CuttingSheetId" })
+                @Html.ValidationMessageFor(model => model.CuttingSheetId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.details, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <textarea name="details" class="form-control" cols="50" rows="4"></textarea>
+                @*@Html.EditorFor(model => model.details, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.ValidationMessageFor(model => model.details, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.SalesManager, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.SalesManager)
+                        @Html.ValidationMessageFor(model => model.SalesManager, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CoordinatorFull, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.CoordinatorFull)
+                        @Html.ValidationMessageFor(model => model.CoordinatorFull, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CoordinatorPartial, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.CoordinatorPartial)
+                        @Html.ValidationMessageFor(model => model.CoordinatorPartial, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CEO, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.CEO)
+                        @Html.ValidationMessageFor(model => model.CEO, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>*@
+
+
+
+        <div class="form-group">
+            <div class="card-content">
+                <b>
+                    <p class="control-label col-md-2">
+
+
+                    </p>
+                </b>
+                <div class="table-responsive">
+                    <table class="table-bordered table-responsive table dataTable text-nowrap" style="" id="tbDetails">
+                        <thead>
+                            <tr>
+
+
+                                <td>
+                                    Sr #
+                                </td>
+                                <td hidden>
+                                    id
+                                </td>
+                                <td>
+                                    Material
+                                </td>
+                                <td>
+                                    Dimension
+                                </td>
+                                <td>
+                                    Unit
+                                </td>
+                                <td>
+                                    Request Qty
+                                </td>
+                                <td>
+                                    Issued Qty
+
+
+                                </td>
+                                <td>
+                                    Balance Qty
+                                </td>
+                                <td>
+                                    Price
+                                </td>
+
+                                <td id="QtyApproved">
+                                    Qty For Approved
+                                </td>
+                                <td>Remark</td>
+                                <td>Approval</td>
+
+
+                            </tr>
+                        </thead>
+                        <tbody id="p_scents"></tbody>
+
+                        <div style="float: left;padding-left:10%">
+                            <span onclick="openChild()" class="">
+                                @*<i class="fa fa-plus-square" aria-hidden="true">   Add Material</i>*@
+                            </span>
+                            <input id="CustomerId" name="CustomerId" type="hidden" />
+                            <div id="Customer"></div>
+
+                        </div>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" style="margin-top : 5px">
+            <div class="col-md-offset-4 col-md-2">
+
+                <input type="button" id="btnSave" value="  Save  " class="btn btn-primary adminworkSaveBtn " />
+
+
+
+            </div>
+        </div>
+
+
+
+
+        @*<div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>*@
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+
+    <script>
+        $(document).ready(function () {
+
+
+            var typeId = $('#RequestApprovalTypeId').val();
+
+            if (typeId == 1) {
+                $('#ContractId').show();
+                $('#QuotationId').hide();
+            } else if (typeId == 2) {
+                $('#ContractId').hide();
+                $('#QuotationId').show();
+            }
+            else if (typeId == 3) {
+                $('#ContractId').show();
+                $('#QuotationId').hide();
+            }
+            $('#JSFEMB_17958').hide();
+            //    $('#JSFEMB_17958').toggle();
+        });
+
+    </script>
+
+    <script>
+        $('#RequestApprovalTypeId').change(function () {
+            var typeId = $('#RequestApprovalTypeId').val();
+            if (typeId == 1) {
+                $('#ContractId').show();
+                $('#QuotationId').hide();
+            } else if (typeId == 2) {
+                $('#ContractId').hide();
+                $('#QuotationId').show();
+            } else if (typeId == 3) {
+                $('#ContractId').show();
+                $('#QuotationId').hide();
+            }
+        });
+
+    </script>
+
+
+
+
+
+    <!--Select Search-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="~/Scripts/js/selectSearch/select2.min.js"></script>
+
+    <!--Select Search-->
+
+    <script>
+        $("#CuttingSheetId").select2({
+            placeholder: "Select Cutting Sheet Code",
+            allowClear: true
+        });
+
+        $("#LpoId").select2({
+            placeholder: "Select Lpo",
+            allowClear: true
+        });
+
+        $("#CuttingSheetId").select2({
+            placeholder: "Select Cutting Sheet",
+            allowClear: true
+        });
+
+
+        $("#StockIssueTypeId").change(function () {
+            var s = $("#StockIssueTypeId").val();
+
+
+
+            if (s == "1") {
+                $("#LpoIdDiv").show();
+                $("#CuttingSheetIdDiv").hide("slow");
+
+
+                document.getElementById("qtyH").innerHTML = "Recived Qty";
+
+
+                $("#QtyApproved").hide();
+                $("#Approvaltd").hide();
+
+
+
+            }
+
+            if (s == "2") {
+                $("#LpoIdDiv").hide("slow");
+                $("#CuttingSheetIdDiv").show();
+                document.getElementById("qtyH").innerHTML = "Issue Qty";
+            }
+            //alert(s);
+        })
+
+        $("#LpoId").change(function () {
+
+            lpoid = $("#LpoId").val();
+            $.ajax({
+                type: "GET",
+                traditional: true,
+                async: false,
+                cache: false,
+                url: '/Lpoes/LpoDetails',
+                context: JSON,
+                data: { "Lpoid": lpoid /* add other additional parameters */ },
+
+                //data: '{ enquery:' + JSON.stringify(Enquery) + '}',
+                success: function (result) {
+                    result.forEach(element => setValue("lpo", element.MaterialId, element.Name, element.Unit, element.Dimension, element.Qty, 0, element.Price, 0, 0, element.Remark));
+
+                },
+                error: function (xhr) {
+                    //debugger;
+                    console.log(xhr.responseText);
+                    alert("Error has occurred..");
+                }
+            });
+
+        });
+
+        $("#CuttingSheetId").change(function () {
+
+            CuttingSheetId = $("#CuttingSheetId").val();
+            $.ajax({
+                type: "GET",
+                traditional: true,
+                async: false,
+                cache: false,
+                url: '/CuttingSheets/CuttingSheetsDetails',
+                context: JSON,
+                data: { "CuttingSheetId": CuttingSheetId /* add other additional parameters */ },
+
+                //data: '{ enquery:' + JSON.stringify(Enquery) + '}',
+                success: function (result) {
+                    result.forEach(element => setValue("cut", element.MaterialId, element.Name, element.Unit, element.Dimension, element.Qty, element.IssueQty, element.Price,
+                        element.qtyApproved, element.Approval, element.Remark, element.CuttingSheetDetailId));
+
+                },
+                error: function (xhr) {
+                    //debugger;
+                    console.log(xhr.responseText);
+                    alert("Error has occurred..");
+                }
+            });
+        });
+
+
+
+    </script>
+
+
+    <script>
+
+
+                $(document).ready(function () {
+                    $("form").submit(function (e) {
+
+                        e.preventDefault(e);
+                    });
+
+                    var x = "@ViewBag.code"
+                    $("#code").val(x);
+                });
+
+                function validateForm() {
+                }
+
+
+                function openChild() {
+                    showModalPopUp('/Materials/IndexShort');
+
+                }
+
+    </script>
+
+
+
+
+    <script>
+        var scntDiv = $('#p_scents');
+        var nextRaw = 0;
+
+        function remove(rowId) {
+            //Remove the TR element using JQuery's remove method.
+            $('#' + rowId).fadeOut('slow', function () {
+                $('#' + rowId).remove();
+
+            });
+            nextRaw = nextRaw - 1;
+
+            Sr = Sr - 1;
+        }
+    </script>
+
+
+    <script>
+        $("body").on("click", "#btnSave", function () {
+
+            if (validateForm() != false) {
+                //Loop through the Table rows and build a JSON array.
+                //  var LpoHeader = new Array();
+                var EnqueryId = 0;
+                var Enquery = $('#Issueform').serialize();
+                console.log(Enquery);
+                $.ajax({
+                    type: "POST",
+                    url: "/RequestApprovals/CreateJson",
+                    data: '{ enquery:' + JSON.stringify(Enquery) + '}',
+                    async: false,
+                    success: function (r) {
+
+                        if (Number.isInteger(r)) {
+                            EnqueryId = r;
+                        }
+                        else {
+
+                            if (confirm(r + ' do you whant to retry?')) {
+
+                            } else {
+                                window.location.href = "@Url.Action("Create", "StockIssues")";
+                            }
+                        }
+                    }
+                });
+
+
+                if (Number.isInteger(EnqueryId) && EnqueryId > 0) {
+                    var Details = new Array();
+                    var i = 0;
+
+                    var testnum = 0;
+                    $("#tbDetails TBODY TR").each(function () {
+
+                        var row = $(this);
+                        var Detail = {};
+                        var Confirmed = 0;
+                        Detail.StockIssueId = EnqueryId;
+                        //alert(Detail.LpoId)
+                        i++;
+                        $(this).closest('tr').find('input').each(function () {
+
+                            
+                            if ($(this).attr("name") === "CuttingSheetDetailId") {
+                                Detail.CuttingSheetDetailId = $(this).prop("value");
+
+                            }
+
+                            if ($(this).attr("name") === "id") {
+                                Detail.MaterialId = $(this).prop("value");
+
+                            }
+                            if ($(this).attr("name") === "Qty") {
+                                Detail.Qty = $(this).prop("value");
+
+                                Detail.InQty = $(this).prop("value");
+                                Detail.OutQty = $(this).prop("value");
+
+                            }
+                            if ($(this).attr("name") === "BalanceQty") {
+                                Detail.BalanceQty = $(this).prop("value");
+
+
+                            }
+
+
+
+                            if ($(this).attr("name") === "Price") {
+                                Detail.Price = $(this).prop("value");
+
+                            }
+
+                            if ($(this).attr("name") === "QtyApproved") {
+                                Detail.QtyApproved = $(this).prop("value");
+
+                            }
+
+                            if ($(this).attr("name") === "Remark") {
+                                Detail.Remark = $(this).prop("value");
+
+                            }
+
+
+
+                            if ($(this).attr("name") === "BalanceQty") {
+                                Detail.BalanceQty = $(this).prop("value");
+
+                            }
+
+                            if ($(this).attr("name") === "Approval") {
+                                Detail.Approval = $(this).prop("value");
+
+                            }
+                            
+
+                        });
+
+                        //$(this).closest('tr').find('select').each(function () {
+                        //    if ($(this).attr("name") === "ProductId") {
+                        //        Detail.MaterialId = $(this).val();
+                        //        if (Detail.MaterialId == null) { testnum = 1; }
+                        //    }
+
+                        //});
+                        Details.push(Detail);
+                     });
+
+
+                    if (testnum == 0) {
+                        //Send the JSON array to Controller using AJAX.
+                        $.ajax({
+                            type: "POST",
+                            url: "/RequestApprovals/CreateDetailsJson",
+                            async: false,
+                            data: JSON.stringify({ Details: Details, id :EnqueryId}),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (r) {
+
+                                if (r == "Cutting Sheet Saved Successfully") {
+                                    window.location.href = "@Url.Action("Index", "RequestApprovals")";
+                                }
+                                else {
+                                    if (confirm(r + ' do you whant to retry?')) {
+                                        // Save it!
+                                    } else {
+                                        window.location.href = "@Url.Action("Index", "RequestApprovals")";
+                                    }
+                                }
+                                // confirm("Press a button!");
+                                //  alert(r + " record(s) inserted.");
+                            }
+                        });
+                    } else { alert("number of skips or requested service not filled  "); }
+
+                }
+                else {
+                    alert("Please, Enter data before save ");
+                }
+            }
+        });
+    </script>
+
+
+    <script type="text/javascript">
+
+        var popUpObj;
+
+        function showModalPopUp(url) {
+
+            popUpObj = window.open(url,
+
+                "ModalPopUp",
+
+                "toolbar=no," +
+
+                "scrollbars=no," +
+
+                "location=no," +
+
+                "statusbar=no," +
+
+                "menubar=no," +
+
+                "resizable=0," +
+
+                "width=800," +
+
+                "height=460," +
+
+                "left = 490," +
+
+                "top=300"
+
+            );
+
+            popUpObj.focus();
+
+            LoadModalDiv();
+
+        }
+
+    </script>
+
+    <script type="text/javascript">
+
+        function LoadModalDiv() {
+
+            var bcgDiv = document.getElementById("divBackground");
+
+            bcgDiv.style.display = "block";
+
+            if (bcgDiv != null) {
+
+                if (document.body.clientHeight > document.body.scrollHeight) {
+
+                    bcgDiv.style.height = document.body.clientHeight + "px";
+
+                }
+
+                else {
+
+                    bcgDiv.style.height = document.body.scrollHeight + "px";
+
+                }
+
+                bcgDiv.style.width = "100%";
+
+            }
+
+        }
+
+    </script>
+    <script type="text/javascript">
+
+        function HideModalDiv() {
+
+            var bcgDiv = document.getElementById("divBackground");
+
+            bcgDiv.style.display = "none";
+
+        }
+
+    </script>
+
+
+    <script>
+        var Sr = 0;
+        function setValue(type, myVal, Name, Unit, Dimension, Qty, IssueQty, Price, QtyApproved, Approval, Remark, CuttingSheetDetailId) {
+
+            //alert(Qty + "    " + IssueQty )
+            var Balance = Qty - IssueQty;
+            var current = $(".ClientId").length;
+
+            var next = parseInt(current) + 1;
+            var a = "DDlforLocationsClient" + next;
+            var b = "span" + next;
+
+            Sr = Sr + 1;
+
+
+            //= $('#tbDetails tr').length;
+            nextRaw = nextRaw + 1;
+            var tt = '<tr id="item_' + nextRaw + '">';
+
+
+            tt = tt + '<td class="Name" > ' +
+                '<div class="" > ' +
+                Sr +
+                '</div > ' +
+                '</td > ';
+
+
+            
+            tt = tt + '<td class="CuttingSheetDetailId" hidden> ' +
+                '<div class="" > ' +
+                '<input type="text" name="CuttingSheetDetailId" id="CuttingSheetDetailId' + nextRaw + '"  class="form-control" value="' + CuttingSheetDetailId + '"/> ' +
+                '</div > ' +
+                '</td > ';
+
+
+            tt = tt + '<td class="Name" hidden> ' +
+                '<div class="" > ' +
+                '<input type="text" name="id" id="id' + nextRaw + '"  class="form-control" value="' + myVal + '"/> ' +
+                '</div > ' +
+                '</td > ';
+
+            tt = tt + '<td class="Name" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="Name" id="Name' + nextRaw + '"  class="form-control" value="' + Name + '"/> ' +
+                '</div > ' +
+                '</td > ';
+
+            tt = tt + '<td class="Dimention" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="Dimension" id="Dimension' + nextRaw + '"  class="form-control" value="' + Dimension + '"/> ' +
+                '</div > ' +
+                '</td > ';
+
+
+
+            tt = tt + '<td class="Name" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="Unit" id="Unit' + nextRaw + '"  class="form-control" value="' + Unit + '"/> ' +
+                '</div > ' +
+                '</td > ';
+
+            tt = tt + '<td class="QtyOrginal" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="QtyOrginal" id="QtyOrginal' + nextRaw + '"  class="form-control" value="' + Qty + '" readonly/> ' +
+                '</div > ' +
+                '</td > ';
+
+            tt = tt + '<td class="Qty" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="Qty" id="Qty' + nextRaw + '"  class="form-control" value="' + IssueQty + '" readonly /> ' +
+                '</div > ' +
+                '</td > ';
+
+            tt = tt + '<td class="BalanceQty" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="BalanceQty" id="BalanceQty' + nextRaw + '"  class="form-control" value="' + Balance + '" readonly/> ' +
+                '</div > ' +
+                '</td > ';
+
+            if (type == 'cut') {
+                tt = tt + '<td class="Price" > ' +
+                    '<div class="" > ' +
+                    '<input type="text" name="Price" id="Price' + nextRaw + '"  class="form-control" value="' + Price + '" readonly/> ' +
+                    '</div > ' +
+                    '</td > ';
+            } else
+                if (type == 'lpo') {
+                    tt = tt + '<td class="Price" > ' +
+                        '<div class="" > ' +
+                        '<input type="text" name="Price" id="Price' + nextRaw + '"  class="form-control" value="' + Price + '" /> ' +
+                        '</div > ' +
+                        '</td > ';
+                }
+
+            tt = tt + '<td class="BalanceQty1" Hidden > ' +
+                '<div class="" > ' +
+                '<input type="text" name="BalanceQty1" id="BalanceQty1' + nextRaw + '"  class="form-control" value="' + Balance + '" readonly/> ' +
+                '</div > ' +
+
+                '</td > ';
+
+
+
+            if (type == 'cut') {
+
+
+                tt = tt + '<td class="QtyApproved"  > ' +
+                    '<div class="" > ' +
+                    '<input type="text" name="QtyApproved" id="QtyApproved' + nextRaw + '"  class="form-control" value="' + QtyApproved + '" /> ' +
+                    '</div > ' +
+                    '</td > ';
+            }
+
+
+            tt = tt + '<td class="Remark" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="Remark" id="Remark' + nextRaw + '"  class="form-control" value="' + Remark + '" /> ' +
+                '</div > ' +
+                '</td > ';
+
+            if (type == 'cut') {
+                tt = tt + '<td class="Approval"  > ' +
+                    '<div class="" > ' +
+                    '<input type="text" name="Approval" id="Approval' + nextRaw + '"  class="form-control" value="' + Approval + '" readonly/> ' +
+                    '</div > ' +
+                    '</td > ';
+            }
+
+
+
+            //tt = tt + ' <td>' +
+            //    ' <div class="delete">' +
+            //    '  <span id="c1" class="	glyphicon glyphicon-trash" onclick="remove(\'item_' + nextRaw + '\')"> </span>' +
+            //    ' </div>' +
+            //    ' </td>' +
+            //    ' </tr>';
+
+            scntDiv.append(tt);
+
+
+            var options = "";
+
+
+        }
+    </script>
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script>
+
+
+
+        function QtyChange(selectObject) {
+
+            var i = selectObject.substring(3);
+
+            var qty = parseFloat($("#Qty" + i).val());
+            var QtyOrginal = parseFloat($("#QtyOrginal" + i).val());
+
+            var BalanceQty = parseFloat($("#BalanceQty1" + i).val());
+
+            var QtyApproved = parseFloat($("#QtyApproved" + i).val());
+
+            var Approval = $("#Approval" + i).val();
+            //alert(Approval);
+
+
+            if (Approval == "true") {
+                var newBalance = BalanceQty - qty + QtyApproved
+
+            } else {
+                var newBalance = BalanceQty - qty;
+            }
+
+            if (newBalance >= 0) {
+
+                var newBalance = BalanceQty - qty;
+                $("#BalanceQty" + i).val(newBalance);
+            } else {
+                $("#Qty" + i).val(0);
+                alert("Sorry, You cant issue extra items, you need approval");
+            }
+
+
+        };
+    </script>
+
+}
+
+

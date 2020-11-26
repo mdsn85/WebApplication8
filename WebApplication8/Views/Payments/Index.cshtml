@@ -1,0 +1,111 @@
+﻿@model IEnumerable<WebApplication8.Models.Payment>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>List Of Payment</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Project.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Receipt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModOfPayment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CollectedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CollectionDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChqNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChqDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TransBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfCredit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ToBankHM)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACHM)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserCreate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Project.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Receipt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModOfPayment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CollectedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CollectionDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChqNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChqDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TransBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateOfCredit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ToBankHM)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACHM)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserCreate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PaymentId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PaymentId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PaymentId })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,107 @@
+﻿
+<div class="files" id="files">
+    <input id="avatar" type="file" name="avatar" style="float:left ; background-color:white; margin-right:25px" />
+    <button id="upload" value="Upload" class="btn btn-info btn-upload">Upload Document</button>
+</div>
+
+@*<p><input type="button" value="Add File" onclick="addFile();" /></p>*@
+@*<script type="text/JavaScript" src="~/Scripts/googlejquery.min.js"></script>*@
+
+<script src="~/Scripts/googlejquery.min.js"></script>
+
+
+<script>
+    var i = 1;
+    $(document).on("click", "#upload", function () {
+
+        //document.getElementById("myAnchor").addEventListener("click", function (event) {
+        //    //event.preventDefault()
+        //});
+        //      Error + x.status + "888" + file_data.data
+        var file_data = $("#avatar").prop("files")[0];   // Getting the properties of file from file field
+        var form_data = new FormData();                  // Creating object of FormData class
+        form_data.append("file", file_data);             // Appending parameter named file with properties of file_field to form_data
+        // Adding extra parameters to form_data
+        $.ajax({
+            url: "../UploadFile/uploadFileSingle",
+            //dataType: 'script',
+            dataType: 'json',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,                         // Setting the data attribute of ajax with file_data
+            error: function (x, e) {
+                alert("eee" + form_data);//~
+                $('#info').html(Error + x.status + "888" + file_data.data);
+                $('#info').append(x.status);
+            },
+            success: function (data) {
+               // alert(data);
+
+                var input = document.createElement("input");
+                input.setAttribute("type", "hidden");
+                input.setAttribute("name", "FileName");
+                input.setAttribute("id", "FileName" + i);
+                input.setAttribute("class", "FileName");
+                input.setAttribute("value", data.msg);
+                //get display area
+                var element = document.getElementById("filesList");
+                element.appendChild(input);
+
+
+                //show to user
+                //add name of  uploaded file to list
+                var para = document.createElement("p");
+                para.setAttribute("id", "FileNameTxt" + i);
+                para.setAttribute("name", "FileNameTXT");
+                para.setAttribute("class", "FileNameTXT");
+                var node = document.createTextNode(data.msg);
+                para.appendChild(node);
+                //get display area
+                var ppp = "FileNameTxt" + i;
+                var pp = "FileNameSpan" + i;
+
+                element = document.getElementById("info");
+                element.appendChild(para);
+
+                i++;
+
+            },
+            type: 'post'
+
+
+        });
+    });
+
+</script>
+
+@* add new elements *@
+<script>
+
+    var fileId = 2; // used by the addFile() function to keep track of IDs
+    function addFile() {
+
+        fileId++; // increment fileId to get a unique ID for the new element
+        var html = '<input type="file" name="uploaded_files[]" /> ';
+        // '<a href="" onclick="javascript:removeElement('file-' + fileId + ''); return false;">Remove</a>';
+
+
+        var addList = document.getElementById('files');
+        var docstyle = addList.style.display;
+        // if (docstyle == 'none') addList.style.display = '';
+
+        var text = document.createElement('div');
+        text.id = 'additem_' + fileId;
+        // text.innerHTML = "<input type='text' value='' class='buckinput' name='items[]' style='padding:5px; margin-top:20px;' /> <a href='javascript:void(0);' onclick='addInput(" + fileId + ")' id='addlink_" + fileId + "'>add more</a>";
+        text.innerHTML = ' <input id="avatar" type="file" name="avatar" style="float:right; margin-top:10px;" />' +
+            '<button id="upload" value="Upload" class="btn btn-info btn-upload"  style="margin-top:10px;">Upload Document </button>';
+        addList.appendChild(text);
+
+    }
+
+
+</script>
+
+
+
+

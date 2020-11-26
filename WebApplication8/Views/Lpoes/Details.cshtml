@@ -1,0 +1,178 @@
+﻿@model WebApplication8.Models.Lpo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details Lpo</h2>
+
+<div>
+    <h4></h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SupplierRef)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SupplierRef)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LpoDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LpoDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Supplier.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Supplier.Name)
+        </dd>
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreditTerm.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreditTerm.Name)
+        </dd>
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubTotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubTotal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Discount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Discount)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Vat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GrandTotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GrandTotal)
+        </dd>
+
+
+
+        <dt>
+            @Html.DisplayName("Stock In (Puchase Invoice)")
+        </dt>
+
+        <dd>
+            @foreach (var si in Model.StockIssues)
+            {
+                @Html.ActionLink(si.Code, "Details", "StockIssues", new { id = si.StockIssueId }, new { target = "_blank" });
+  
+                @Html.Raw("<br/>");
+            }
+        </dd>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </dl>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            Material Name
+        </th>
+        <th>
+            Unit
+        </th>
+        <th>
+            Qty
+        </th>
+        <th>
+            Unit
+        </th>
+        <th>
+            Price
+        </th>
+
+        <th>
+            Total
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.LpoDetails)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Material.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Material.Unit.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Qty)
+        </td>
+
+        <td>
+            EA
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+
+        <td>
+           @{var a = @item.Price * @item.Qty;}
+            @a
+        </td>
+    </tr>
+    }
+
+</table>
+<p>
+    @Html.ActionLink("Print", "PrintNewTable", new { id = Model.LpoId }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.LpoId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

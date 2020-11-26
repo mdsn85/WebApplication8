@@ -1,0 +1,506 @@
+﻿@model WebApplication8.Models.CuttingSheet
+
+@{
+    ViewBag.Title = "Edit";
+}
+<link href="~/Scripts/css/selectsearch/select2.min.css" rel="stylesheet" />
+<h2>Edit MRF</h2>
+
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "CuttingSheetform" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4></h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.CuttingSheetId)
+
+        @Html.HiddenFor(model => model.ProjectId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProjectId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                <input type="text" value="@Model.project.Code" class="form-control" readonly />
+                @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.code, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.code, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.code, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        @Html.HiddenFor(model => model.UserCreate, new { htmlAttributes = new { @class = "form-control" } })
+
+
+        @Html.HiddenFor(model => model.CreateDate, new { htmlAttributes = new { @class = "form-control" } })
+
+
+
+
+        <div class="col-md-10 pull-left">
+
+            <div class="card-content">
+                <b>
+                    <p class="control-label col-md-2">
+
+
+                    </p>
+                </b>
+                <div class="table-responsive">
+                    <table class="table-bordered table-responsive table dataTable text-nowrap" style="" id="tbDetails">
+                        <thead>
+                            <tr>
+
+
+                                <td>
+                                    Sr #
+                                </td>
+                                <td>
+                                    id
+                                </td>
+                                <td>
+                                    Material
+                                </td>
+                                <td>
+                                    Dinmension
+                                </td>
+                                <td>
+                                    Unit
+                                </td>
+                                <td>
+                                    Request Qty
+                                </td>
+                                <td>
+                                    Isssue Qty
+                                </td>
+                                <td>
+                                    Balance
+                                </td>
+
+                                <td>
+                                    delete
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody id="p_scents"></tbody>
+
+                        <div style="float: left;padding-left:10%">
+                            <span onclick="openChild()" class="btn-info">
+                                Add Material
+                            </span>
+                            <input id="CustomerId" name="CustomerId" type="hidden" />
+                            <div id="Customer"></div>
+
+                        </div>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group" style="margin-top : 5px">
+            <div class="col-md-offset-4 col-md-2">
+                <input type="button" id="btnSave" value="  Save  " class="btn btn-primary adminworkSaveBtn " />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <!--Select Search-->
+
+    <script src="~/Scripts/js/jquery1.7.1Google.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="~/Scripts/js/selectSearch/select2.min.js"></script>
+
+    <!--Select Search-->
+
+
+
+
+    <script>
+
+
+
+        $(document).ready(function () {
+
+            ListDetails();
+            $("form").submit(function (e) {
+
+                e.preventDefault(e);
+            });
+
+        });
+
+        function validateForm() {
+        }
+
+
+        function openChild() {
+            showModalPopUp('/Materials/IndexShort');
+
+        }
+
+    </script>
+
+
+
+
+    <script>
+        var scntDiv = $('#p_scents');
+        var nextRaw = 0;
+
+        function remove(rowId) {
+            //Remove the TR element using JQuery's remove method.
+            $('#' + rowId).fadeOut('slow', function () {
+                $('#' + rowId).remove();
+
+            });
+            nextRaw = nextRaw - 1;
+        }
+    </script>
+
+
+    <script>
+        $("body").on("click", "#btnSave", function () {
+
+            if (validateForm() != false) {
+                //Loop through the Table rows and build a JSON array.
+                //  var LpoHeader = new Array();
+                var EnqueryId = 0;
+                var Enquery = $('#CuttingSheetform').serialize();
+                console.log(Enquery);
+                $.ajax({
+                    type: "POST",
+                    url: "/CuttingSheets/EditJson",
+                    data: '{ enquery:' + JSON.stringify(Enquery) + '}',
+                    async: false,
+                    success: function (r) {
+
+                        if (Number.isInteger(r)) {
+                            EnqueryId = r;
+                        }
+                        else {
+
+                            if (confirm(r + ' do you whant to retry?')) {
+
+                            } else {
+                                window.location.href = "@Url.Action("Create", "CuttingSheets")";
+                            }
+                        }
+                    }
+                });
+
+
+                if (Number.isInteger(EnqueryId) && EnqueryId > 0) {
+                    var Details = new Array();
+                    var i = 0;
+
+                    var testnum = 0;
+                    $("#tbDetails TBODY TR").each(function () {
+
+                        var row = $(this);
+                        var Detail = {};
+                        var Confirmed = 0;
+                        Detail.CuttingSheetId = EnqueryId;
+                        i++;
+                        $(this).closest('tr').find('input').each(function () {
+
+                            if ($(this).attr("name") === "id") {
+                                Detail.MaterialId = $(this).prop("value");
+
+                            }
+                            if ($(this).attr("name") === "Qty") {
+                                Detail.qty = $(this).prop("value");
+
+                            }
+
+                        });
+
+                        //$(this).closest('tr').find('select').each(function () {
+                        //    if ($(this).attr("name") === "ProductId") {
+                        //        Detail.MaterialId = $(this).val();
+                        //        if (Detail.MaterialId == null) { testnum = 1; }
+                        //    }
+
+                        //});
+                        Details.push(Detail);
+                     });
+
+
+                    if (testnum == 0) {
+                        //Send the JSON array to Controller using AJAX.
+                        $.ajax({
+                            type: "POST",
+                            url: "/CuttingSheets/EditDetailsJson",
+                            async: false,
+                            data: JSON.stringify({ Details: Details, id :EnqueryId}),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (r) {
+
+                                if (r == "Cutting Sheet Saved Successfully") {
+                                    window.location.href = "@Url.Action("Index", "CuttingSheets")";
+                                }
+                                else {
+                                    if (confirm(r + ' do you whant to retry?')) {
+                                        // Save it!
+                                    } else {
+                                        window.location.href = "@Url.Action("Index", "CuttingSheets")";
+                                    }
+                                }
+                                // confirm("Press a button!");
+                                //  alert(r + " record(s) inserted.");
+                            }
+                        });
+                    } else { alert("number of skips or requested service not filled  "); }
+
+                }
+                else {
+                    alert("Please, Enter data before save ");
+                }
+            }
+        });
+    </script>
+
+
+    <script type="text/javascript">
+
+        var popUpObj;
+
+        function showModalPopUp(url) {
+
+            popUpObj = window.open(url,
+
+                "ModalPopUp",
+
+                "toolbar=no," +
+
+                "scrollbars=no," +
+
+                "location=no," +
+
+                "statusbar=no," +
+
+                "menubar=no," +
+
+                "resizable=0," +
+
+                "width=800," +
+
+                "height=460," +
+
+                "left = 490," +
+
+                "top=300"
+
+            );
+
+            popUpObj.focus();
+
+            LoadModalDiv();
+
+        }
+
+    </script>
+
+    <script type="text/javascript">
+
+        function LoadModalDiv() {
+
+            var bcgDiv = document.getElementById("divBackground");
+
+            bcgDiv.style.display = "block";
+
+            if (bcgDiv != null) {
+
+                if (document.body.clientHeight > document.body.scrollHeight) {
+
+                    bcgDiv.style.height = document.body.clientHeight + "px";
+
+                }
+
+                else {
+
+                    bcgDiv.style.height = document.body.scrollHeight + "px";
+
+                }
+
+                bcgDiv.style.width = "100%";
+
+            }
+
+        }
+
+    </script>
+    <script type="text/javascript">
+
+        function HideModalDiv() {
+
+            var bcgDiv = document.getElementById("divBackground");
+
+            bcgDiv.style.display = "none";
+
+        }
+
+    </script>
+
+
+    <script>
+        var Sr = 0;
+        function setValue(myVal, Name, Unit, Dinmension, Qty, IssueQty) {
+
+            var current = $(".ClientId").length;
+
+            var next = parseInt(current) + 1;
+            var a = "DDlforLocationsClient" + next;
+            var b = "span" + next;
+
+            Sr = Sr + 1;
+
+
+            //= $('#tbDetails tr').length;
+            nextRaw = nextRaw + 1;
+            var tt = '<tr id="item_' + nextRaw + '">';
+
+
+            tt = tt + '<td class="Name" > ' +
+                '<div class="" > ' +
+                Sr +
+                '</div > ' +
+                '</td > ';
+
+            tt = tt + '<td class="Name" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="id" id="id' + nextRaw + '"  class="form-control" value="' + myVal + '"/> ' +
+                '</div > ' +
+                '</td > ';
+
+            tt = tt + '<td class="Name" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="Name" id="Name' + nextRaw + '"  class="form-control" value="' + Name + '"/> ' +
+                '</div > ' +
+                '</td > ';
+
+            tt = tt + '<td class="Name" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="Dinmension" id="Dinmension' + nextRaw + '"  class="form-control" value="' + Dinmension + '"/> ' +
+                '</div > ' +
+                '</td > ';
+
+
+
+            tt = tt + '<td class="Name" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="Unit" id="Unit' + nextRaw + '"  class="form-control" value="' + Unit + '"/> ' +
+                '</div > ' +
+                '</td > ';
+
+
+            tt = tt + '<td class="Qty" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="Qty" id="Qty' + nextRaw + '"  class="form-control" value="' + Qty + '"/> ' +
+                '</div > ' +
+                '</td > ';
+
+
+            tt = tt + '<td class="IssueQty" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="IssueQty" id="IssueQty' + nextRaw + '"  class="form-control" value="' + IssueQty  + '" readonly/> ' +
+                '</div > ' +
+                '</td > ';
+
+            var BalanceQty = Qty - IssueQty ;
+
+
+            tt = tt + '<td class="BalanceQty" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="BalanceQty" id="BalanceQty' + nextRaw + '"  class="form-control" value="' + BalanceQty + '" readonly/> ' +
+                '</div > ' +
+                '</td > ';
+
+
+            //tt = tt + '<td class="Price" > ' +
+            //    '<div class="" > ' +
+            //    '<input type="text" name="Price" id="Price' + nextRaw + '"  class="form-control"/> ' +
+            //    '</div > ' +
+            //    '</td > ' +
+
+
+
+            tt = tt + ' <td>' +
+                ' <div class="delete">' +
+                '  <span id="c1" class="	glyphicon glyphicon-trash" onclick="remove(\'item_' + nextRaw + '\')"> </span>' +
+                ' </div>' +
+                ' </td>' +
+                ' </tr>';
+
+            scntDiv.append(tt);
+
+
+            var options = "";
+
+
+        }
+
+
+
+
+
+        function ListDetails() {
+
+            CuttingSheetId = $("#CuttingSheetId").val();
+            $.ajax({
+                type: "GET",
+                traditional: true,
+                async: false,
+                cache: false,
+                url: '/CuttingSheets/CuttingSheetsDetails',
+                context: JSON,
+                data: { "CuttingSheetId": CuttingSheetId /* add other additional parameters */ },
+
+                //data: '{ enquery:' + JSON.stringify(Enquery) + '}',
+                success: function (result) {
+                  
+                    result.forEach(element => setValue(element.MaterialId, element.Name, element.Unit, element.Dimension, element.Qty, 0, element.BalanceQty ));
+
+                },
+                error: function (xhr) {
+                    //debugger;
+                    console.log(xhr.responseText);
+                    alert("Error has occurred..");
+                }
+            });
+        }
+
+
+    </script>
+
+
+
+
+}
+
+
+
+
+
+
+
