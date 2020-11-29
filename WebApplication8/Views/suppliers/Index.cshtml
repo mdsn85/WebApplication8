@@ -20,6 +20,12 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreditTermSupplier.Name)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Attention)
             </th>
             <th>
@@ -31,40 +37,42 @@
             <th>
                 @Html.DisplayNameFor(model => model.email)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
+
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Attention)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.tel)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.mobile)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Address)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.supplierId }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.supplierId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.supplierId })
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreditTermSupplier.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Attention)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.mobile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.supplierId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.supplierId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.supplierId })
+            </td>
+        </tr>
         }
     </tbody>
 

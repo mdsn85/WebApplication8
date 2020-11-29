@@ -235,7 +235,7 @@
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
 
-                    
+
                     @if (User.IsInRole("Sales Coordinator") || User.IsInRole("Admin"))
                     {
                         <li>
@@ -347,6 +347,10 @@
                                 <li>
                                     @Html.ActionLink("Project Payment Terms", "Index", "ProjectPaymentTerms3")
                                 </li>
+
+                                <li>
+                                    @Html.ActionLink("Supplier Payment Terms", "Index", "CreditTermSuppliers")
+                                </li>
                                 <li>@Html.ActionLink("Unit", "Index", "units")</li>
 
                                 <li>@Html.ActionLink("Customer Types", "Index", "CustomersTypes")</li>
@@ -439,7 +443,7 @@
         @Scripts.Render("~/bundles/bootstrap")
         @RenderSection("scripts", required: false)
 
-        @Scripts.Render("~/bundles/jqueryui")
+
 
 
 
@@ -465,6 +469,7 @@
         <script src="~/assets/js/Lightweight-Chart/jquery.chart.js"></script>
 
         <!-- Custom Js -->
+        <script src="~/assets/js/custom-scripts.js"></script>
 
 
 
@@ -606,7 +611,7 @@
 
 
 
- 
+
         <script src="~/Scripts/datetime/bootstrap-datetimepicker.js" charset="UTF-8"></script>
         <script src="~/Scripts/datetime/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
         <script type="text/javascript">

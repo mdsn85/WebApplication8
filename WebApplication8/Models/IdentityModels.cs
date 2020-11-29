@@ -112,7 +112,11 @@ namespace WebApplication8.Models
 
         public System.Data.Entity.DbSet<WebApplication8.Models.SalesTeam> SalesTeam { get; set; }
 
+
+        public System.Data.Entity.DbSet<WebApplication8.Models.CreditTermSupplier> CreditTermSuppliers { get; set; }
         
+
+
 
 
 

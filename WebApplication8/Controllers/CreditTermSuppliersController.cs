@@ -10,110 +10,107 @@ using WebApplication8.Models;
 
 namespace WebApplication8.Controllers
 {
-    public class suppliersController : Controller
+    public class CreditTermSuppliersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: suppliers
+        // GET: CreditTermSuppliers
         public ActionResult Index()
         {
-            return View(db.suppliers.ToList());
+            return View(db.CreditTermSuppliers.ToList());
         }
 
-        // GET: suppliers/Details/5
+        // GET: CreditTermSuppliers/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            supplier supplier = db.suppliers.Find(id);
-            if (supplier == null)
+            CreditTermSupplier creditTermSupplier = db.CreditTermSuppliers.Find(id);
+            if (creditTermSupplier == null)
             {
                 return HttpNotFound();
             }
-            return View(supplier);
+            return View(creditTermSupplier);
         }
 
-        // GET: suppliers/Create
+        // GET: CreditTermSuppliers/Create
         public ActionResult Create()
         {
-            ViewBag.CreditTermSupplierId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name");
             return View();
         }
 
-        // POST: suppliers/Create
+        // POST: CreditTermSuppliers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "supplierId,Name,Attention,tel,mobile,email,Address,CreditTermSupplierId")] supplier supplier)
+        public ActionResult Create([Bind(Include = "CreditTermSupplierId,Name")] CreditTermSupplier creditTermSupplier)
         {
             if (ModelState.IsValid)
             {
-                db.suppliers.Add(supplier);
+                db.CreditTermSuppliers.Add(creditTermSupplier);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CreditTermSupplierId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name", supplier.CreditTermSupplierId);
-            return View(supplier);
+
+            return View(creditTermSupplier);
         }
 
-        // GET: suppliers/Edit/5
+        // GET: CreditTermSuppliers/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            supplier supplier = db.suppliers.Find(id);
-            if (supplier == null)
+            CreditTermSupplier creditTermSupplier = db.CreditTermSuppliers.Find(id);
+            if (creditTermSupplier == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CreditTermSupplierId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name", supplier.CreditTermSupplierId);
-            return View(supplier);
+            return View(creditTermSupplier);
         }
 
-        // POST: suppliers/Edit/5
+        // POST: CreditTermSuppliers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "supplierId,Name,Attention,tel,mobile,email,Address,CreditTermSupplierId")] supplier supplier)
+        public ActionResult Edit([Bind(Include = "CreditTermSupplierId,Name")] CreditTermSupplier creditTermSupplier)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(supplier).State = EntityState.Modified;
+                db.Entry(creditTermSupplier).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CreditTermSupplierId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name", supplier.CreditTermSupplierId);
-            return View(supplier);
+            return View(creditTermSupplier);
         }
 
-        // GET: suppliers/Delete/5
+        // GET: CreditTermSuppliers/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            supplier supplier = db.suppliers.Find(id);
-            if (supplier == null)
+            CreditTermSupplier creditTermSupplier = db.CreditTermSuppliers.Find(id);
+            if (creditTermSupplier == null)
             {
                 return HttpNotFound();
             }
-            return View(supplier);
+            return View(creditTermSupplier);
         }
 
-        // POST: suppliers/Delete/5
+        // POST: CreditTermSuppliers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            supplier supplier = db.suppliers.Find(id);
-            db.suppliers.Remove(supplier);
+            CreditTermSupplier creditTermSupplier = db.CreditTermSuppliers.Find(id);
+            db.CreditTermSuppliers.Remove(creditTermSupplier);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

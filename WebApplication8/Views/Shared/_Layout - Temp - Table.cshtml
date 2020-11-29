@@ -186,6 +186,8 @@
         <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
+
+
                     @if (User.IsInRole("Sales Coordinator") || User.IsInRole("Admin"))
                     {
                         <li>
@@ -223,6 +225,7 @@
                             <a href="/Lpoes/index" class="waves-effect waves-dark"><i class="fa fa-qrcode"></i> LPO</a>
                         </li>
                     }
+
                     @if (User.IsInRole("WareHouse") || User.IsInRole("Admin"))
                     {
                         <li>
@@ -230,6 +233,7 @@
                         </li>
 
                     }
+
                     @if (User.IsInRole("Purchase") || User.IsInRole("WareHouse") || User.IsInRole("Admin"))
                     {
                         <li>
@@ -248,11 +252,14 @@
 
                     @if (User.IsInRole("Cutting Sheet") || User.IsInRole("Admin"))
                     {
-
                         <li>
                             <a href="/RequestApprovals/Index" class="waves-effect waves-dark"><i class="fa fa-bitbucket"></i>Request Approvals</a>
                         </li>
                     }
+
+
+
+
 
                     @if (User.IsInRole("Admin"))
                     {
@@ -275,47 +282,53 @@
                         </li>
                     }
 
-
                     <li>
                         <a href="#" class="waves-effect waves-dark"><i class="fa fa-user-md"></i>Reports<span class="fa arrow"></span></a>
                         <ul class="nav nav-third-level"></ul>
 
                     </li>
 
-                    <li>
-                        <a href="#" class="waves-effect waves-dark"><i class="fa fa-sitemap"></i> Master Data<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                @Html.ActionLink("Credit Terms", "Index", "CreditTerms")
-                            </li>
-                            <li>
-                                @Html.ActionLink("Project Payment Terms", "Index", "ProjectPaymentTerms3")
-                            </li>
-                            <li>@Html.ActionLink("Unit", "Index", "units")</li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>
+                            <a href="#" class="waves-effect waves-dark"><i class="fa fa-sitemap"></i> Master Data<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    @Html.ActionLink("Credit Terms", "Index", "CreditTerms")
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Project Payment Terms", "Index", "ProjectPaymentTerms3")
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Supplier Payment Terms", "Index", "CreditTermSuppliers")
+                                </li>
+                                <li>@Html.ActionLink("Unit", "Index", "units")</li>
 
-                            <li>@Html.ActionLink("Customer Types", "Index", "CustomersTypes")</li>
-                            <li>@Html.ActionLink("Project Payment Terms", "Index", "ProjectPaymentTerms")</li>
-                            <li>
-                                <a href="#">Second Level Link</a>
-                            </li>
-                            <li>
-                                <a href="#">Second Level Link<span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level">
-                                    <li>
-                                        <a href="#">Third Level Link</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Third Level Link</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Third Level Link</a>
-                                    </li>
+                                <li>@Html.ActionLink("Customer Types", "Index", "CustomersTypes")</li>
+                                <li>@Html.ActionLink("Project Payment Terms", "Index", "ProjectPaymentTerms")</li>
 
-                                </ul>
+                                <li>
+                                    <a href="#">Second Level Link</a>
+                                </li>
+                                <li>
+                                    <a href="#">Second Level Link<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="#">Third Level Link</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Link</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Link</a>
+                                        </li>
 
-                            </li>
-                        </ul>
-                    </li>
+                                    </ul>
+
+                                </li>
+                            </ul>
+                        </li>
+                    }
                     <li>
                         <a href="empty.html" class="waves-effect waves-dark"><i class="fa fa-fw fa-file"></i> Empty Page</a>
                     </li>

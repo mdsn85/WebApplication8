@@ -178,6 +178,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CreditTerms1Controller.cs" />
     <Compile Include="Controllers\CreditTermsController.cs" />
+    <Compile Include="Controllers\CreditTermSuppliersController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\CustomersTypesController.cs" />
     <Compile Include="Controllers\CuttingSheetsController.cs" />
@@ -671,11 +672,24 @@
     <Compile Include="Migrations\202011260719031_modifyProject.designer.cs">
       <DependentUpon>202011260719031_modifyProject.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011281132150_sshj.cs" />
+    <Compile Include="Migrations\202011281132150_sshj.designer.cs">
+      <DependentUpon>202011281132150_sshj.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011290817388_update_supplier.cs" />
+    <Compile Include="Migrations\202011290817388_update_supplier.designer.cs">
+      <DependentUpon>202011290817388_update_supplier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011290834220_update_supplier_ct.cs" />
+    <Compile Include="Migrations\202011290834220_update_supplier_ct.designer.cs">
+      <DependentUpon>202011290834220_update_supplier_ct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApprovalType.cs" />
     <Compile Include="Models\ContractFile.cs" />
     <Compile Include="Models\CreditTerm.cs" />
+    <Compile Include="Models\CreditTermSupplier.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomersType.cs" />
     <Compile Include="Models\CuttingSheet.cs" />
@@ -1307,6 +1321,11 @@
     <Content Include="Views\Report\Index.cshtml" />
     <Content Include="Views\Account\EditRegister.cshtml" />
     <Content Include="Views\UploadFile\UploadFileMulti.cshtml" />
+    <Content Include="Views\CreditTermSuppliers\Create.cshtml" />
+    <Content Include="Views\CreditTermSuppliers\Delete.cshtml" />
+    <Content Include="Views\CreditTermSuppliers\Details.cshtml" />
+    <Content Include="Views\CreditTermSuppliers\Edit.cshtml" />
+    <Content Include="Views\CreditTermSuppliers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1671,6 +1690,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011260719031_modifyProject.resx">
       <DependentUpon>202011260719031_modifyProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011281132150_sshj.resx">
+      <DependentUpon>202011281132150_sshj.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011290817388_update_supplier.resx">
+      <DependentUpon>202011290817388_update_supplier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011290834220_update_supplier_ct.resx">
+      <DependentUpon>202011290834220_update_supplier_ct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
