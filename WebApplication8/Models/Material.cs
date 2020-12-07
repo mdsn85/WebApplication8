@@ -7,6 +7,8 @@ using System.Web;
 
 namespace WebApplication8.Models
 {
+    //Material Category	Material Type	Material Description
+
     public class Material
     {
         public int MaterialId { get; set; }
@@ -16,6 +18,7 @@ namespace WebApplication8.Models
         public DateTime CreatedDate { get; set; }
 
         [Display(Name = "Material Name")]
+        [StringLength(250)]
         public string Name { get; set; }
 
 
@@ -74,6 +77,13 @@ namespace WebApplication8.Models
         public virtual Warehouse WareHouse { get; set; }
 
         public virtual ICollection<MaterialUnit> MaterialUnits { get; set; }
+
+        public int? MaterialCategoryId { get; set; }
+        public virtual MaterialCategory MaterialCategory { get; set; }
+
+        public int? MaterialTypeId { get; set; }
+        public virtual MaterialType MaterialType { get; set; }
+
 
     }
 }

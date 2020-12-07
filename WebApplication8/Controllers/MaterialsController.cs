@@ -154,6 +154,10 @@ namespace WebApplication8.Controllers
             ViewBag.UnitId = new SelectList(db.Units, "UnitId", "Name");
             ViewBag.UnitId2 = new SelectList(db.Units, "UnitId", "Name");
             ViewBag.WareHouseId = new SelectList(db.Warehouses, "WarehouseId", "Name");
+
+            ViewBag.MaterialCategoryId = new SelectList(db.MaterialCategorys, "MaterialCategoryId", "Name");
+
+            ViewBag.MaterialTypeId = new SelectList(db.MaterialTypes, "MaterialTypeId", "Name");
             return View();
         }
 
@@ -162,7 +166,7 @@ namespace WebApplication8.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Code,MaterialId,Name,latestPrice,MinReOrder,Description,qty,AvgPrice,barcode,UnitId,UnitId2,convert,WareHouseId,Dimension")] Material material)
+        public ActionResult Create([Bind(Include = "MaterialCategoryId,MaterialTypeId,Code,MaterialId,Name,latestPrice,MinReOrder,Description,qty,AvgPrice,barcode,UnitId,UnitId2,convert,WareHouseId,Dimension")] Material material)
         {
             if (ModelState.IsValid)
             {
@@ -220,6 +224,10 @@ namespace WebApplication8.Controllers
             ViewBag.UnitId2 = new SelectList(db.Units, "UnitId", "Name", material.UnitId2);
 
             ViewBag.WareHouseId = new SelectList(db.Warehouses, "WarehouseId", "Name",material.WareHouseId);
+
+            ViewBag.MaterialCategoryId = new SelectList(db.MaterialCategorys, "MaterialCategoryId", "Name");
+
+            ViewBag.MaterialTypeId = new SelectList(db.MaterialTypes, "MaterialTypeId", "Name");
             return View(material);
         }
 
@@ -240,6 +248,10 @@ namespace WebApplication8.Controllers
             ViewBag.WareHouseId = new SelectList(db.Warehouses, "WarehouseId", "Name", material.WareHouseId);
             ViewBag.UnitId = new SelectList(db.Units, "UnitId", "Name");
             ViewBag.UnitId2 = new SelectList(db.Units, "UnitId", "Name", material.UnitId2);
+
+            ViewBag.MaterialCategoryId = new SelectList(db.MaterialCategorys, "MaterialCategoryId", "Name", material.MaterialCategoryId);
+
+            ViewBag.MaterialTypeId = new SelectList(db.MaterialTypes, "MaterialTypeId", "Name",material.MaterialTypeId);
             return View(material);
         }
 
@@ -248,7 +260,7 @@ namespace WebApplication8.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Code,CreatedDate,Resevedqty,barcode,Dimension,MaterialId,Name,MinReOrder,Description,qty,latestPrice,AvgPrice,UnitId,UnitId2,convert,WareHouseId")] Material material)
+        public ActionResult Edit([Bind(Include = "MaterialCategoryId,MaterialTypeId,Code,CreatedDate,Resevedqty,barcode,Dimension,MaterialId,Name,MinReOrder,Description,qty,latestPrice,AvgPrice,UnitId,UnitId2,convert,WareHouseId")] Material material)
         {
             if (ModelState.IsValid)
             {
@@ -260,6 +272,9 @@ namespace WebApplication8.Controllers
             ViewBag.UnitId = new SelectList(db.Units, "UnitId", "Name", material.UnitId);
             ViewBag.UnitId2 = new SelectList(db.Units, "UnitId", "Name", material.UnitId2);
             ViewBag.WareHouseId = new SelectList(db.Warehouses, "WarehouseId", "Name",material.WareHouseId);
+            ViewBag.MaterialCategoryId = new SelectList(db.MaterialCategorys, "MaterialCategoryId", "Name", material.MaterialCategoryId);
+
+            ViewBag.MaterialTypeId = new SelectList(db.MaterialTypes, "MaterialTypeId", "Name", material.MaterialTypeId);
             return View(material);
         }
 

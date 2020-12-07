@@ -114,7 +114,10 @@ namespace WebApplication8.Models
 
 
         public System.Data.Entity.DbSet<WebApplication8.Models.CreditTermSupplier> CreditTermSuppliers { get; set; }
-        
+
+        public System.Data.Entity.DbSet<WebApplication8.Models.MaterialCategory> MaterialCategorys { get; set; }
+        public System.Data.Entity.DbSet<WebApplication8.Models.MaterialType> MaterialTypes { get; set; }
+
 
 
 

@@ -33,6 +33,12 @@
                 @Html.DisplayNameFor(model => model.code)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.MaterialCategory.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaterialType.Name)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
 
@@ -90,96 +96,102 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+        <tr>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.code)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.Dimension)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.Unit.Name)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.qty)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.Resevedqty)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.MinReOrder)
-                </td>
-
-                <td>
-                    @{float? a = 0;
-                        a = @item.qty - @item.Resevedqty - @item.MinReOrder;}
-
-                    @Html.DisplayFor(modelItem => item.AvalableQty)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.AvgPrice)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.latestPrice)
-                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaterialCategory.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaterialType.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
 
 
-                <td>
-                    @{
-                        double total = item.qty * item.latestPrice ?? 0;
-                        Sumtotal += total;
-                    }
-                    @total.ToString()
-                </td>
-                <td>
-                    @{
-                        double totalAvg = item.qty * item.AvgPrice ?? 0;
-                        SumtotalAvg += totalAvg;
-                    }
-                    @totalAvg.ToString()
-                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dimension)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Unit.Name)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.qty)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Resevedqty)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.MinReOrder)
+            </td>
+
+            <td>
+                @{float? a = 0;
+                    a = @item.qty - @item.Resevedqty - @item.MinReOrder;}
+
+                @Html.DisplayFor(modelItem => item.AvalableQty)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.AvgPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.latestPrice)
+            </td>
 
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.barcode)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.WareHouse.Name)
-                </td>
-
-
-
-
-
-
-                <td>
-
-                    @Html.ActionLink("Movment", "MaterialMovment", new { id = item.MaterialId }) |
+            <td>
+                @{
+                    double total = item.qty * item.latestPrice ?? 0;
+                    Sumtotal += total;
+                }
+                @total.ToString()
+            </td>
+            <td>
+                @{
+                    double totalAvg = item.qty * item.AvgPrice ?? 0;
+                    SumtotalAvg += totalAvg;
+                }
+                @totalAvg.ToString()
+            </td>
 
 
-                    @if (User.IsInRole("Admin"))
-                    {
-                        @Html.ActionLink("Edit", "Edit", new { id = item.MaterialId })
-                        @Html.Raw("|")
+            <td>
+                @Html.DisplayFor(modelItem => item.barcode)
+            </td>
 
-                    }
-                    @Html.ActionLink("Details", "Details", new { id = item.MaterialId }) |
-                    @*@Html.ActionLink("Delete", "Delete", new { id = item.MaterialId })*@
+            <td>
+                @Html.DisplayFor(modelItem => item.WareHouse.Name)
+            </td>
 
-                </td>
-            </tr>
+
+
+
+
+
+            <td>
+
+                @Html.ActionLink("Movment", "MaterialMovment", new { id = item.MaterialId }) |
+
+
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.MaterialId })
+                    @Html.Raw("|")
+
+                }
+                @Html.ActionLink("Details", "Details", new { id = item.MaterialId }) |
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.MaterialId })*@
+
+            </td>
+        </tr>
         }
     </tbody>
 
