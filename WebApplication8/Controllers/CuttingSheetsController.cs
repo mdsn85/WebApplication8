@@ -210,7 +210,7 @@ namespace WebApplication8.Controllers
                     {
                         EP.status = statusList.Purchase;
                     }
-
+                    EP.IssueQty = 0;
                     db.CuttingSheetDetails.Add(EP);
                     db.SaveChanges();
 

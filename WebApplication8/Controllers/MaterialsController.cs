@@ -140,9 +140,11 @@ namespace WebApplication8.Controllers
             {
                 Name = material.Name,
                 latestPrice = material.latestPrice,
-                Unit = material.MaterialUnits.FirstOrDefault().Unit.Name,
-                Unit2 = material.MaterialUnits.LastOrDefault().Unit.Name,
-                Dimension = material.Dimension,
+                //Unit = material.MaterialUnits.FirstOrDefault().Unit.Name,
+
+                Unit = material.Unit.Name,
+                Unit2 ="", //material.MaterialUnits.LastOrDefault().Unit.Name,
+                Dimension = material.Dimension ?? "",
 
             }
             , JsonRequestBehavior.AllowGet);

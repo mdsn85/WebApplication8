@@ -707,6 +707,14 @@
     <Compile Include="Migrations\202012081154034_warantydateOptional.designer.cs">
       <DependentUpon>202012081154034_warantydateOptional.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012090712129_sdads.cs" />
+    <Compile Include="Migrations\202012090712129_sdads.designer.cs">
+      <DependentUpon>202012090712129_sdads.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012090712589_sdadsd.cs" />
+    <Compile Include="Migrations\202012090712589_sdadsd.designer.cs">
+      <DependentUpon>202012090712589_sdadsd.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApprovalType.cs" />
@@ -1744,6 +1752,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202012081154034_warantydateOptional.resx">
       <DependentUpon>202012081154034_warantydateOptional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012090712129_sdads.resx">
+      <DependentUpon>202012090712129_sdads.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012090712589_sdadsd.resx">
+      <DependentUpon>202012090712589_sdadsd.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

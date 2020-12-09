@@ -76,7 +76,7 @@ namespace WebApplication8.Controllers
 
 
             projects = projects.OrderByDescending(p => p.StampDate).ToList();
-            return View(projects.ToList());
+            return View(projects);
         }
 
         // GET: Projects/Details/5
