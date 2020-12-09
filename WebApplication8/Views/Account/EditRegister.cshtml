@@ -14,7 +14,7 @@
 
     @Html.ValidationSummary("", new { @class = "text-danger" })
 
-@Html.HiddenFor(Model=>Model.Email);
+    @Html.HiddenFor(Model => Model.Email);
 
 
 
@@ -46,7 +46,15 @@
         </div>
     </div>
 
+
     <div class="form-group">
+        @Html.LabelFor(model => model.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-3">
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control Email", value = "", id = "Email", autocomplete = "off" })
+        </div>
+    </div>
+
+    @*<div class="form-group">
         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
@@ -56,6 +64,13 @@
         @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        </div>
+    </div>*@
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.IsEnabled, new { @class = "col-md-2 control-label" })
+        <div class="col-md-3">
+            @Html.EditorFor(m => m.IsEnabled, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">

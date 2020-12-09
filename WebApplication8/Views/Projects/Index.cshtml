@@ -10,12 +10,15 @@
 <link href="~/Scripts/css/selectsearch/select2.min.css" rel="stylesheet" />
 
 
-<p>
+<label class="button-collapse">
     @if (User.IsInRole("Sales Coordinator") || User.IsInRole("Admin"))
     {
-        @Html.ActionLink("Create New", "Create")
+        @Html.ActionLink("Create ", "Create" ,null, htmlAttributes: new { @class = " btn btn-default " })
+        
+        
     }
-</p>
+    <button id="btnExport"  style="margin-left:20px" class="btn btn-default">Excel <span class=" glyphicon glyphicon-download-alt"></span></button>
+</label>
 
 
 
@@ -65,13 +68,13 @@
 
             <div class="input-group push-down-4 inner col-md-2" style="float:left;padding-left:30px">
                 <input type="checkbox" id="NotApproved" name="NotApproved" value="true" />
-                <label for="NotApproved">Not Approved</label>
-            </div>
+                <label for="NotApproved" style="padding-right:30px">Not Approved</label>
 
 
-            <div class="input-group-btn">
-                <button class="btn btn-primary">Search</button>
 
+                <button class="btn btn-default" > Search <span class="glyphicon glyphicon-search"></span> </button>
+
+            
             </div>
 
         </div>
@@ -81,52 +84,42 @@
 
 
 
-    <button id="btnExport">Export</button>
+
 
 
 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
     <thead>
         <tr>
 
+
+            <th>
+                @Html.DisplayNameFor(model => model.QuotationRef)
+            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.Code)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectStatusId)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.SalesMan)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SalesType)
-            </th>
-
-
-            <th>
-                @Html.DisplayNameFor(model => model.Customer.Name)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.CustomersType)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.Designer.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectPaymentTermId)
+                @Html.DisplayNameFor(model => model.ProjectStatus.Name)
             </th>
 
 
             <th>
                 @Html.DisplayNameFor(model => model.SalesDate)
             </th>
+
             <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Area.Name)
+            </th>
+
+
+            <th>
+
+
+
                 @Html.DisplayNameFor(model => model.Value)
             </th>
             <th>
@@ -138,30 +131,97 @@
             <th>
                 @Html.DisplayNameFor(model => model.Total)
             </th>
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.SalesType.Name)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.CustomersType.Name)
+            </th>
+
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.Designer.Name)
+            </th>
+
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectPaymentTerm.Name)
+            </th>
+
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.QuotationAgreementApprovedby)
+            </th>
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.AccountApproval)
+
+            </th>
+
+
+
             <th>
                 @Html.DisplayNameFor(model => model.Deduction)
             </th>
             <th>
-                @Html.DisplayName("Net Value")
+                Net Value
             </th>
 
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
+
+
+
             <th>
                 @Html.DisplayNameFor(model => model.DeliveryDate)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ActualDeliveryDate)
             </th>
+
             <th>
-                @Html.DisplayNameFor(model => model.AccountApproval)
+                @Html.DisplayNameFor(model => model.Warranty)
             </th>
+
+
+
+
+
+
+
+
+
+
             <th>
-                Created In
+                @Html.DisplayNameFor(model => model.SalesMan.Name)
             </th>
+
+
             <th>
-                @Html.DisplayNameFor(model => model.QuotationRef)
+                @Html.DisplayNameFor(model => model.Customer.Name)
+            </th>
+
+
+
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.CreateDate)
+            </th>
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.StampDate)
             </th>
             <th></th>
         </tr>
@@ -171,46 +231,39 @@
         @foreach (var item in Model)
         {
         <tr>
-
+            <td>
+                @Html.DisplayFor(modelItem => item.QuotationRef)
+            </td>
 
             <td>
                 @Html.DisplayFor(modelItem => item.Code)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-
-            <td>
                 @Html.DisplayFor(modelItem => item.ProjectStatus.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SalesMan.Name)
-            </td>
-            <td>
-
-                @Html.DisplayFor(modelItem => item.SalesType.Name)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.Name)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.CustomersType.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Designer.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjectPaymentTerm.Name)
             </td>
 
 
             <td>
                 @Html.DisplayFor(modelItem => item.SalesDate)
             </td>
+
             <td>
-                @Html.DisplayFor(modelItem => item.Value)
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Area.Name)
+            </td>
+
+
+            <td>
+
+
+                @{
+                    var indianCulture = new System.Globalization.CultureInfo("hi-IN");
+                    
+                }
+                @string.Format(indianCulture, "{0:N}", item.Total)
+
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Discount)
@@ -219,29 +272,37 @@
                 @Html.DisplayFor(modelItem => item.Vat)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Total)
+
+                @string.Format(indianCulture, "{0:N}", item.Total)
+            </td>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.SalesType.Name)
             </td>
 
             <td>
-                @Html.DisplayFor(modelItem => item.Deduction)
-            </td>
-            <td>
-                @{
-                    float x = @item.Total - @item.Deduction ?? 0;
-                }
-
-                @Html.Raw(x)
+                @Html.DisplayFor(modelItem => item.CustomersType.Name)
             </td>
 
+
+
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => item.Designer.Name)
             </td>
+
+
+
             <td>
-                @Html.DisplayFor(modelItem => item.DeliveryDate)
+                @Html.DisplayFor(modelItem => item.ProjectPaymentTerm.Name)
             </td>
+
+
+
             <td>
-                @Html.DisplayFor(modelItem => item.ActualDeliveryDate)
+                @Html.DisplayFor(modelItem => item.QuotationAgreementApprovedby)
             </td>
+
 
             <td>
 
@@ -257,6 +318,66 @@
                     }
                 }
             </td>
+
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Deduction)
+            </td>
+            <td>
+                @{
+                    float x = @item.Total - @item.Deduction ?? 0;
+                }
+                @string.Format(indianCulture, "{0:N}", x)
+
+            </td>
+
+
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.DeliveryDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActualDeliveryDate)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Warranty)
+            </td>
+
+
+
+
+
+
+
+
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.SalesMan.Name)
+            </td>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer.Name)
+            </td>
+
+
+
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateDate)
+            </td>
+
+
             <td>
                 @Html.DisplayFor(modelItem => item.StampDate)
             </td>
@@ -270,9 +391,9 @@
                 @Html.ActionLink("Details", "Details", new { id = item.ProjectId })
                 @*@Html.ActionLink("Delete", "Delete", new { id = item.ProjectId })*@
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.QuotationRef)
-            </td>
+
+
+
         </tr>
         }
     </tbody>
@@ -292,6 +413,9 @@
                 "order": [[20, "desc"]]
             });
 
+
+            $('.navbar-side').animate({ left: '-260px' });
+            $('#page-wrapper').animate({ 'margin-left': '0px' });
 
         });
 

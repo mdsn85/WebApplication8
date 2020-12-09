@@ -243,6 +243,8 @@ namespace WebApplication8.Controllers
             ViewBag.SalesTypeId = new SelectList(db.SalesTypes, "SalesTypeId", "Name");
 
             ViewBag.ProjectStatusId = new SelectList(db.ProjectStatus, "ProjectStatusId", "Name");
+            ViewBag.AreaId = new SelectList(db.Areas, "AreaId", "Name");
+            
 
             ViewBag.ext = FolderPath.allowedExtensions;
 
@@ -254,7 +256,7 @@ namespace WebApplication8.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProjectId,Name,CustomersTypeId,SalesTypeId,Code,SalesDate,SalesManId,CustomerId,DesignerId,Value,Discount,Vat,Total,SalePrice,ProjectPaymentTermId" +
+        public ActionResult Create([Bind(Include = "Warranty,AreaId,ProjectId,Name,CustomersTypeId,SalesTypeId,Code,SalesDate,SalesManId,CustomerId,DesignerId,Value,Discount,Vat,Total,SalePrice,ProjectPaymentTermId" +
             ",Description,DeliveryDate,ActualDeliveryDate,AccountApproval,QuotationRef,QuotationAgreementApprovedby")] Project project,
             String[] FileName)
         {
@@ -317,8 +319,17 @@ namespace WebApplication8.Controllers
             ViewBag.CustomersTypeId = new SelectList(db.CustomersTypes, "CustomersTypeId", "Name", project.CustomersTypeId);
 
             ViewBag.SalesTypeId = new SelectList(db.SalesTypes, "SalesTypeId", "Name", project.SalesTypeId);
-
+            ViewBag.AreaId = new SelectList(db.Areas, "AreaId", "Name",project.AreaId);
             ViewBag.code = project.Code;
+            ViewBag.ext = FolderPath.allowedExtensions;
+
+
+
+            ViewBag.DeliveryDate = project.DeliveryDate;
+            ViewBag.Warranty= project.Warranty;
+            ViewBag.ActualDeliveryDate = project.ActualDeliveryDate;
+
+
             return View(project);
         }
 
@@ -350,6 +361,7 @@ namespace WebApplication8.Controllers
             ViewBag.SalesTypeId = new SelectList(db.SalesTypes, "SalesTypeId", "Name", project.SalesTypeId);
 
             ViewBag.ProjectStatusId = new SelectList(db.ProjectStatus, "ProjectStatusId", "Name", project.ProjectStatusId);
+            ViewBag.AreaId = new SelectList(db.Areas, "AreaId", "Name", project.AreaId);
             project.ProjectFiles = db.Projects.Find(project.ProjectId).ProjectFiles;
 
 
@@ -361,7 +373,7 @@ namespace WebApplication8.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProjectId,UserCreate,CreateDate,Deduction,ProjectStatusId,DeductionReason,Name,CustomersTypeId,SalesTypeId,Code,SalesDate,SalesManId,CustomerId,DesignerId,Value,Discount,Vat,Total,SalePrice,ProjectPaymentTermId,Description,DeliveryDate,ActualDeliveryDate,AccountApproval")] Project project
+        public ActionResult Edit([Bind(Include = "Warranty,AreaId,ProjectId,UserCreate,CreateDate,Deduction,ProjectStatusId,DeductionReason,Name,CustomersTypeId,SalesTypeId,Code,SalesDate,SalesManId,CustomerId,DesignerId,Value,Discount,Vat,Total,SalePrice,ProjectPaymentTermId,Description,DeliveryDate,ActualDeliveryDate,AccountApproval")] Project project
             , String[] FileName)
         {
             if (ModelState.IsValid)
@@ -414,6 +426,7 @@ namespace WebApplication8.Controllers
             ViewBag.SalesTypeId = new SelectList(db.SalesTypes, "SalesTypeId", "Name", project.SalesTypeId);
 
             ViewBag.ProjectStatusId = new SelectList(db.ProjectStatus, "ProjectStatusId", "Name", project.ProjectStatusId);
+            ViewBag.AreaId = new SelectList(db.Areas, "AreaId", "Name", project.AreaId);
             return View(project);
         }
 

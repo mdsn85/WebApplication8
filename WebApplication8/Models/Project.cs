@@ -79,6 +79,16 @@ namespace WebApplication8.Models
         [StringLength(350)]
         public string Description { get; set; }
 
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? Warranty { get; set; }
+
+
+        [Display(Name = "Area ")]
+        public int? AreaId { get; set; }
+        [Display(Name = "Area ")]
+        public virtual Area Area { get; set; }
+        
+
 
         [Display(Name = "Expected Delivery Date")]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]

@@ -88,6 +88,15 @@
         </div>
     </div>
 
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.AreaId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("AreaId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.AreaId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
     <div class="form-group">
         @Html.LabelFor(model => model.DesignerId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -144,6 +153,9 @@
         </div>
     </div>
 
+
+
+
     <div class="form-group">
         @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -172,8 +184,19 @@
 
 
 
+    <div class="form-group">
+        <label for="SalesDate" class="col-md-2 control-label">Waranti</label>
+        <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="Warranty" data-link-format="yyyy-mm-dd">
+            <input class="form-control" size="16" type="text" value="@ViewBag.Warranty" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+        <input type="hidden" id="Warranty" name="Warranty" value="@ViewBag.Warranty" /><br />
 
+        @Html.ValidationMessageFor(model => model.Warranty, "", new { @class = "text-danger" })
+    </div>
 
+    
     <div class="form-group">
         <label for="SalesDate" class="col-md-2 control-label">Delivery Date</label>
         <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="DeliveryDate" data-link-format="yyyy-mm-dd">
@@ -270,6 +293,11 @@
     <script>
         $("#SalesManId").select2({
             placeholder: "Select salesman",
+            allowClear: true
+        });
+
+        $("#AreaId").select2({
+            placeholder: "Select area",
             allowClear: true
         });
 

@@ -544,13 +544,16 @@ namespace WebApplication8.Controllers
             user.UserName = model.UserName;
             user.Email = model.Email;
             user.IsEnabled = model.IsEnabled;
-            user.PasswordHash = user.PasswordHash;
+
+            var EmployeeUser = db.EmployeeUsers.Where(ee => ee.User == user.UserName).FirstOrDefault();
+
+            //user.PasswordHash = user.PasswordHash;
             // Apply the changes if any to the db
             try
             {
                 UserManager.Update(user);
 
-
+                await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
 
                 //var RoleRegisterUser = new RoleStore<IdentityRole>(new ApplicationDbContext());
                 //var roleManager = new RoleManager<IdentityRole>(RoleRegisterUser);
@@ -573,7 +576,6 @@ namespace WebApplication8.Controllers
                 //User role
                 //await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
 
-                var EmployeeUser = db.EmployeeUsers.Where(ee => ee.User == user.UserName).FirstOrDefault();
 
                 //if employee has not assign to user yet
                 if (EmployeeUser == null)

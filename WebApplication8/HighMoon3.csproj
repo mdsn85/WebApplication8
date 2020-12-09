@@ -182,6 +182,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AreasController.cs" />
     <Compile Include="Controllers\CreditTerms1Controller.cs" />
     <Compile Include="Controllers\CreditTermsController.cs" />
     <Compile Include="Controllers\CreditTermSuppliersController.cs" />
@@ -698,9 +699,18 @@
     <Compile Include="Migrations\202012070959136_add_type_category_for_material_table.designer.cs">
       <DependentUpon>202012070959136_add_type_category_for_material_table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012080824596_addWarantyAndAreaToProject.cs" />
+    <Compile Include="Migrations\202012080824596_addWarantyAndAreaToProject.designer.cs">
+      <DependentUpon>202012080824596_addWarantyAndAreaToProject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012081154034_warantydateOptional.cs" />
+    <Compile Include="Migrations\202012081154034_warantydateOptional.designer.cs">
+      <DependentUpon>202012081154034_warantydateOptional.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApprovalType.cs" />
+    <Compile Include="Models\Area.cs" />
     <Compile Include="Models\ContractFile.cs" />
     <Compile Include="Models\CreditTerm.cs" />
     <Compile Include="Models\CreditTermSupplier.cs" />
@@ -1344,6 +1354,11 @@
     <Content Include="Views\CreditTermSuppliers\Details.cshtml" />
     <Content Include="Views\CreditTermSuppliers\Edit.cshtml" />
     <Content Include="Views\CreditTermSuppliers\Index.cshtml" />
+    <Content Include="Views\Areas\Create.cshtml" />
+    <Content Include="Views\Areas\Delete.cshtml" />
+    <Content Include="Views\Areas\Details.cshtml" />
+    <Content Include="Views\Areas\Edit.cshtml" />
+    <Content Include="Views\Areas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1723,6 +1738,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202012070959136_add_type_category_for_material_table.resx">
       <DependentUpon>202012070959136_add_type_category_for_material_table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012080824596_addWarantyAndAreaToProject.resx">
+      <DependentUpon>202012080824596_addWarantyAndAreaToProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012081154034_warantydateOptional.resx">
+      <DependentUpon>202012081154034_warantydateOptional.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

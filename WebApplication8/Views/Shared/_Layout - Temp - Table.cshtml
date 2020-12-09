@@ -46,8 +46,8 @@
             <ul class="nav navbar-top-links navbar-right">
                 <li style="margin-right:50PX"> @Html.Partial("_LoginPartial")</li>
                 @*<li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown4"><i class="fa fa-envelope fa-fw"></i> <i class="material-icons right">arrow_drop_down</i></a></li>
-                <li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown3"><i class="fa fa-tasks fa-fw"></i> <i class="material-icons right">arrow_drop_down</i></a></li>
-                <li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown2"><i class="fa fa-bell fa-fw"></i> <i class="material-icons right">arrow_drop_down</i></a></li>*@
+                <li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown3"><i class="fa fa-tasks fa-fw"></i> <i class="material-icons right">arrow_drop_down</i></a></li>*@
+                <li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown2"><i class="fa fa-bell fa-fw"></i> <i class="material-icons right">arrow_drop_down</i></a></li>
                 @*<li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown1"><i class="fa fa-user fa-fw"></i> <b>John Doe</b> <i class="material-icons right">arrow_drop_down</i></a></li>*@
 
 
@@ -307,6 +307,8 @@
                                 <li>@Html.ActionLink("Customer Types", "Index", "CustomersTypes")</li>
                                 <li>@Html.ActionLink("Project Payment Terms", "Index", "ProjectPaymentTerms")</li>
 
+                                <li>@Html.ActionLink("Areas", "Index", "Areas")</li>
+                                
                                 <li>
                                     <a href="#">Second Level Link</a>
                                 </li>
@@ -438,10 +440,12 @@
         <script src="~/assets/js/dataTables/jquery.dataTables.js"></script>
         <script src="~/assets/js/dataTables/dataTables.bootstrap.js"></script>
         <script>
-            $(document).ready(function () {
-                alert();
-                $('#dataTables-example').dataTable();
-            });
+            //$(document).ready(function () {
+            //    //alert();
+            //    $('#dataTables-example').dataTable();
+
+
+            //});
         </script>
 
 
@@ -579,5 +583,7 @@
             }
 
         </script>
+
+
 </body>
 </html>

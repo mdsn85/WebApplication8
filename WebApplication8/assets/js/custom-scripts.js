@@ -206,7 +206,10 @@
     // Initializing ///
 
     $(document).ready(function () {
-		$(".dropdown-button").dropdown();
+        $(".dropdown-button").dropdown();
+
+        var t = false;
+
 		$("#sideNav").click(function(){
 			if($(this).hasClass('closed')){
 				$('.navbar-side').animate({left: '0px'});
@@ -218,8 +221,12 @@
 			    $(this).addClass('closed');
 				$('.navbar-side').animate({left: '-260px'});
 				$('#page-wrapper').animate({'margin-left' : '0px'}); 
-			}
-		});
+            }
+            t = true;
+        });
+
+
+
 		
         mainApp.initFunction(); 
     });
