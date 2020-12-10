@@ -141,6 +141,9 @@
                 @Html.DisplayNameFor(model => model.CustomersType.Name)
             </th>
 
+            <th>
+                @Html.DisplayNameFor(model => model.SalesMan.Name)
+            </th>
 
 
             <th>
@@ -197,9 +200,6 @@
 
 
 
-            <th>
-                @Html.DisplayNameFor(model => model.SalesMan.Name)
-            </th>
 
 
             <th>
@@ -260,7 +260,7 @@
 
                 @{
                     var indianCulture = new System.Globalization.CultureInfo("hi-IN");
-                    
+
                 }
                 @string.Format(indianCulture, "{0:N}", item.Total)
 
@@ -269,7 +269,7 @@
                 @Html.DisplayFor(modelItem => item.Discount)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Vat)
+                @string.Format(indianCulture, "{0:N}", item.Vat)
             </td>
             <td>
 
@@ -286,6 +286,9 @@
             </td>
 
 
+            <td>
+                @Html.DisplayFor(modelItem => item.SalesMan.Name)
+            </td>
 
             <td>
                 @Html.DisplayFor(modelItem => item.Designer.Name)
@@ -355,9 +358,6 @@
 
 
 
-            <td>
-                @Html.DisplayFor(modelItem => item.SalesMan.Name)
-            </td>
 
 
             <td>

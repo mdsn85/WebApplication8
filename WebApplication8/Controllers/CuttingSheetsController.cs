@@ -125,6 +125,8 @@ namespace WebApplication8.Controllers
 
             ViewBag.productlist = new SelectList(db.Materials, "MaterialId", "Name");
             ViewBag.ProjectId = new SelectList(db.Projects.Where(p=>p.AccountApproval==true && p.CuttingSheets.Count==0), "ProjectId", "Code");
+
+            ViewBag.date = DateTime.Now;
             return View();
         }
 
@@ -148,6 +150,7 @@ namespace WebApplication8.Controllers
             ViewBag.productlist = new SelectList(db.Materials, "MaterialId", "Name");
 
             ViewBag.ProjectId = new SelectList(db.Projects, "ProjectId", "Name", cuttingSheet.ProjectId);
+            ViewBag.date = cuttingSheet.CreateDate;
             return View(cuttingSheet);
         }
 
@@ -203,7 +206,7 @@ namespace WebApplication8.Controllers
                     EP.qty = float.Parse(d.qty.ToString());
 
 
-                    float? AvailableQty = mm.qty - mm.Resevedqty - mm.MinReOrder;
+                    float? AvailableQty = mm.qty - mm.Resevedqty??0 - mm.MinReOrder??0;
                     if (AvailableQty> EP.qty) {
                         EP.status = statusList.InStock;
                     }else
@@ -220,7 +223,7 @@ namespace WebApplication8.Controllers
 
                     var StockIssue = db.StockIssues.Find(eid);
 
-                        mm.Resevedqty = mm.Resevedqty + EP.qty;
+                    mm.Resevedqty = mm.Resevedqty??0 + EP.qty;
                     db.SaveChanges();
 
                 }

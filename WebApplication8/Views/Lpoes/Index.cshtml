@@ -111,6 +111,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.GrandTotal)
             </th>
+            <th hidden>
+                @Html.DisplayNameFor(model => model.StampDate)
+            </th>
 
 
             <th></th>
@@ -119,63 +122,66 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.code)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LpoStatus.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SupplierRef)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LpoDate)
-                </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LpoStatus.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupplierRef)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LpoDate)
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Supplier.Name)
-                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Supplier.Name)
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreditTerm.Name)
-                </td>
-
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserCreate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SubTotal)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.Discount)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.Vat)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.GrandTotal)
-                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreditTerm.Name)
+            </td>
 
 
-                <td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserCreate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubTotal)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Discount)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Vat)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.GrandTotal)
+            </td>
+
+            <td hidden>
+                @Html.DisplayFor(modelItem => item.StampDate)
+            </td>
+
+            <td>
 
 
-                    @Html.ActionLink("Print", "PrintNewTable", new { id = item.LpoId }) |
+                @Html.ActionLink("Print", "PrintNewTable", new { id = item.LpoId }) |
 
-                    @if (User.IsInRole("Purchase") || User.IsInRole("Admin"))
-                    {
-                        @Html.ActionLink("Revised", "Revised", new { id = item.LpoId })
-                        @Html.Raw("|")
-                    }
+                @if (User.IsInRole("Purchase") || User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Revised", "Revised", new { id = item.LpoId })
+                    @Html.Raw("|")
+                }
 
-                    @Html.ActionLink("Details", "Details", new { id = item.LpoId })
-                </td>
-            </tr>
+                @Html.ActionLink("Details", "Details", new { id = item.LpoId })
+            </td>
+        </tr>
         }
     </tbody>
 </table>
@@ -191,6 +197,8 @@
     <script>
         $(document).ready(function () {
             $('#dataTables-example').dataTable();
+            "order": [11, "desc"];
+
         });
 
     </script>

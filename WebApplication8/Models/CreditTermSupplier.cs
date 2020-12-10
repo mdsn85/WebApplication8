@@ -16,5 +16,8 @@ namespace WebApplication8.Models
         public string Name { get; set; }
 
         public virtual ICollection<supplier> Suppliers { get; set; }
+
+        public virtual ICollection<Lpo> Lpos { get; set; }
+
     }
 }

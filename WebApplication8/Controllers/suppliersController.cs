@@ -35,6 +35,20 @@ namespace WebApplication8.Controllers
             return View(supplier);
         }
 
+        public int GetSupplierTerm(int? id)
+        {
+            if (id == null)
+            {
+                return 0;
+            }
+            supplier supplier = db.suppliers.Find(id);
+            if (supplier == null || supplier.CreditTermSupplier==null)
+            {
+                return 0;
+            }
+            return supplier.CreditTermSupplier.CreditTermSupplierId;
+        }
+
         // GET: suppliers/Create
         public ActionResult Create()
         {

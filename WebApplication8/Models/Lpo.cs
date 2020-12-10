@@ -39,7 +39,7 @@ namespace WebApplication8.Models
 
         [Display(Name = "Credit Term")]
         public int CreditTermId { get; set; }
-        public virtual CreditTerm CreditTerm { get; set; }
+        public virtual CreditTermSupplier CreditTerm { get; set; }
 
         public float SubTotal { get; set; }
 

@@ -145,6 +145,8 @@ namespace WebApplication8.Controllers
                 Unit = material.Unit.Name,
                 Unit2 ="", //material.MaterialUnits.LastOrDefault().Unit.Name,
                 Dimension = material.Dimension ?? "",
+                AvalableQty = material.AvalableQty,
+  
 
             }
             , JsonRequestBehavior.AllowGet);

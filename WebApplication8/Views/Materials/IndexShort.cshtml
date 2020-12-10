@@ -69,113 +69,120 @@
 }
 <!-- END SEARCH -->
 
-<table class="table">
-    <tr>
-        <th></th>
-        <th>
-            @Html.DisplayNameFor(model => model.code)
-        </th>
-
-        <th>
-            @Html.DisplayNameFor(model => model.WareHouse.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-
-        <th>
-            @Html.DisplayNameFor(model => model.Dimension)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Unit.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.qty)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Resevedqty)
-        </th>
-
-        <th>
-            @Html.DisplayNameFor(model => model.MinReOrder)
-        </th>
-
-        <th>
-            @Html.ActionLink("Available Qty", "IndexShort", new { sortOrder = ViewBag.AvalableQty })
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AvgPrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.latestPrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.barcode)
-        </th>
-
-
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<table class="table" id="dataTables-example">
+    <thead>
         <tr>
-            <td>
-                <span class="btn btn-info cid" id="@item.MaterialId">@item.MaterialId </span>
+            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.code)
+            </th>
 
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.code)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WareHouse.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.WareHouse.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Dimension)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Unit.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.qty)
-            </td>
-            <td>
-                @{float x = item.Resevedqty ?? 0;}
-                @x
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MinReOrder)
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Dimension)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Unit.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.qty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Resevedqty)
+            </th>
 
-            <td>
-                @{float? a = 0;
-                    a = @item.qty - @item.Resevedqty - @item.MinReOrder;}
+            <th>
+                @Html.DisplayNameFor(model => model.MinReOrder)
+            </th>
 
-                @Html.DisplayFor(modelItem => item.AvalableQty)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AvgPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.latestPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.barcode)
-            </td>
+            <th>
+                Available Qty
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvgPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.latestPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.barcode)
+            </th>
 
 
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <span class="btn btn-info cid" id="@item.MaterialId">@item.MaterialId </span>
 
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WareHouse.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dimension)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Unit.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.qty)
+                </td>
+                <td>
+                    @{float x = item.Resevedqty ?? 0;}
+                    @x
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MinReOrder)
+                </td>
+
+                <td>
+                    @{float? a = 0;
+                        a = @item.qty - @item.Resevedqty - @item.MinReOrder;}
+
+                    @Html.DisplayFor(modelItem => item.AvalableQty)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvgPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.latestPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.barcode)
+                </td>
+
+
+            </tr>
+        }
+    </tbody>
 </table>
 
 <script src="~/Scripts/js/jquery1.7.1Google.min.js"></script>
 
 <script>
+
+
     $(document).ready(function () {
+        $('#dataTables-example').dataTable({
+            "order": [9, "asc"]
+        });
         $(".cid").click(function () {
 
             var name = "";
@@ -200,6 +207,7 @@
                     Price = result.Price;
                     QtyApproved = result.QtyApproved;
                     Approval = result.QtyApproved;
+                    AvalableQty = result.AvalableQty;
                 },
                 error: function (xhr) {
                     //debugger;
@@ -210,7 +218,7 @@
 
             //alert(oVal);
 
-            window.opener.setValue(oVal, name, unit, Dimension, Price, QtyApproved, Approval);
+            window.opener.setValue(oVal, name, unit, Dimension, Price, QtyApproved, Approval, AvalableQty);
 
             window.close();
 

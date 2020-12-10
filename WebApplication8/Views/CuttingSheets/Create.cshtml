@@ -36,12 +36,18 @@
 
 
 
+
+
     <div class="form-group">
-        @Html.LabelFor(model => model.CreateDate, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.CreateDate, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.CreateDate, "", new { @class = "text-danger" })
+        <label for="CreateDate" class="col-md-2 control-label">Warranty</label>
+        <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="CreateDate" data-link-format="yyyy-mm-dd">
+            <input class="form-control" size="16" type="text" value="@ViewBag.date" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
         </div>
+        <input type="hidden" id="CreateDate" name="CreateDate" value="@ViewBag.date" /><br />
+
+        @Html.ValidationMessageFor(model => model.CreateDate, "", new { @class = "text-danger" })
     </div>
 
 
@@ -91,7 +97,7 @@
 
                         <span onclick="()" class=" ">
                             <button id="calculate" type="button" onclick="openChild()" class="fa fa-plus-square">Add Material</button><br>
-                         <br/>
+                            <br />
                         </span>
 
                         <input id="CustomerId" name="CustomerId" type="hidden" />

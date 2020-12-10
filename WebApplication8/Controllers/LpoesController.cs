@@ -170,8 +170,10 @@ namespace WebApplication8.Controllers
             ViewBag.code = generateContractCode(Sequense );
 
     
-            ViewBag.CreditTermId = new SelectList(db.CreditTerms, "CreditTermId", "Name");
+            ViewBag.CreditTermId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name");
             ViewBag.SupplierId = new SelectList(db.suppliers, "supplierId", "Name");
+
+            ViewBag.LpoDate = DateTime.Now;
             return View();
         }
 
@@ -186,8 +188,12 @@ namespace WebApplication8.Controllers
             ViewBag.code = newCode;
 
 
-            ViewBag.CreditTermId = new SelectList(db.CreditTerms, "CreditTermId", "Name");
+            //ViewBag.CreditTermId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name");
+
+            ViewBag.CreditTermId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name", lpo.CreditTermId);
             ViewBag.SupplierId = new SelectList(db.suppliers, "supplierId", "Name");
+
+
             return View(lpo);
         }
 
@@ -207,8 +213,9 @@ namespace WebApplication8.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CreditTermId = new SelectList(db.CreditTerms, "CreditTermId", "Name", lpo.CreditTermId);
+            ViewBag.CreditTermId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name", lpo.CreditTermId);
             ViewBag.SupplierId = new SelectList(db.suppliers, "supplierId", "Name", lpo.SupplierId);
+            ViewBag.LpoDate = lpo.LpoDate;
             return View(lpo);
         }
 
