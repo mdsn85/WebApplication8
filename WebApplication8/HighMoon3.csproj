@@ -58,17 +58,18 @@
     <Reference Include="ExcelDataReader.DataSet, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
       <HintPath>..\packages\ExcelDataReader.DataSet.3.6.0\lib\net35\ExcelDataReader.DataSet.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.2\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.4.1\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.2\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.4.1\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -219,6 +220,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\helloHub.cs" />
+    <Compile Include="Hubs\NotificationHub.cs" />
     <Compile Include="Migrations\202009011230532_init.cs" />
     <Compile Include="Migrations\202009011230532_init.Designer.cs">
       <DependentUpon>202009011230532_init.cs</DependentUpon>
@@ -719,6 +722,10 @@
     <Compile Include="Migrations\202012100653424_djdjd.designer.cs">
       <DependentUpon>202012100653424_djdjd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012110917474_hfh.cs" />
+    <Compile Include="Migrations\202012110917474_hfh.designer.cs">
+      <DependentUpon>202012110917474_hfh.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApprovalType.cs" />
@@ -748,6 +755,8 @@
     <Compile Include="Models\MaterialCategory.cs" />
     <Compile Include="Models\MaterialType.cs" />
     <Compile Include="Models\MaterialUnit.cs" />
+    <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\NotifModels.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\PaymentSequense.cs" />
     <Compile Include="Models\Permission.cs" />
@@ -772,6 +781,7 @@
     <Compile Include="Models\StringExtensions.cs" />
     <Compile Include="Models\supplier.cs" />
     <Compile Include="Models\Unit.cs" />
+    <Compile Include="Models\UserHubModels.cs" />
     <Compile Include="Models\Warehouse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -793,6 +803,7 @@
     <Content Include="assets\js\bootstrap.min.js" />
     <Content Include="assets\js\chart-data.js" />
     <Content Include="assets\js\chart.min.js" />
+    <Content Include="assets\js\custom-scripts - Copy.js" />
     <Content Include="assets\js\custom-scripts.js" />
     <Content Include="assets\js\dataTables\dataTables.bootstrap.css" />
     <Content Include="assets\js\dataTables\dataTables.bootstrap.js" />
@@ -1016,6 +1027,7 @@
     <Content Include="Content\bootstrap\alerts.less" />
     <Content Include="Content\_bootstrap-datetimepicker.less" />
     <Content Include="Content\bootstrap-datetimepicker-build.less" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="Scripts\datetime\bootstrap\css\bootstrap-datetimepicker.css" />
     <Content Include="Scripts\datetime\bootstrap\css\bootstrap-datetimepicker.min.css" />
@@ -1051,8 +1063,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
-    <Content Include="Scripts\jquery.signalR-2.2.2.js" />
-    <Content Include="Scripts\jquery.signalR-2.2.2.min.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.1.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.1.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1765,6 +1777,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202012100653424_djdjd.resx">
       <DependentUpon>202012100653424_djdjd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012110917474_hfh.resx">
+      <DependentUpon>202012110917474_hfh.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
