@@ -10,12 +10,17 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using WebApplication8.Hubs;
 using WebApplication8.Models;
 
 namespace WebApplication8.Controllers
 {
     public class ProjectsController : Controller
     {
+
+        NotificationHub objNotifHub = new NotificationHub();
+
+
         private ApplicationDbContext db = new ApplicationDbContext();
         private string[] rolesArray;
 
@@ -300,7 +305,15 @@ namespace WebApplication8.Controllers
                         }
                     }
 
+                    Notification objNotif = new Notification();
+                    objNotif.SentTo = project.UserCreate;
 
+                    db.Configuration.ProxyCreationEnabled = false;
+                    db.Notifications.Add(objNotif);
+                    db.SaveChanges();
+
+
+                    objNotifHub.SendNotification(objNotif.SentTo);
                     return RedirectToAction("Index");
                 }
                 else

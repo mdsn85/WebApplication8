@@ -9,6 +9,7 @@ using WebApplication8.Models;
 
 namespace WebApplication8.Hubs
 {
+    [Authorize]
     public class NotificationHub : Hub
     {
         private static readonly ConcurrentDictionary<string, UserHubModels> Users =
@@ -25,7 +26,7 @@ namespace WebApplication8.Hubs
                 string loggedUser = Context.User.Identity.Name;
 
                 //Get TotalNotification
-                string totalNotif = LoadNotifData(loggedUser);
+                List<Notification> totalNotif = LoadNotifData(loggedUser);
 
                 //Send To
                 UserHubModels receiver;
@@ -48,10 +49,12 @@ namespace WebApplication8.Hubs
             try
             {
                 //Get TotalNotification
-                string totalNotif = LoadNotifData(SentTo);
+                List<Notification> totalNotif = LoadNotifData(SentTo);
 
                 //Send To
-                UserHubModels receiver;
+                //var context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+                //context.Clients.All.broadcaastNotif(totalNotif);
+                 UserHubModels receiver;
                 if (Users.TryGetValue(SentTo, out receiver))
                 {
                     var cid = receiver.ConnectionIds.FirstOrDefault();
@@ -65,21 +68,24 @@ namespace WebApplication8.Hubs
             }
         }
 
-        private string LoadNotifData(string userId)
+        private List<Notification> LoadNotifData(string userId)
         {
             int total = 0;
             var query = (from t in context.Notifications
                          where t.SentTo == userId
                          select t)
                         .ToList();
-            total = query.Count;
-            return total.ToString();
+            //total = query.Count;
+            return query.ToList();
         }
 
         public override Task OnConnected()
         {
+            //string userName = "Admin"; 
+            //string name = Context.User.Identity.Name;
             string userName = Context.User.Identity.Name;
             string connectionId = Context.ConnectionId;
+
 
             var user = Users.GetOrAdd(userName, _ => new UserHubModels
             {

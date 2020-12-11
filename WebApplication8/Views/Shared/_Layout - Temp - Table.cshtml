@@ -27,6 +27,11 @@
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="~/assets/js/Lightweight-Chart/cssCharts.css">
+    <style>
+        .redBell{
+            color:red;
+        }
+    </style>
 </head>
 <body>
 
@@ -46,8 +51,9 @@
             <ul class="nav navbar-top-links navbar-right">
                 <li style="margin-right:50PX"> @Html.Partial("_LoginPartial")</li>
                 @*<li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown4"><i class="fa fa-envelope fa-fw"></i> <i class="material-icons right">arrow_drop_down</i></a></li>
-                <li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown3"><i class="fa fa-tasks fa-fw"></i> <i class="material-icons right">arrow_drop_down</i></a></li>*@
-                <li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown2"><i class="fa fa-bell fa-fw"></i> <i class="material-icons right">arrow_drop_down</i></a></li>
+        <li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown3"><i class="fa fa-tasks fa-fw"></i> <i class="material-icons right">arrow_drop_down</i></a></li>*@
+                <li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown2"><i class=" fa fa-bell fa-fw  "   id="messages"></i> 
+                                        <i class="material-icons right">arrow_drop_down</i></a></li>
                 @*<li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown1"><i class="fa fa-user fa-fw"></i> <b>John Doe</b> <i class="material-icons right">arrow_drop_down</i></a></li>*@
 
 
@@ -55,6 +61,7 @@
 
             </ul>
         </nav>
+
         <!-- Dropdown Structure -->
         <ul id="dropdown1" class="dropdown-content">
             <li>
@@ -68,7 +75,7 @@
             </li>
         </ul>
         <ul id="dropdown2" class="dropdown-content w250">
-            <li>
+            @*<li>
                 <div>
                     <i class="fa fa-comment fa-fw"></i> New Comment
                     <span class="pull-right text-muted small">4 min</span>
@@ -113,7 +120,7 @@
                     <strong>See All Alerts</strong>
                     <i class="fa fa-angle-right"></i>
                 </a>
-            </li>
+            </li>*@
         </ul>
         <ul id="dropdown3" class="dropdown-content dropdown-tasks w250">
             <li>
@@ -411,10 +418,46 @@
         <script src="~/signalr/hubs"></script>
         <script type="text/javascript">
             $(document).ready(function () {
+
+                function setTotalNotification(totalNotif) {
+                    console.log(totalNotif);
+                    $("#messages").html(totalNotif.length);
+                    $("#messages").css("color", "red");
+
+                    for (var i = 0;i< totalNotif.length ; i++) {
+                        
+                        st = "<li>" +
+                            "<div>" +
+                            "<i class='fa fa-comment fa-fw'></i>" + totalNotif[i].SentTo+
+                            "<span class='pull-right text-muted small' > 4 min</span >" +
+                            "</div>" +
+                            "</a>" +
+                            "</li>" +
+                            "<li class='divider'></li>";
+                        $("#dropdown2").append(st);
+
+                    }
+
+
+          
+                }
+
                 var hub = $.connection.notificationHub;
+
+                //Client Call
+                hub.client.broadcaastNotif = function (totalNotif) {
+                    setTotalNotification(totalNotif)
+                };
+
+
+                //$.connection.hub.start().done(function () { });
+
                 $.connection.hub.start()
                     .done(function () {
                         console.log("Hub Connected!");
+
+                        //Server Call
+                        hub.server.getNotification();
 
                     })
                     .fail(function () {
