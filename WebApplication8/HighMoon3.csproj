@@ -58,6 +58,9 @@
     <Reference Include="ExcelDataReader.DataSet, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
       <HintPath>..\packages\ExcelDataReader.DataSet.3.6.0\lib\net35\ExcelDataReader.DataSet.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.4.1\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
     </Reference>
@@ -198,6 +201,7 @@
     <Compile Include="Controllers\LpoTermsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MaterialsController.cs" />
+    <Compile Include="Controllers\NotificationCategoriesController.cs" />
     <Compile Include="Controllers\PaymentsController.cs" />
     <Compile Include="Controllers\PermissionUsersController.cs" />
     <Compile Include="Controllers\Project2Controller.cs" />
@@ -726,6 +730,38 @@
     <Compile Include="Migrations\202012110917474_hfh.designer.cs">
       <DependentUpon>202012110917474_hfh.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012111936034_NotificationCatagory.cs" />
+    <Compile Include="Migrations\202012111936034_NotificationCatagory.designer.cs">
+      <DependentUpon>202012111936034_NotificationCatagory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012112000064_NotificationCatagoryModify.cs" />
+    <Compile Include="Migrations\202012112000064_NotificationCatagoryModify.designer.cs">
+      <DependentUpon>202012112000064_NotificationCatagoryModify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012120742044_updateNotification.cs" />
+    <Compile Include="Migrations\202012120742044_updateNotification.designer.cs">
+      <DependentUpon>202012120742044_updateNotification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012120912265_dateOfNotification.cs" />
+    <Compile Include="Migrations\202012120912265_dateOfNotification.designer.cs">
+      <DependentUpon>202012120912265_dateOfNotification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012121028352_LPOCreditTerm.cs" />
+    <Compile Include="Migrations\202012121028352_LPOCreditTerm.designer.cs">
+      <DependentUpon>202012121028352_LPOCreditTerm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012121032205_LPOCreditTerm2.cs" />
+    <Compile Include="Migrations\202012121032205_LPOCreditTerm2.designer.cs">
+      <DependentUpon>202012121032205_LPOCreditTerm2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012121118008_renameNotificationCatTable.cs" />
+    <Compile Include="Migrations\202012121118008_renameNotificationCatTable.designer.cs">
+      <DependentUpon>202012121118008_renameNotificationCatTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012121335237_AddFileUploadToCuttingSheet.cs" />
+    <Compile Include="Migrations\202012121335237_AddFileUploadToCuttingSheet.designer.cs">
+      <DependentUpon>202012121335237_AddFileUploadToCuttingSheet.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApprovalType.cs" />
@@ -737,6 +773,7 @@
     <Compile Include="Models\CustomersType.cs" />
     <Compile Include="Models\CuttingSheet.cs" />
     <Compile Include="Models\CuttingSheetDetail.cs" />
+    <Compile Include="Models\CuttingSheetFile.cs" />
     <Compile Include="Models\CuttingSheetSequense.cs" />
     <Compile Include="Models\Designer.cs" />
     <Compile Include="Models\EmailServer.cs" />
@@ -755,7 +792,10 @@
     <Compile Include="Models\MaterialCategory.cs" />
     <Compile Include="Models\MaterialType.cs" />
     <Compile Include="Models\MaterialUnit.cs" />
-    <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\Notification1.cs" />
+    <Compile Include="Models\NotificationCategory.cs" />
+    <Compile Include="Models\NotificationCatUser.cs" />
+    <Compile Include="Models\NotificationName.cs" />
     <Compile Include="Models\NotifModels.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\PaymentSequense.cs" />
@@ -769,6 +809,8 @@
     <Compile Include="Models\ProjectSequense.cs" />
     <Compile Include="Models\ProjectStatus.cs" />
     <Compile Include="Models\Quotation.cs" />
+    <Compile Include="Models\Repository\IUnitOfWork.cs" />
+    <Compile Include="Models\Repository\INotificationRepository.cs" />
     <Compile Include="Models\RequestApproval.cs" />
     <Compile Include="Models\RoleNames.cs" />
     <Compile Include="Models\SalesMan.cs" />
@@ -783,6 +825,8 @@
     <Compile Include="Models\Unit.cs" />
     <Compile Include="Models\UserHubModels.cs" />
     <Compile Include="Models\Warehouse.cs" />
+    <Compile Include="Persistence\UnitOfWork.cs" />
+    <Compile Include="Persistence\NotificationRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -792,6 +836,7 @@
     <Content Include="assets\css\custom-styles.css" />
     <Content Include="assets\css\font-awesome.css" />
     <Content Include="assets\css\materialize.min.css" />
+    <Content Include="assets\css\styleMultiSelect.css" />
     <Content Include="assets\font-awesome\fonts\fontawesome-webfontba72.svg" />
     <Content Include="assets\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="assets\img\bg-img.jpg" />
@@ -801,6 +846,7 @@
     <Content Include="assets\img\img-DATETIME\calendar.gif" />
     <Content Include="assets\img\interior-bright-living-room-with-pillows-sofa-armchair-plants-lamp-empty-blue-wall-background_41470-708.jpg" />
     <Content Include="assets\js\bootstrap.min.js" />
+    <Content Include="assets\js\bundle.min.js" />
     <Content Include="assets\js\chart-data.js" />
     <Content Include="assets\js\chart.min.js" />
     <Content Include="assets\js\custom-scripts - Copy.js" />
@@ -1028,6 +1074,7 @@
     <Content Include="Content\_bootstrap-datetimepicker.less" />
     <Content Include="Content\bootstrap-datetimepicker-build.less" />
     <Content Include="assets\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Log4net.config" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="Scripts\datetime\bootstrap\css\bootstrap-datetimepicker.css" />
     <Content Include="Scripts\datetime\bootstrap\css\bootstrap-datetimepicker.min.css" />
@@ -1383,6 +1430,11 @@
     <Content Include="Views\Areas\Details.cshtml" />
     <Content Include="Views\Areas\Edit.cshtml" />
     <Content Include="Views\Areas\Index.cshtml" />
+    <Content Include="Views\NotificationCategories\Create.cshtml" />
+    <Content Include="Views\NotificationCategories\Delete.cshtml" />
+    <Content Include="Views\NotificationCategories\Details.cshtml" />
+    <Content Include="Views\NotificationCategories\Edit.cshtml" />
+    <Content Include="Views\NotificationCategories\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1780,6 +1832,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202012110917474_hfh.resx">
       <DependentUpon>202012110917474_hfh.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012111936034_NotificationCatagory.resx">
+      <DependentUpon>202012111936034_NotificationCatagory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012112000064_NotificationCatagoryModify.resx">
+      <DependentUpon>202012112000064_NotificationCatagoryModify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012120742044_updateNotification.resx">
+      <DependentUpon>202012120742044_updateNotification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012120912265_dateOfNotification.resx">
+      <DependentUpon>202012120912265_dateOfNotification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012121028352_LPOCreditTerm.resx">
+      <DependentUpon>202012121028352_LPOCreditTerm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012121032205_LPOCreditTerm2.resx">
+      <DependentUpon>202012121032205_LPOCreditTerm2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012121118008_renameNotificationCatTable.resx">
+      <DependentUpon>202012121118008_renameNotificationCatTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012121335237_AddFileUploadToCuttingSheet.resx">
+      <DependentUpon>202012121335237_AddFileUploadToCuttingSheet.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

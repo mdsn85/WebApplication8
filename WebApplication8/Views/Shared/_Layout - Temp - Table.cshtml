@@ -421,21 +421,23 @@
 
                 function setTotalNotification(totalNotif) {
                     console.log(totalNotif);
-                    $("#messages").html(totalNotif.length);
-                    $("#messages").css("color", "red");
+                    if (totalNotif.length != 0) {
+                        $("#messages").html(totalNotif.length);
+                        $("#messages").css("color", "red");
 
-                    for (var i = 0;i< totalNotif.length ; i++) {
-                        
-                        st = "<li>" +
-                            "<div>" +
-                            "<i class='fa fa-comment fa-fw'></i>" + totalNotif[i].SentTo+
-                            "<span class='pull-right text-muted small' > 4 min</span >" +
-                            "</div>" +
-                            "</a>" +
-                            "</li>" +
-                            "<li class='divider'></li>";
-                        $("#dropdown2").append(st);
+                        for (var i = 0; i < totalNotif.length; i++) {
 
+                            st = "<li>" +
+                                "<div>" +
+                                "<i class='fa fa-comment fa-fw'></i>" + totalNotif[i].Title +
+                                "<span class='pull-right text-muted small' > 4 min</span >" +
+                                "</div>" +
+                                "</a>" +
+                                "</li>" +
+                                "<li class='divider'></li>";
+                            $("#dropdown2").append(st);
+
+                        }
                     }
 
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using log4net;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,7 +20,7 @@ namespace WebApplication8.Controllers
     {
 
         NotificationHub objNotifHub = new NotificationHub();
-
+        ILog log = LogManager.GetLogger("application-log");
 
         private ApplicationDbContext db = new ApplicationDbContext();
         private string[] rolesArray;
@@ -265,6 +266,9 @@ namespace WebApplication8.Controllers
             ",Description,DeliveryDate,ActualDeliveryDate,AccountApproval,QuotationRef,QuotationAgreementApprovedby")] Project project,
             String[] FileName)
         {
+            int saveProject = 0;
+            int savefiles = 0;
+       
             ViewBag.SalesDate = project.SalesDate.ToString("dd-MMMM-yyyy", CultureInfo.InvariantCulture); ;
             if (project.DeliveryDate != null)
             {
@@ -273,48 +277,103 @@ namespace WebApplication8.Controllers
             ViewBag.ActualDeliveryDate = project.ActualDeliveryDate;
             if (ModelState.IsValid)
             {
-                if (FileName!= null)
+                if (FileName != null)
                 {
-                    project.Deduction = 0;
-
-
-                    project.UserCreate = User.Identity.GetUserName();
-                    project.CreateDate = DateTime.Now;
-                    project.StampDate = DateTime.Now;
-                    project.ProjectStatusId = 1;
-                    db.Projects.Add(project);
-                    db.SaveChanges();
-
-
-                    //file link
-                    //save uploaded files record
-                    ProjectFile projectFile = new ProjectFile();
-                    if (FileName != null)
+                    try
                     {
-                        foreach (string fn in FileName)
+
+                        project.Deduction = 0;
+
+
+                        project.UserCreate = User.Identity.GetUserName();
+                        project.CreateDate = DateTime.Now;
+                        project.StampDate = DateTime.Now;
+                        project.ProjectStatusId = 1;
+
+
+                        db.Projects.Add(project);
+
+                        try
                         {
-                            string st = "_Project " + fn;
-                            projectFile.ProjectId = project.ProjectId;
-                            //String c = db.Customers.Find(contract.CustomerId).CompanyName;
-
-                            projectFile.Name = fn;
-                            projectFile.Path = Path.Combine(Server.MapPath(FolderPath.FolderPathCustomerDoc), st);
-
-                            db.projectFiles.Add(projectFile);
                             db.SaveChanges();
+
+                            saveProject = 1;
+                        }
+                        catch (Exception e)
+                        {
+
+                            ViewBag.Error += "Project not saved : " + e.Message ;
+                            log.Error(" ERROR mylog - Error while save project to server:" + e.Message + " , stacktrace:" + e.StackTrace);
+                        }
+
+
+                        //file link
+                        //save uploaded files record
+                        ProjectFile projectFile = new ProjectFile();
+                        if (FileName != null)
+                        {
+                            foreach (string fn in FileName)
+                            {
+                                string st = "_Project " + fn;
+                                projectFile.ProjectId = project.ProjectId;
+                                //String c = db.Customers.Find(contract.CustomerId).CompanyName;
+
+                                projectFile.Name = fn;
+                                projectFile.Path = Path.Combine(Server.MapPath(FolderPath.FolderPathCustomerDoc), st);
+
+                                
+
+                                try
+                                {
+                                    db.projectFiles.Add(projectFile);
+                                    db.SaveChanges();
+
+                                    savefiles = 1;
+                                }
+                                catch (Exception e)
+                                {
+
+                                    ViewBag.Error += "Files not saved :" + e.Message;
+                                    log.Error(" ERROR mylog - Error while save  file of project "+project.ProjectId+":" + e.Message + " , stacktrace:" + e.StackTrace);
+                                }
+                                
+                            }
+                        }
+
+                        //NotificationCategory cat = db.NotificationCategorys.Where()
+                        try
+                        {
+                            Notification1 objNotif = new Notification1();
+                            objNotif.NotificationCategoryId = db.NotificationCategorys.Where(c => c.Name == NotificationName.CreateProject).FirstOrDefault().NotificationCategoryId;
+
+                            objNotif.ObjectId = project.ProjectId;
+                            objNotif.NotificationDate = DateTime.Now;
+
+                            db.Configuration.ProxyCreationEnabled = false;
+                            db.Notifications.Add(objNotif);
+                            db.SaveChanges();
+
+                            string[] SentTo = objNotif.NotificationCategory.NotificationCatUser.Select(n => n.UserId).ToArray();
+                            objNotifHub.SendNotification(SentTo);
+                        }
+                        catch(Exception e)
+                        {
+                            log.Error(" ERROR mylog - Error while send notification for project "+project.ProjectId+":" + e.Message + " , stacktrace:" + e.StackTrace);
+                        }
+
+
+                        if (saveProject == 1)
+                        {
+
+                            return RedirectToAction("Index");
                         }
                     }
+                    catch (Exception e)
+                    {
+                        log.Error(" ERROR mylog - Error while upload file to server:" + e.Message + " , stacktrace:" + e.StackTrace);
 
-                    Notification objNotif = new Notification();
-                    objNotif.SentTo = project.UserCreate;
-
-                    db.Configuration.ProxyCreationEnabled = false;
-                    db.Notifications.Add(objNotif);
-                    db.SaveChanges();
-
-
-                    objNotifHub.SendNotification(objNotif.SentTo);
-                    return RedirectToAction("Index");
+                       
+                    }
                 }
                 else
                 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -35,6 +36,13 @@ namespace WebApplication8.Models
 
         public virtual ICollection<CuttingSheetDetail> CuttingSheetDetails { get; set; }
         public virtual ICollection<StockIssue> StockIssues { get; set; }
+
+        public virtual ICollection<CuttingSheetFile> CuttingSheetFiles { get; set; }
+
+        public CuttingSheet()
+        {
+            CuttingSheetFiles = new Collection<CuttingSheetFile>();
+        }
 
     }
 }

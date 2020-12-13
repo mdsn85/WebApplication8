@@ -38,6 +38,7 @@
 
 
 
+
     <div class="form-group">
         <label for="CreateDate" class="col-md-2 control-label">Warranty</label>
         <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="CreateDate" data-link-format="yyyy-mm-dd">
@@ -51,6 +52,30 @@
     </div>
 
 
+
+
+    <div class="form-group">
+
+        @Html.Label(" Upload Documents", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+
+            <p style="color:crimson">@ViewBag.message</p>
+
+            @{ Html.RenderPartial("~/Views/UploadFile/UploadFileMulti.cshtml"); }
+            <div style="padding: 10px 2px">
+                @foreach (var e in ViewBag.ext)
+                {
+                    @Html.Raw(e + ", ");
+                }
+            </div>
+            @*display name of uploaded files*@
+
+
+            @*hidden input (name is FileName ) conatin name of uploaded files to submit*@
+            <div class="filesList" id="filesList"> </div>
+        </div>
+    </div>
+    <br />
     <div class="form-group">
 
         <div class="card-content">
@@ -201,10 +226,12 @@
                 var EnqueryId = 0;
                 var Enquery = $('#CuttingSheetform').serialize();
                 console.log(Enquery);
+                console.log(JSON.stringify(Enquery));
+                console.log(Enquery);
                 $.ajax({
                     type: "POST",
                     url: "/CuttingSheets/CreateJson",
-                    data: '{ enquery:' + JSON.stringify(Enquery) + '}',
+                    data: '{ enquery:' + JSON.stringify(Enquery) + ' }',
                     async: false,
                     success: function (r) {
 

@@ -31,6 +31,9 @@ namespace WebApplication8.Models
             return new ApplicationDbContext();
         }
 
+
+
+
         public DbSet<Unit> Units { get; set; }
         public DbSet<Material> Materials { get; set; }
 
@@ -121,9 +124,11 @@ namespace WebApplication8.Models
 
         public System.Data.Entity.DbSet<WebApplication8.Models.Area> Areas { get; set; }
 
-        public System.Data.Entity.DbSet<WebApplication8.Models.Notification> Notifications { get; set; }
+        public System.Data.Entity.DbSet<WebApplication8.Models.Notification1> Notifications { get; set; }
+        public System.Data.Entity.DbSet<WebApplication8.Models.NotificationCategory> NotificationCategorys { get; set; }
+        public System.Data.Entity.DbSet<WebApplication8.Models.NotificationCatUser> NotificationCatUsers { get; set; }
 
-
+        public System.Data.Entity.DbSet<WebApplication8.Models.CuttingSheetFile> CuttingSheetFiles { get; set; }
 
 
 

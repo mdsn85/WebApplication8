@@ -142,7 +142,7 @@
             </th>
 
             <th>
-                @Html.DisplayNameFor(model => model.SalesMan.Name)
+                @Html.DisplayNameFor(model => model.SalesMan.Employees.Name)
             </th>
 
 
@@ -287,11 +287,11 @@
 
 
             <td>
-                @Html.DisplayFor(modelItem => item.SalesMan.Name)
+                @Html.DisplayFor(modelItem => item.SalesMan.Employees.Name)
             </td>
 
             <td>
-                @Html.DisplayFor(modelItem => item.Designer.Name)
+                @Html.DisplayFor(modelItem => item.Designer.Employees.Name)
             </td>
 
 
@@ -388,8 +388,14 @@
                     @Html.ActionLink("Edit", "Edit", new { id = item.ProjectId })
                     @Html.Raw("|");
                 }
-                @Html.ActionLink("Details", "Details", new { id = item.ProjectId })
-                @*@Html.ActionLink("Delete", "Delete", new { id = item.ProjectId })*@
+                @Html.ActionLink("Details", "Details", new { id = item.ProjectId })|
+
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ProjectId })
+                    @Html.Raw("|");
+                }
+   
             </td>
 
 

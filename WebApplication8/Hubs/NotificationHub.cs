@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 using WebApplication8.Models;
-
+using System.Data.Entity;
 namespace WebApplication8.Hubs
 {
     [Authorize]
@@ -26,7 +26,7 @@ namespace WebApplication8.Hubs
                 string loggedUser = Context.User.Identity.Name;
 
                 //Get TotalNotification
-                List<Notification> totalNotif = LoadNotifData(loggedUser);
+                List<note> totalNotif = LoadNotifData(loggedUser);
 
                 //Send To
                 UserHubModels receiver;
@@ -43,23 +43,54 @@ namespace WebApplication8.Hubs
             }
         }
 
+
         //Specific User Call
         public void SendNotification(string SentTo)
         {
             try
             {
-                //Get TotalNotification
-                List<Notification> totalNotif = LoadNotifData(SentTo);
 
-                //Send To
-                //var context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-                //context.Clients.All.broadcaastNotif(totalNotif);
-                 UserHubModels receiver;
-                if (Users.TryGetValue(SentTo, out receiver))
+                    //Get TotalNotification
+                    List<note> totalNotif = LoadNotifData(SentTo);
+
+                    //Send To
+                    //var context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+                    //context.Clients.All.broadcaastNotif(totalNotif);
+                    UserHubModels receiver;
+                    if (Users.TryGetValue(SentTo, out receiver))
+                    {
+                        var cid = receiver.ConnectionIds.FirstOrDefault();
+                        var context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+                        context.Clients.Client(cid).broadcaastNotif(totalNotif);
+                    }
+
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
+        }
+
+        //Specific User Call
+        public void SendNotification(string[] recipients)
+        {
+            try
+            {
+                foreach (string SentTo in recipients)
                 {
-                    var cid = receiver.ConnectionIds.FirstOrDefault();
-                    var context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-                    context.Clients.Client(cid).broadcaastNotif(totalNotif);
+                    //Get TotalNotification
+                    List<note> totalNotif = LoadNotifData(SentTo);
+
+                    //Send To
+                    //var context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+                    //context.Clients.All.broadcaastNotif(totalNotif);
+                    UserHubModels receiver;
+                    if (Users.TryGetValue(SentTo, out receiver))
+                    {
+                        var cid = receiver.ConnectionIds.FirstOrDefault();
+                        var context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+                        context.Clients.Client(cid).broadcaastNotif(totalNotif);
+                    }
                 }
             }
             catch (Exception ex)
@@ -68,12 +99,26 @@ namespace WebApplication8.Hubs
             }
         }
 
-        private List<Notification> LoadNotifData(string userId)
+        class note
         {
-            int total = 0;
+            public string Title { get; set; }
+        }
+        private List<note> LoadNotifData(string userId)
+        {
+            var currentUser=  context.Users.Where(u => u.UserName == userId).FirstOrDefault();
+            //var x = context.
+            //get notificatin 
+            var listCat1 = context.NotificationCategorys.Include(nc=>nc.NotificationCatUser).ToList();
+            //7014dcd7-6824-422f-8441-fca6221acc11 , 2e1ed9d7-d498-4e15-9aeb-3c3599920b83
+            var listCat = listCat1.Where(nc => nc.NotificationCatUser.Where(a => a.UserId == currentUser.Id) != null).ToList();
+
+            var catOfUser = listCat.Select(a => a.NotificationCategoryId).ToList();
+
+
+
             var query = (from t in context.Notifications
-                         where t.SentTo == userId
-                         select t)
+                         where catOfUser.Contains( t.NotificationCategory.NotificationCategoryId)
+                         select (new note { Title = t.NotificationCategory.Title}))
                         .ToList();
             //total = query.Count;
             return query.ToList();

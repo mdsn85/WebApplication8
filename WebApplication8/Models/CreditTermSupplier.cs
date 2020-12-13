@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -18,6 +19,11 @@ namespace WebApplication8.Models
         public virtual ICollection<supplier> Suppliers { get; set; }
 
         public virtual ICollection<Lpo> Lpos { get; set; }
+
+        public CreditTermSupplier()
+        {
+            Lpos = new Collection<Lpo>();
+        }
 
     }
 }

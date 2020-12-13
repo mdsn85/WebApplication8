@@ -81,11 +81,11 @@
             Unit
         </th>
         <th>
-           Request Qty
+            Request Qty
         </th>
 
         <th>
-           Issue Qty
+            Issue Qty
         </th>
         <th>
             Balance
@@ -98,39 +98,57 @@
 
     @foreach (var item in Model.CuttingSheetDetails)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.material.code)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.material.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.material.Dimension)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.material.Unit.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.qty)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IssueQty)
-        </td>
-        <td>
-            @{double x = item.qty - item.IssueQty ?? 0;}
-            @x
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.status)
-        </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.material.code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.material.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.material.Dimension)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.material.Unit.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.qty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IssueQty)
+            </td>
+            <td>
+                @{double x = item.qty - item.IssueQty ?? 0;}
+                @x
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.status)
+            </td>
 
-    </tr>
+        </tr>
     }
 
 </table>
 
+<div>
+    @if (@ViewBag.AttachedFiles == null)
+    {<p> No attachments was uploaded</p>}
+    else
+    {
 
+        @*<a href="~/Uploads/CustomerDoc/@ViewBag.Contract_Copy.Name" target="_blank">@ViewBag.Contract_Copy.Name</a>   ,
+            <span> valid until: @ViewBag.Contract_Copy.ValidUntil</span>*@
+        @Html.Raw("  Attachments  : <br/>")
+        foreach (var f in ViewBag.AttachedFiles)
+        {
+
+            <a href="~/Uploads/CustomerDoc/@f.Name" target="_blank">@f.Name</a> <br />
+        }
+
+    }
+
+
+</div>
 
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.CuttingSheetId }) |

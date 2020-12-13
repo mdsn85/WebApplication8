@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using log4net;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -14,6 +16,7 @@ namespace WebApplication8.Controllers
     public class CuttingSheetsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        ILog log = LogManager.GetLogger("application-log");
 
         // GET: CuttingSheets
         public ActionResult Index(string SearchCode, string SearchProjectCode)
@@ -49,6 +52,8 @@ namespace WebApplication8.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             CuttingSheet cuttingSheet = db.CuttingSheets.Find(id);
+
+            ViewBag.AttachedFiles = cuttingSheet.CuttingSheetFiles.OrderBy(c => c.Name); ;
             if (cuttingSheet == null)
             {
                 return HttpNotFound();
@@ -127,6 +132,7 @@ namespace WebApplication8.Controllers
             ViewBag.ProjectId = new SelectList(db.Projects.Where(p=>p.AccountApproval==true && p.CuttingSheets.Count==0), "ProjectId", "Code");
 
             ViewBag.date = DateTime.Now;
+            ViewBag.ext = FolderPath.allowedExtensions;
             return View();
         }
 
@@ -138,13 +144,31 @@ namespace WebApplication8.Controllers
         public ActionResult Create([Bind(Include = "CuttingSheetId,ProjectId,UserCreate,CreateDate,code")] CuttingSheet cuttingSheet,
             String[] FileName)
         {
+            int savefiles = 0;
             if (ModelState.IsValid)
             {
-                var proj = db.Projects.Find(cuttingSheet.ProjectId);
-                proj.ProjectStatusId = 4;
-                db.CuttingSheets.Add(cuttingSheet);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+
+                if (FileName != null)
+                {
+                    var proj = db.Projects.Find(cuttingSheet.ProjectId);
+                    proj.ProjectStatusId = 4;
+                    db.CuttingSheets.Add(cuttingSheet);
+                    db.SaveChanges();
+
+
+
+
+
+
+
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.Error = "Please upload Production Sheet";
+                }
+
             }
 
             ViewBag.productlist = new SelectList(db.Materials, "MaterialId", "Name");
@@ -155,8 +179,10 @@ namespace WebApplication8.Controllers
         }
 
 
-        public JsonResult CreateJson([Bind(Include = "CuttingSheetId,ProjectId,UserCreate,CreateDate,code")] CuttingSheet cuttingSheet)
+        public JsonResult CreateJson([Bind(Include = "CuttingSheetId,ProjectId,UserCreate,CreateDate,code")] CuttingSheet cuttingSheet,
+            String[] FileName)
         {
+            int savefiles = 0;
             if (ModelState.IsValid)
             {
                 try
@@ -168,6 +194,43 @@ namespace WebApplication8.Controllers
                     cuttingSheet.UserCreate = User.Identity.GetUserName();
                     db.CuttingSheets.Add(cuttingSheet);
                     db.SaveChanges();
+
+
+                    //file link
+                    //save uploaded files record
+                    CuttingSheetFile CuttingSheetFile = new CuttingSheetFile();
+                    if (FileName != null)
+                    {
+                        foreach (string fn in FileName)
+                        {
+                            string st = "_CuttingSheet " + fn;
+                            CuttingSheetFile.CuttingSheetId = cuttingSheet.CuttingSheetId;
+                            //String c = db.Customers.Find(contract.CustomerId).CompanyName;
+
+                            CuttingSheetFile.Name = fn;
+                            CuttingSheetFile.Path = Path.Combine(Server.MapPath(FolderPath.FolderPathCustomerDoc), st);
+
+
+
+                            try
+                            {
+                                db.CuttingSheetFiles.Add(CuttingSheetFile);
+                                db.SaveChanges();
+
+                                savefiles = 1;
+                            }
+                            catch (Exception e)
+                            {
+
+                                ViewBag.Error += "Files not saved :" + e.Message;
+                                log.Error(" ERROR mylog - Error while save  file of project " + cuttingSheet.CuttingSheetId + ":" + e.Message + " , stacktrace:" + e.StackTrace);
+                            }
+
+                        }
+                    }
+
+
+
                     return Json(cuttingSheet.CuttingSheetId);
                 }
                 catch (Exception ex)

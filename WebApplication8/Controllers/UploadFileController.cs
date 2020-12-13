@@ -1,4 +1,5 @@
 ﻿
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,7 +16,7 @@ namespace WebApplication8.Controllers
 {
     public class UploadFileController : Controller
     {
-
+        ILog log = LogManager.GetLogger("myapp.log");
 
         static string[] allowedExtensions = FolderPath.allowedExtensions;
 
@@ -65,7 +66,7 @@ namespace WebApplication8.Controllers
         }
 
 
-
+        // call UploadFiles
         public ActionResult uploadFileMulti()
         {
 
@@ -75,7 +76,7 @@ namespace WebApplication8.Controllers
         [HttpPost]
         public ActionResult UploadFiles()
         {
-
+            log.Info(" Start Appload File");
             try
             {
                 List<string> filesName = new List<string>();
@@ -121,6 +122,8 @@ namespace WebApplication8.Controllers
                 return Json(filesName, JsonRequestBehavior.AllowGet);
             }catch (Exception e)
             {
+                
+                log.Error(" ERROR mylog - Error while upload file to server:"+e.Message + " , stacktrace:"+ e.StackTrace);
                 return new HttpStatusCodeResult(410, e.Message + " . Please reupload or contact IT");
             }
            

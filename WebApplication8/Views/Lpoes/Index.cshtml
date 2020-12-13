@@ -90,7 +90,7 @@
                 @Html.DisplayNameFor(model => model.Supplier.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreditTerm.Name)
+                @Html.DisplayNameFor(model => model.CreditTermSupplier.Name)
             </th>
 
 
@@ -141,7 +141,7 @@
             </td>
 
             <td>
-                @Html.DisplayFor(modelItem => item.CreditTerm.Name)
+                @Html.DisplayFor(modelItem => item.CreditTermSupplier.Name)
             </td>
 
 
@@ -179,7 +179,16 @@
                     @Html.Raw("|")
                 }
 
-                @Html.ActionLink("Details", "Details", new { id = item.LpoId })
+
+
+
+                @Html.ActionLink("Details", "Details", new { id = item.LpoId })|
+
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.LpoId })
+                    @Html.Raw("|")
+                }
             </td>
         </tr>
         }
@@ -196,8 +205,10 @@
 
     <script>
         $(document).ready(function () {
-            $('#dataTables-example').dataTable();
-            "order": [11, "desc"];
+            $('#dataTables-example').dataTable({
+                "order": [11, "desc"]
+            });
+
 
         });
 

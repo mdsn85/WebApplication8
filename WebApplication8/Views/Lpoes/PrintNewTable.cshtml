@@ -267,8 +267,12 @@
                             Date : @Model.LpoDate<br />
                             Your Ref# :  @Model.SupplierRef<br />
 
+                            @{
+
+                                string ct = (@Model.CreditTermSupplier == null) ? "" : Model.CreditTermSupplier.Name;
+                                }
                             Job #<br />
-                            Credit Term : @Model.CreditTerm.Name<br />
+                            Credit Term : @ct <br />
 
 
                         </td>

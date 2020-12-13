@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -142,6 +143,12 @@ namespace WebApplication8.Models
         public virtual ICollection<ProjectFile> ProjectFiles { get; set; }
 
         public virtual ICollection<Payment> Payments { get; set; }
+
+
+        public Project()
+        {
+            ProjectFiles = new Collection<ProjectFile>();
+        }
 
 
     }

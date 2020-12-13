@@ -28,7 +28,7 @@ namespace WebApplication8.Controllers
 
             ViewBag.supplierId = new SelectList(db.suppliers, "supplierId", "Name", supplierId);
 
-            List<Lpo> lpoes = db.Lpoes.Include(l => l.CreditTerm).Include(l => l.Supplier).ToList();
+            List<Lpo> lpoes = db.Lpoes.Include(l => l.CreditTermSupplier).Include(l => l.Supplier).ToList();
 
 
             if (!String.IsNullOrEmpty(SearchCode))
@@ -170,7 +170,7 @@ namespace WebApplication8.Controllers
             ViewBag.code = generateContractCode(Sequense );
 
     
-            ViewBag.CreditTermId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name");
+            ViewBag.CreditTermSupplierId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name");
             ViewBag.SupplierId = new SelectList(db.suppliers, "supplierId", "Name");
 
             ViewBag.LpoDate = DateTime.Now;
@@ -190,7 +190,7 @@ namespace WebApplication8.Controllers
 
             //ViewBag.CreditTermId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name");
 
-            ViewBag.CreditTermId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name", lpo.CreditTermId);
+            ViewBag.CreditTermSupplierId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name", lpo.CreditTermSupplierId);
             ViewBag.SupplierId = new SelectList(db.suppliers, "supplierId", "Name");
 
 
@@ -213,14 +213,14 @@ namespace WebApplication8.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CreditTermId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name", lpo.CreditTermId);
+            ViewBag.CreditTermSupplierId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name", lpo.CreditTermSupplierId);
             ViewBag.SupplierId = new SelectList(db.suppliers, "supplierId", "Name", lpo.SupplierId);
             ViewBag.LpoDate = lpo.LpoDate;
             return View(lpo);
         }
 
 
-        public JsonResult CreateJson([Bind(Include = "LpoId,code,SupplierRef,LpoDate,SupplierId,CreditTermId,SubTotal,Discount,Total,Vat,GrandTotal ")] Lpo lpo)
+        public JsonResult CreateJson([Bind(Include = "LpoId,code,SupplierRef,LpoDate,SupplierId,CreditTermSupplierId,SubTotal,Discount,Total,Vat,GrandTotal ")] Lpo lpo)
         {
             if (ModelState.IsValid)
             {
@@ -314,7 +314,7 @@ namespace WebApplication8.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CreditTermId = new SelectList(db.CreditTerms, "CreditTermId", "Name", lpo.CreditTermId);
+            ViewBag.CreditTermId = new SelectList(db.CreditTerms, "CreditTermId", "Name", lpo.CreditTermSupplierId);
             ViewBag.SupplierId = new SelectList(db.suppliers, "supplierId", "Name", lpo.SupplierId);
             return View(lpo);
         }
@@ -324,7 +324,7 @@ namespace WebApplication8.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "LpoId,code,SupplierRef,LpoDate,SupplierId,CreditTermId")] Lpo lpo)
+        public ActionResult Edit([Bind(Include = "LpoId,code,SupplierRef,LpoDate,SupplierId,CreditTermSupplierId")] Lpo lpo)
         {
             if (ModelState.IsValid)
             {
@@ -332,7 +332,7 @@ namespace WebApplication8.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CreditTermId = new SelectList(db.CreditTerms, "CreditTermId", "Name", lpo.CreditTermId);
+            ViewBag.CreditTermId = new SelectList(db.CreditTerms, "CreditTermId", "Name", lpo.CreditTermSupplierId);
             ViewBag.SupplierId = new SelectList(db.suppliers, "supplierId", "Name", lpo.SupplierId);
             return View(lpo);
         }

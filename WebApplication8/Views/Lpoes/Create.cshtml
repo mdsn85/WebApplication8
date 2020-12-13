@@ -57,10 +57,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CreditTermId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.CreditTermSupplierId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("CreditTermId", null, "Please Select Credit Term", htmlAttributes: new { @class = "form-control", @id = "CreditTermId" })
-                @Html.ValidationMessageFor(model => model.CreditTermId, "", new { @class = "text-danger" })
+                @Html.DropDownList("CreditTermSupplierId", null, "Please Select Credit Term", htmlAttributes: new { @class = "form-control", @id = "CreditTermSupplierId" })
+                @Html.ValidationMessageFor(model => model.CreditTermSupplierId, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -196,7 +196,7 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <!--Select Search-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
     <script src="~/Scripts/js/selectSearch/select2.min.js"></script>
 
     <!--Select Search-->
@@ -212,7 +212,7 @@
                 async: true,
                 success: function (r) {
 
-                    $("#CreditTermId").val(r);
+                    $("#CreditTermSupplierId").val(r);
                 }
             })
         });
@@ -242,9 +242,9 @@
 
         function validateForm() {
 
-            if (document.Lpoform.CreditTermId.value == '') {
+            if (document.Lpoform.CreditTermSupplierId.value == '') {
                 alert("Please select Credit Term!");
-                document.Lpoform.CreditTermId.focus();
+                document.Lpoform.CreditTermSupplierId.focus();
                 return false;
             }
 
@@ -671,7 +671,7 @@
 
         }
     </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>*@
     <script>
         $("#Discount").change(function () {
 

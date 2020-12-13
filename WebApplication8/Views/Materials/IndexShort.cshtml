@@ -177,53 +177,55 @@
 <script src="~/Scripts/js/jquery1.7.1Google.min.js"></script>
 
 <script>
+    $("#dataTables-example").on("click", ".cid ", function selectM() {
+
+        var name = "";
+        var unit = "";
+        var oVal = this.id;
+
+        $.ajax({
+            type: "GET",
+            traditional: true,
+            async: false,
+            cache: false,
+            url: '/Materials/get',
+            context: JSON,
+            data: { "id": oVal /* add other additional parameters */ },
+
+            //data: '{ enquery:' + JSON.stringify(Enquery) + '}',
+            success: function (result) {
+                name = result.Name;
+                unit = result.Unit;
+                unit2 = result.Unit2;
+                Dimension = result.Dimension;
+                Price = result.Price;
+                QtyApproved = result.QtyApproved;
+                Approval = result.QtyApproved;
+                AvalableQty = result.AvalableQty;
+            },
+            error: function (xhr) {
+                //debugger;
+                console.log(xhr.responseText);
+                alert("Error has occurred..");
+            }
+        });
+
+        //alert(oVal);
+
+        window.opener.setValue(oVal, name, unit, Dimension, Price, QtyApproved, Approval, AvalableQty);
+
+        window.close();
+
+        return false;
+    });
 
 
+   
     $(document).ready(function () {
         $('#dataTables-example').dataTable({
             "order": [9, "asc"]
         });
-        $(".cid").click(function () {
-
-            var name = "";
-            var unit = "";
-            var oVal = this.id;
-
-            $.ajax({
-                type: "GET",
-                traditional: true,
-                async: false,
-                cache: false,
-                url: '/Materials/get',
-                context: JSON,
-                data: { "id": oVal /* add other additional parameters */ },
-
-                //data: '{ enquery:' + JSON.stringify(Enquery) + '}',
-                success: function (result) {
-                    name = result.Name;
-                    unit = result.Unit;
-                    unit2 = result.Unit2;
-                    Dimension = result.Dimension;
-                    Price = result.Price;
-                    QtyApproved = result.QtyApproved;
-                    Approval = result.QtyApproved;
-                    AvalableQty = result.AvalableQty;
-                },
-                error: function (xhr) {
-                    //debugger;
-                    console.log(xhr.responseText);
-                    alert("Error has occurred..");
-                }
-            });
-
-            //alert(oVal);
-
-            window.opener.setValue(oVal, name, unit, Dimension, Price, QtyApproved, Approval, AvalableQty);
-
-            window.close();
-
-            return false;
-        });
+      
     });
 </script>
 
