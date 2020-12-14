@@ -104,7 +104,7 @@ namespace WebApplication8.Models
 
 
         [Display(Name = "Create Date")]
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm:dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm:dd}", ApplyFormatInEditMode = true)]
         public DateTime? CreateDate { get; set; }
 
 
@@ -114,7 +114,7 @@ namespace WebApplication8.Models
 
 
         [Display(Name = "Stamp Date")]
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm:ss}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime? StampDate { get; set; }
 
 

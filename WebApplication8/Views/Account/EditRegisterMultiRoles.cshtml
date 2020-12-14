@@ -1,0 +1,166 @@
+﻿@model WebApplication8.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+<link href="~/assets/css/styleMultiSelect.css" rel="stylesheet" />
+<link href="~/Scripts/css/selectsearch/select2.min.css" rel="stylesheet" />
+<h2>@ViewBag.Title.</h2>
+
+@using (Html.BeginForm("EditRegisterMultiRoles", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Create a new account.</h4>
+    <hr />
+
+    @Html.HiddenFor(model => model.idx)
+
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    @Html.HiddenFor(Model => Model.EmployeeId);
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.EmployeeId, null, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-3">
+            @Html.Raw(@ViewBag.EmployeeName)
+
+        </div>
+    </div>
+    <div class="orm-group ">
+        @Html.Label("Select Roles", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <span class="autocomplete-select"></span>
+            @*<button onclick="resetAutocomplete()">Reset</button>*@
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-3">
+            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control UserNamec", value = "", id = "UserName", autocomplete = "off" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-3">
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control Email", value = "", id = "Email", autocomplete = "off" })
+        </div>
+    </div>
+
+    @*<div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            </div>
+        </div>*@
+
+    <div class="form-group">
+
+        @Html.Label("Status of User", new { @class = "col-md-2 control-label" })
+        <div class="col-md-6">
+            @{string d = (Model.IsEnabled == true) ? "Checked" : ""; }
+            <input type="checkbox" id="test5" name="IsEnabled" value="true" @d />
+
+
+
+            <label for="test5" class="col-md-2 control-label">Is Enabled</label>
+        </div>
+    </div>
+
+    <div id="users"></div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Register" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+
+    <!--Select Search-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="~/Scripts/js/selectSearch/select2.min.js"></script>
+
+    <!--Select Search-->
+    <script>
+        $("#EmployeeId").select2({
+            placeholder: "Select Employee",
+            allowClear: true
+        });
+    </script>
+
+
+    <script src="~/assets/js/bundle.min.js"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+            $("#users").empty();
+            var array2 = @Html.Raw(Json.Encode(@ViewBag.CurrentRoles));
+            //alert(array2);
+            for (var i = 0; i < array2.length; i++) {
+
+                var st = '<input type="hidden" name="UserRolesList[]" value="' + array2[i] + '">';
+                $("#users").append(st);
+            }
+        })
+
+
+        var array = @Html.Raw(Json.Encode(@ViewBag.Users));
+         var array2 = @Html.Raw(Json.Encode(@ViewBag.CurrentRoles));
+        console.log(array);
+        //for(var i =0; i<array.length;i++){
+        //   sampleTags[i] = array[i];
+        //}
+
+        var autocomplete = new SelectPure(".autocomplete-select", {
+            options: array,
+            value: array2,
+            multiple: true,
+            autocomplete: true,
+            icon: "fa fa-times",
+            onChange: value => {
+                console.log(value);
+                $("#users").empty();
+                for (var i = 0; i < value.length; i++) {
+
+                    var st = '<input type="hidden" name="UserRolesList[]" value="' + value[i] + '">';
+                    $("#users").append(st);
+                }
+            },
+            classNames: {
+                select: "select-pure__select",
+                dropdownShown: "select-pure__select--opened",
+                multiselect: "select-pure__select--multiple",
+                label: "select-pure__label",
+                placeholder: "select-pure__placeholder",
+                dropdown: "select-pure__options",
+                option: "select-pure__option",
+                autocompleteInput: "select-pure__autocomplete",
+                selectedLabel: "select-pure__selected-label",
+                selectedOption: "select-pure__option--selected",
+                placeholderHidden: "select-pure__placeholder--hidden",
+                optionHidden: "select-pure__option--hidden",
+            }
+        });
+        var resetAutocomplete = function () {
+            autocomplete.reset();
+        };
+    </script>
+
+}

@@ -102,18 +102,19 @@
         color: #e4e4e4;
       }
 
-      .select-pure__autocomplete {
-        background: #f9f9f8;
-        border-bottom: 1px solid #e4e4e4;
-        border-left: none;
-        border-right: none;
-        border-top: none;
-        box-sizing: border-box;
-        font-size: 16px;
-        outline: none;
-        padding: 10px;
-        width: 100%;
-      }
+.select-pure__autocomplete {
+    background: #f9f9f8;
+    border-bottom: 1px solid #e4e4e4;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    box-sizing: border-box;
+    font-size: 16px;
+    outline: none;
+    padding: 10px;
+    width: 100%;
+    background-color: #808080 !important;
+}
 
       .select-pure__placeholder--hidden {
         display: none;

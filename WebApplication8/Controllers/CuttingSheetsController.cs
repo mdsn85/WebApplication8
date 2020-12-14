@@ -1,5 +1,6 @@
 ﻿using log4net;
 using Microsoft.AspNet.Identity;
+
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,12 +14,14 @@ using WebApplication8.Models;
 
 namespace WebApplication8.Controllers
 {
+    [Authorize]
     public class CuttingSheetsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         ILog log = LogManager.GetLogger("application-log");
 
         // GET: CuttingSheets
+        [Authorize(Roles = RoleNames.ROLE_MRFView + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Index(string SearchCode, string SearchProjectCode)
         {
             ViewBag.title1 = "MRF List";
@@ -45,6 +48,7 @@ namespace WebApplication8.Controllers
         }
 
         // GET: CuttingSheets/Details/5
+        [Authorize(Roles = RoleNames.ROLE_MRFView + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -60,6 +64,7 @@ namespace WebApplication8.Controllers
             }
             return View(cuttingSheet);
         }
+
 
         public JsonResult CuttingSheetsDetails(int CuttingSheetId)
         {
@@ -122,6 +127,7 @@ namespace WebApplication8.Controllers
         }
 
         // GET: CuttingSheets/Create
+        [Authorize(Roles = RoleNames.ROLE_MRFCreate + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Create()
         {
             ViewBag.title1 = "Create MRF ";
@@ -141,6 +147,7 @@ namespace WebApplication8.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.ROLE_MRFCreate + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Create([Bind(Include = "CuttingSheetId,ProjectId,UserCreate,CreateDate,code")] CuttingSheet cuttingSheet,
             String[] FileName)
         {
@@ -314,7 +321,7 @@ namespace WebApplication8.Controllers
             return Json("Cutting Sheet Saved Successfully");
 
         }
-
+        [Authorize(Roles = RoleNames.ROLE_MRFPrint + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult PrintNewTable(int? id)
         {
             if (id == null)
@@ -331,6 +338,7 @@ namespace WebApplication8.Controllers
         }
 
         // GET: CuttingSheets/Edit/5
+        [Authorize(Roles = RoleNames.ROLE_MRFEdit + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -477,6 +485,7 @@ namespace WebApplication8.Controllers
 
 
         // GET: CuttingSheets/Delete/5
+        [Authorize(Roles = RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Delete(int? id)
         {
             if (id == null)

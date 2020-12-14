@@ -77,9 +77,13 @@ namespace WebApplication8.Models
         [Display(Name = "Is Enabled")]
         public bool IsEnabled { get; set; }
 
-        [Required]
+
         [Display(Name = "User Role")]
         public string UserRoles { get; set; }
+
+
+        [Display(Name = "User Roles")]
+        public List<string> UserRolesList { get; set; }
 
         [Required]
         [Display(Name = "Employee")]
@@ -109,9 +113,11 @@ namespace WebApplication8.Models
     }
     public class ListUsersViewModel
     {
-        [Required]
+
         [Display(Name = "User Role")]
         public string UserRoles { get; set; }
+
+        public List<string> UserRolesList { get; set; }
 
         [Required]
         [Display(Name = "Employee")]
@@ -123,6 +129,8 @@ namespace WebApplication8.Models
         [Display(Name = "Username")]
         public string UserName { get; set; }
 
+        public string UserId { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -130,7 +138,7 @@ namespace WebApplication8.Models
 
 
         [Display(Name = "Is Enabled")]
-        public bool IsEnabled { get; set; }
+        public bool? IsEnabled { get; set; }
     }
     public class ResetPasswordViewModel
     {

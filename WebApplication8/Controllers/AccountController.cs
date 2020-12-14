@@ -15,7 +15,7 @@ using WebApplication8.Models;
 
 namespace WebApplication8.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = RoleNames.ROLE_ADMINISTRATOR)]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -139,6 +139,75 @@ namespace WebApplication8.Controllers
 
 
         ApplicationDbContext db = new ApplicationDbContext();
+
+
+        [AllowAnonymous]
+        public ActionResult RegisterMultiRoles()
+        {
+            ViewBag.EmployeeId = new SelectList(db.Employees.OrderBy(s => s.Name), "EmployeeId", "Name");
+
+            ViewBag.Users = db.Roles.Select(u => new { label = u.Name, value = u.Name }).ToList();
+            //ViewBag.RolesName = new SelectList(db.Roles.ToList(), "Id", "Name");
+            return View();
+        }
+
+        //
+        // POST: /Account/Register
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegisterMultiRoles(RegisterViewModel model )
+        {
+            if (ModelState.IsValid)
+            {
+
+                int eid = model.EmployeeId;
+                Employee e = db.Employees.Find(eid);
+                model.Email = e.EmailSignature;
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email ,IsEnabled =true};
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+
+                    //User role
+                    foreach (string roleName in model.UserRolesList)
+                    {
+                        await this.UserManager.AddToRoleAsync(user.Id, roleName);
+                    }
+
+
+                    EmployeeUser eu = new EmployeeUser();
+                    eu.User = user.UserName;
+                    eu.EmployeeId = model.EmployeeId;
+                    db.EmployeeUsers.Add(eu);
+                    db.SaveChanges();
+
+
+                    return RedirectToAction("Index", "Home");
+                }
+                ViewBag.EmployeeId = new SelectList(db.Employees.OrderBy(s => s.Name), "EmployeeId", "Name");
+                ViewBag.Users = db.Roles.Select(u => new { label = u.Name, value = u.Name }).ToList();
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            ViewBag.EmployeeId = new SelectList(db.Employees.OrderBy(s => s.Name), "EmployeeId", "Name");
+            ViewBag.Users = db.Roles.Select(u => new { label = u.Name, value = u.Name }).ToList();
+            return View(model);
+        }
+
+
+
+
+
         //
         // GET: /Account/Register
         [AllowAnonymous]
@@ -146,6 +215,8 @@ namespace WebApplication8.Controllers
         {
             ViewBag.EmployeeId = new SelectList(db.Employees.OrderBy(s => s.Name), "EmployeeId", "Name");
             ViewBag.RolesName = new SelectList(db.Roles.ToList(), "Name", "Name");
+
+            //ViewBag.RolesName = new SelectList(db.Roles.ToList(), "Id", "Name");
             return View();
         }
 
@@ -448,50 +519,119 @@ namespace WebApplication8.Controllers
             base.Dispose(disposing);
         }
 
-        [Authorize(Roles = "Admin")]
+
+
+
+
+
+
+
+
+
         public ActionResult ListOfUsers(string searchStringName)
         {
+            List<ListUsersViewModel> allusers = null;
+            allusers = (from a in db.Users
+                        select new ListUsersViewModel() { UserId = a.Id, UserName = a.UserName, Email = a.Email, IsEnabled = a.IsEnabled }).ToList();
 
-            ViewBag.EmployeeId = new SelectList(db.Employees.OrderBy(s => s.Name), "EmployeeId", "Name");
+            foreach (var u in allusers.ToList())
+            {
+                u.UserRolesList = UserManager.GetRoles(u.UserId).ToList();
+            }
+            return View(allusers.OrderBy(a => a.UserName).ToList());
+        }
+
+        public ActionResult EditRegisterMultiRoles(string id)
+        {
+            var user = db.Users.Where(u => u.UserName == id).FirstOrDefault();
+            int empid = -1;
+            try
+            {
+                empid = db.EmployeeUsers.Where(eu => eu.User == id).FirstOrDefault().EmployeeId;
+            }
+            catch (Exception e) { }
+            string roleid = user.Roles.FirstOrDefault().RoleId;
+            string userId = User.Identity.GetUserId();
+            ViewBag.Users = db.Roles.Select(u => new { label = u.Name, value = u.Name }).ToList();
+            ViewBag.CurrentRoles =UserManager.GetRoles(user.Id).ToList();
+            // get user roles
+
+
+
+            // ViewBag.EmployeeId = new SelectList(db.Employees.OrderBy(s => s.Name), "EmployeeId", "Name", empid);
+            ViewBag.EmployeeName = db.Employees.Find(empid).Name;
             //User role
-            ViewBag.RolesName = new SelectList(db.Roles.Where(u => !u.Name.Contains("Admin"))
-                                            .ToList(), "Name", "Name");
+
+            RegisterViewModel model = new RegisterViewModel();
+            model.idx = user.Id;
+            model.Email = user.Email;
+            model.IsEnabled = user.IsEnabled ?? false;
+            model.UserName = user.UserName;
+
+            model.EmployeeId = empid;
+            model.Password = "";
             //if (User.IsInRole(RoleName.Admin))
             //{
-            List<ListUsersViewModel> allusers = null;
-
-
-            if (!String.IsNullOrEmpty(searchStringName))
-            {
-                allusers = (from a in db.Users
-                            where a.UserName.Contains(searchStringName)
-                            select new ListUsersViewModel() { UserName = a.UserName, Email = a.Email}).ToList();
-
-            }
-            else
-            {
-
-                //allusers = (from a in db.Users
-                //            select new ListUsersViewModel() { UserName = a.UserName, Email = a.Email, UserRoles = a.Roles}).ToList();
-
-
-                allusers = (from u in db.Users
-                            from ur in u.Roles
-                            join r in db.Roles on ur.RoleId equals r.Id
-                            select new ListUsersViewModel
-                            {
-                                UserName=u.UserName,
-                                Email = u.Email,
-                                UserRoles = r.Name,
-                            }).ToList();
-
-            }
-
-            return View(allusers.OrderBy(a => a.UserName).ToList());
+            return View(model);
             //}
             //return HttpNotFound();
         }
 
+        //
+        // POST: /Account/Register
+        [HttpPost]
+
+        [ValidateAntiForgeryToken]
+
+        public async Task<ActionResult> EditRegisterMultiRoles(RegisterViewModel model)
+        {
+
+            var user = UserManager.FindById(model.idx);
+
+            // Update it with the values from the view model
+            user.UserName = model.UserName;
+            user.Email = model.Email;
+            user.IsEnabled = model.IsEnabled;
+            user.PasswordHash = user.PasswordHash;
+            // var user = UserManager.FindByName(model.UserName);
+
+            //var EmployeeUser = db.EmployeeUsers.Where(ee => ee.User == user.UserName).FirstOrDefault();
+
+
+            try
+            {
+                UserManager.Update(user);
+
+                //await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
+                var roles = await UserManager.GetRolesAsync(user.Id);
+                await UserManager.RemoveFromRolesAsync(user.Id, roles.ToArray());
+                if (model.UserRolesList != null)
+                {
+                    foreach (string roleName in model.UserRolesList)
+                    {
+                        await this.UserManager.AddToRoleAsync(user.Id, roleName);
+                    }
+                }
+
+
+                EmployeeUser eu = db.EmployeeUsers.Where(ee => ee.EmployeeId == model.EmployeeId).FirstOrDefault();
+                eu.User = user.UserName;
+                eu.EmployeeId = model.EmployeeId;
+               
+                db.SaveChanges();
+                return RedirectToAction("ListOfUsers", "Account");
+            }
+            catch (Exception e)
+            {
+                ViewBag.e = e.Message;
+
+                ViewBag.Users = db.Roles.Select(u => new { label = u.Name, value = u.Name }).ToList();
+                //ViewBag.EmployeeName = 
+                return View(model);
+            }
+
+           
+        }
 
 
         public ActionResult EditRegister(string id)
@@ -633,6 +773,85 @@ namespace WebApplication8.Controllers
             //    // If we got this far, something failed, redisplay form
             //    return View(model);
             //}
+
+        }
+
+        [Authorize(Roles = RoleNames.ROLE_ADMINISTRATOR)]
+        public ActionResult ResetPasswordCust(string id)
+        {
+            var user = db.Users.Where(u => u.UserName == id).FirstOrDefault();
+            int empid = -1;
+            try
+            {
+                empid = db.EmployeeUsers.Where(eu => eu.User == id).FirstOrDefault().EmployeeId;
+            }
+            catch (Exception e) { }
+            string roleid = user.Roles.FirstOrDefault().RoleId;
+            string userId = User.Identity.GetUserId();
+
+            string roleName = db.Roles.Find(roleid).Name;
+            // get user roles
+
+
+
+            ViewBag.EmployeeId = new SelectList(db.Employees.OrderBy(s => s.Name), "EmployeeId", "Name", empid);
+
+            //User role
+            ViewBag.RolesName = new SelectList(db.Roles.Where(u => !u.Name.Contains("Admin"))
+                                            .ToList(), "Name", "Name", roleName);
+            RegisterViewModel model = new RegisterViewModel();
+            model.idx = user.Id;
+            model.Email = user.Email;
+            model.IsEnabled = user.IsEnabled ?? false;
+            model.UserName = user.UserName;
+            model.UserRoles = roleName;
+            model.EmployeeId = empid;
+            model.Password = user.PasswordHash;
+            //if (User.IsInRole(RoleName.Admin))
+            if (empid != -1)
+            {
+                ViewBag.empname = db.Employees.Find(empid).Name;
+            }
+            else
+            {
+                ViewBag.empname = "";
+            }
+            return View(model);
+            //}
+            //return HttpNotFound();
+        }
+
+        [HttpPost]
+
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.ROLE_ADMINISTRATOR)]
+        public async Task<ActionResult> ResetPasswordCust(RegisterViewModel model)
+        {
+            // Apply the changes if any to the db
+            try
+            {
+
+                UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
+
+                userManager.RemovePassword(model.idx);
+
+                userManager.AddPassword(model.idx, model.Password);
+                return RedirectToAction("ListOfUsers", "Account");
+            }
+            catch (Exception e)
+            {
+                ViewBag.e = e.Message;
+                ViewBag.EmployeeId = new SelectList(db.Employees.OrderBy(s => s.Name), "EmployeeId", "Name");
+                //User role
+                ViewBag.RolesName = new SelectList(db.Roles.Where(u => !u.Name.Contains("Admin"))
+                                                .ToList(), "Name", "Name");
+
+                //User role
+                ViewBag.Name = new SelectList(db.Roles.Where(u => !u.Name.Contains("Admin"))
+                          .ToList(), "Name", "Name");
+                return View(model);
+            }
+
 
         }
 

@@ -13,7 +13,7 @@ namespace WebApplication8.Models
 
         public static string Credintial = "crm@mrskips.net";
 
-        public static String Password = "100$zero";
+        public static String Password = "-^+!*dB!4YNt[BwW";
 
         public static String MailFrom = "crm@mrskips.net";
     }

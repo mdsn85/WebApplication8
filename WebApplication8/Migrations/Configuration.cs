@@ -52,9 +52,28 @@ namespace WebApplication8.Migrations
                 new MaterialType() { MaterialTypeId = 13, Name = "Finished Goods" },
                 new MaterialType() { MaterialTypeId = 14, Name = "Flooring" },
                 new MaterialType() { MaterialTypeId = 15, Name = "Glass" }
+                );
 
 
+
+
+            context.Roles.AddOrUpdate(x => x.Name,
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_MRFView},
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_MRFCreate },
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_MRFEdit },
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_MRFPrint }
+                );
+
+            context.Roles.AddOrUpdate(x => x.Name,
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_ProjectCreate },
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_ProjectDownloadExcel },
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_ProjectEdit },
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_ProjectView },
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_ProjectViewAttachment },
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_ProjectViewCustomize }
     );
+
+
 
 
 

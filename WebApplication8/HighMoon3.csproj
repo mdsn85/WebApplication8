@@ -762,6 +762,18 @@
     <Compile Include="Migrations\202012121335237_AddFileUploadToCuttingSheet.designer.cs">
       <DependentUpon>202012121335237_AddFileUploadToCuttingSheet.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012130949366_ssdnj.cs" />
+    <Compile Include="Migrations\202012130949366_ssdnj.designer.cs">
+      <DependentUpon>202012130949366_ssdnj.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012131042576_ssdnjd.cs" />
+    <Compile Include="Migrations\202012131042576_ssdnjd.designer.cs">
+      <DependentUpon>202012131042576_ssdnjd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012131610598_dj.cs" />
+    <Compile Include="Migrations\202012131610598_dj.designer.cs">
+      <DependentUpon>202012131610598_dj.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApprovalType.cs" />
@@ -1435,6 +1447,10 @@
     <Content Include="Views\NotificationCategories\Details.cshtml" />
     <Content Include="Views\NotificationCategories\Edit.cshtml" />
     <Content Include="Views\NotificationCategories\Index.cshtml" />
+    <Content Include="Views\Account\RegisterMultiRoles.cshtml" />
+    <Content Include="Views\Account\EditRegisterMultiRoles.cshtml" />
+    <Content Include="Views\Account\ResetPasswordCust.cshtml" />
+    <Content Include="Views\Projects\IndexShort.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1856,6 +1872,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202012121335237_AddFileUploadToCuttingSheet.resx">
       <DependentUpon>202012121335237_AddFileUploadToCuttingSheet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012130949366_ssdnj.resx">
+      <DependentUpon>202012130949366_ssdnj.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012131042576_ssdnjd.resx">
+      <DependentUpon>202012131042576_ssdnjd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012131610598_dj.resx">
+      <DependentUpon>202012131610598_dj.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -211,15 +211,23 @@
                     }
 
 
-                    @if (User.IsInRole("Sales Coordinator") || User.IsInRole("Admin") || User.IsInRole("Account") || User.IsInRole("Factory Coordinator"))
+                    @*@if (User.IsInRole("Sales Coordinator") || User.IsInRole("Admin") || User.IsInRole("Account") || User.IsInRole("Factory Coordinator"))*@
+                    @if (User.IsInRole("ProjectView") || User.IsInRole("Admin") || User.IsInRole("ProjectViewShort"))
                     {
                         <li>
                             <a href="/Projects/Index" class="waves-effect waves-dark"><i class="fa fa-fast-forward"></i> Project</a>
                         </li>
                     }
 
+                    @if (User.IsInRole("Admin") || User.IsInRole("ProjectViewShort"))
+                    {
+                        <li>
+                            <a href="/Projects/IndexShort" class="waves-effect waves-dark"><i class="fa fa-fast-forward"></i> Project</a>
+                        </li>
+                    }
 
-                    @if (User.IsInRole("Cutting Sheet") || User.IsInRole("Admin"))
+
+                    @if (User.IsInRole("Cutting Sheet") || User.IsInRole("Admin") || User.IsInRole("MRFView"))
                     {
                         <li>
                             <a href="/CuttingSheets/index" class="waves-effect waves-dark"><i class="fa fa-bar-chart-o"></i> MRF</a>
@@ -274,7 +282,7 @@
                             <a href="#" class="waves-effect waves-dark"><i class="fa fa-user-md"></i> Employee Managment<span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level">
                                 <li>@Html.ActionLink("Employees", "Index", "Employees")</li>
-                                <li>@Html.ActionLink("Register", "Register", "Account")</li>
+                                <li>@Html.ActionLink("Register", "RegisterMultiRoles", "Account")</li>
 
 
                                 <li>@Html.ActionLink("List of Users", "ListOfUsers", "Account")</li>

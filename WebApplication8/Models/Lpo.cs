@@ -52,7 +52,7 @@ namespace WebApplication8.Models
         public int? Sequense { get; set; }
 
         [Display(Name = "Stamp Date")]
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm:ss}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime? StampDate { get; set; }
 
         public virtual ICollection<LpoDetail> LpoDetails { get; set; }

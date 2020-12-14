@@ -48,7 +48,7 @@ namespace WebApplication8.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "NotificationCategoryId,Name,Title,Details,DetailsURL,NotificationType")] NotificationCategory notificationCategory,string[] users)
+        public ActionResult Create([Bind(Include = "NotificationCategoryId,Name,Title,Details,DetailsURL,NotificationType")] NotificationCategory notificationCategory, string[] users)
         {
             if (ModelState.IsValid)
             {

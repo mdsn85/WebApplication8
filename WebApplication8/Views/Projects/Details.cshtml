@@ -303,28 +303,30 @@
 
 
         </table>
-
-        <div>
-            @if (@ViewBag.AttachedFiles == null)
-            {<p>  No attachments was uploaded</p>}
-            else
-            {
-
-                @*<a href="~/Uploads/CustomerDoc/@ViewBag.Contract_Copy.Name" target="_blank">@ViewBag.Contract_Copy.Name</a>   ,
-                    <span> valid until: @ViewBag.Contract_Copy.ValidUntil</span>*@
-                @Html.Raw("  Attachments  : <br/>")
-                foreach (var f in ViewBag.AttachedFiles)
+        @if (User.IsInRole("ProjectViewAttachment") || User.IsInRole("Admin"))
+        {
+            <div>
+                @if (@ViewBag.AttachedFiles == null)
+                {<p>  No attachments was uploaded</p>}
+                else
                 {
 
-                    <a href="~/Uploads/CustomerDoc/@f.Name" target="_blank">@f.Name</a> <br />
+                    @*<a href="~/Uploads/CustomerDoc/@ViewBag.Contract_Copy.Name" target="_blank">@ViewBag.Contract_Copy.Name</a>   ,
+                    <span> valid until: @ViewBag.Contract_Copy.ValidUntil</span>*@
+                    @Html.Raw("  Attachments  : <br/>")
+                    foreach (var f in ViewBag.AttachedFiles)
+                    {
+
+                        <a href="~/Uploads/CustomerDoc/@f.Name" target="_blank">@f.Name</a> <br />
+                    }
+
                 }
 
-            }
 
+            </div>
+        }
 
         </div>
-
-    </div>
 
 
     <div style="float:left ;height:100%  ; padding-left:50px; width:60%">

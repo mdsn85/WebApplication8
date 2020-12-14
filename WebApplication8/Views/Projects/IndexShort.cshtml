@@ -24,7 +24,7 @@
     {
         <button id="btnExport" style="margin-left:20px" class="btn btn-default">Excel <span class=" glyphicon glyphicon-download-alt"></span></button>
     }
-    </label>
+</label>
 
 
 
@@ -78,9 +78,9 @@
 
 
 
-                <button class="btn btn-default" > Search <span class="glyphicon glyphicon-search"></span> </button>
+                <button class="btn btn-default"> Search <span class="glyphicon glyphicon-search"></span> </button>
 
-            
+
             </div>
 
         </div>
@@ -122,22 +122,6 @@
             </th>
 
 
-            <th>
-
-
-
-                @Html.DisplayNameFor(model => model.Value)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Discount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Vat)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Total)
-            </th>
-
 
             <th>
                 @Html.DisplayNameFor(model => model.SalesType.Name)
@@ -175,13 +159,6 @@
             </th>
 
 
-
-            <th>
-                @Html.DisplayNameFor(model => model.Deduction)
-            </th>
-            <th>
-                Net Value
-            </th>
 
 
 
@@ -236,177 +213,149 @@
 
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.QuotationRef)
-            </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuotationRef)
+                </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Code)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjectStatus.Name)
-            </td>
-
-
-            <td>
-                @Html.DisplayFor(modelItem => item.SalesDate)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Area.Name)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectStatus.Name)
+                </td>
 
 
-            <td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SalesDate)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Area.Name)
+                </td>
 
 
-                @{
-                    var indianCulture = new System.Globalization.CultureInfo("hi-IN");
+              
 
-                }
-                @string.Format(indianCulture, "{0:N}", item.Total)
+                <td>
+                    @Html.DisplayFor(modelItem => item.SalesType.Name)
+                </td>
 
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Discount)
-            </td>
-            <td>
-                @string.Format(indianCulture, "{0:N}", item.Vat)
-            </td>
-            <td>
-
-                @string.Format(indianCulture, "{0:N}", item.Total)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomersType.Name)
+                </td>
 
 
-            <td>
-                @Html.DisplayFor(modelItem => item.SalesType.Name)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SalesMan.Employees.Name)
+                </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.CustomersType.Name)
-            </td>
-
-
-            <td>
-                @Html.DisplayFor(modelItem => item.SalesMan.Employees.Name)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.Designer.Employees.Name)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Designer.Employees.Name)
+                </td>
 
 
 
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjectPaymentTerm.Name)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectPaymentTerm.Name)
+                </td>
 
 
 
-            <td>
-                @Html.DisplayFor(modelItem => item.QuotationAgreementApprovedby)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuotationAgreementApprovedby)
+                </td>
 
 
-            <td>
+                <td>
 
-                @{
-                    if (item.AccountApproval == true)
-                    {
-                        @Html.Raw("Approved")
+                    @{
+                        if (item.AccountApproval == true)
+                        {
+                            @Html.Raw("Approved")
 
+                        }
+                        else
+                        {
+                            @Html.Raw("Pendding")
+                        }
                     }
-                    else
+                </td>
+
+
+
+
+
+
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveryDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActualDeliveryDate)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Warranty)
+                </td>
+
+
+
+
+
+
+
+
+
+
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.Name)
+                </td>
+
+
+
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateDate)
+                </td>
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.StampDate)
+                </td>
+                <td>
+
+                    @if (User.IsInRole("Admin"))
                     {
-                        @Html.Raw("Pendding")
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ProjectId })
+                        @Html.Raw("|");
+                        @Html.ActionLink("Details", "Details", new { id = item.ProjectId })|
+}
+
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ProjectId })
+                        @Html.Raw("|");
                     }
-                }
-            </td>
+
+                </td>
 
 
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Deduction)
-            </td>
-            <td>
-                @{
-                    float x = @item.Total - @item.Deduction ?? 0;
-                }
-                @string.Format(indianCulture, "{0:N}", x)
-
-            </td>
-
-
-
-
-            <td>
-                @Html.DisplayFor(modelItem => item.DeliveryDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ActualDeliveryDate)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.Warranty)
-            </td>
-
-
-
-
-
-
-
-
-
-
-
-
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.Name)
-            </td>
-
-
-
-
-
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-
-
-            <td>
-                @Html.DisplayFor(modelItem => item.CreateDate)
-            </td>
-
-
-            <td>
-                @Html.DisplayFor(modelItem => item.StampDate)
-            </td>
-            <td>
-
-                @if (User.IsInRole("Admin"))
-                {
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ProjectId })
-                    @Html.Raw("|");
-                }
-                @Html.ActionLink("Details", "Details", new { id = item.ProjectId })|
-
-                @if (User.IsInRole("Admin"))
-                {
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ProjectId })
-                    @Html.Raw("|");
-                }
-   
-            </td>
-
-
-
-        </tr>
+            </tr>
         }
     </tbody>
 </table>
@@ -454,5 +403,5 @@
 
 
     @*<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>*@
+        <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>*@
 }

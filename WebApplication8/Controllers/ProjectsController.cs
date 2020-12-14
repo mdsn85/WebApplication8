@@ -16,6 +16,7 @@ using WebApplication8.Models;
 
 namespace WebApplication8.Controllers
 {
+    [Authorize]
     public class ProjectsController : Controller
     {
 
@@ -26,6 +27,7 @@ namespace WebApplication8.Controllers
         private string[] rolesArray;
 
         // GET: Projects
+        [Authorize(Roles = RoleNames.ROLE_ProjectView + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Index(bool? NotApproved,string CustomerId, string st, string SearchCode, string StatusId,string SearchValue1,string SearchValue2)
         {
             ViewBag.title1 = "Project List";
@@ -79,13 +81,83 @@ namespace WebApplication8.Controllers
                     projects = projects.Where(cb => cb.Value == v1).ToList();
                 }
             }
-
-
             projects = projects.OrderByDescending(p => p.StampDate).ToList();
+            if (User.IsInRole(RoleNames.ROLE_FactoryCoordinator))
+            {
+                projects = projects.Where(p => p.AccountApproval == true).ToList();
+            }
+
             return View(projects);
         }
 
+
+        [Authorize(Roles = RoleNames.ROLE_ProjectViewCustomize + "," + RoleNames.ROLE_ADMINISTRATOR)]
+        public ActionResult IndexShort(bool? NotApproved, string CustomerId, string st, string SearchCode, string StatusId, string SearchValue1, string SearchValue2)
+        {
+            ViewBag.title1 = "Project List";
+            ViewBag.SearchCode = SearchCode;
+
+            ViewBag.SearchValue1 = SearchValue1;
+            ViewBag.SearchValue2 = SearchValue2;
+
+            ViewBag.StatusId = new SelectList(db.ProjectStatus, "ProjectStatusId", "Name", StatusId);
+            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "Name", CustomerId);
+
+
+            List<Project> projects = db.Projects.Include(p => p.ProjectStatus).Include(p => p.SalesType).Include(p => p.CustomersType).Include(p => p.Customer).Include(p => p.Designer).Include(p => p.ProjectPaymentTerm).Include(p => p.SalesMan)
+                .ToList(); ;
+
+            if (NotApproved == true)
+            {
+                projects = projects.Where(s => s.AccountApproval == false).ToList();
+            }
+
+            if (!String.IsNullOrEmpty(SearchCode))
+            {
+                projects = projects.Where(s => s.Code.ToString().Contains(SearchCode, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            }
+
+            if (!String.IsNullOrEmpty(StatusId))
+            {
+                int qqqq = int.Parse(StatusId);
+                projects = projects.Where(s => s.ProjectStatusId != null && s.ProjectStatusId == qqqq).ToList();
+            }
+
+            if (!String.IsNullOrEmpty(CustomerId))
+            {
+                int qqqq = int.Parse(CustomerId);
+                projects = projects.Where(s => s.CustomerId != null && s.CustomerId == qqqq).ToList();
+            }
+
+
+
+            if (!String.IsNullOrEmpty(SearchValue1))
+            {
+                float v1 = float.Parse(SearchValue1);
+
+                if (!String.IsNullOrEmpty(SearchValue2))
+                {
+                    float v2 = float.Parse(SearchValue2);
+                    projects = projects.Where(cb => cb.Value >= v1 && cb.Value < v2).ToList();
+                }
+                else
+                {
+
+                    projects = projects.Where(cb => cb.Value == v1).ToList();
+                }
+            }
+            projects = projects.OrderByDescending(p => p.StampDate).ToList();
+            if (User.IsInRole(RoleNames.ROLE_FactoryCoordinator))
+            {
+                projects = projects.Where(p => p.AccountApproval == true).ToList();
+            }
+
+            return View(projects);
+        }
+
+
         // GET: Projects/Details/5
+        [Authorize(Roles = RoleNames.ROLE_ProjectView + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Details(int? id,string msg)
         {
             if (id == null)
@@ -115,6 +187,7 @@ namespace WebApplication8.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = RoleNames.ROLE_ProjectView + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Details(bool? AccountApprovalCk, int ProjectId)
         {
 
@@ -230,7 +303,8 @@ namespace WebApplication8.Controllers
 
 
 
-            // GET: Projects/Create
+        // GET: Projects/Create
+        [Authorize(Roles = RoleNames.ROLE_ProjectCreate + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Create()
         {
             ViewBag.title1 = "Create Project ";
@@ -406,6 +480,7 @@ namespace WebApplication8.Controllers
         }
 
         // GET: Projects/Edit/5
+        [Authorize(Roles = RoleNames.ROLE_ProjectEdit + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Edit(int? id)
         {
  
@@ -614,6 +689,7 @@ namespace WebApplication8.Controllers
         }
 
         // GET: Projects/Delete/5
+        [Authorize(Roles =  RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
