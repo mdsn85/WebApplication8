@@ -56,13 +56,20 @@ namespace WebApplication8.Models
         public int ProjectStatusId { get; set; }
         public ProjectStatus ProjectStatus { get; set; }
 
+
+        [DisplayFormat(DataFormatString = "{0:N2}")]
         public float Value { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N2}")]
         public float Discount { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N2}")]
         public float Vat { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N2}")]
         public float Total { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N2}")]
         public float? SalePrice { get; set; }
 
         [Display(Name = "Deduction ")]
+        [DisplayFormat(DataFormatString = "{0:N2}")]
         public float? Deduction { get; set; }
 
 

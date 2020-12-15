@@ -22,6 +22,8 @@ namespace WebApplication8.Models
         [Display(Name = "Type Of Payment")]
         public TypeOfPaymentList TypeOfPayment { get; set; }
 
+
+        [DisplayFormat(DataFormatString = "{0:N2}")]
         public float Amount { get; set; }
 
         [Display(Name = "Collected By")]

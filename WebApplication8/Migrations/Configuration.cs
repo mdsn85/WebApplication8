@@ -70,8 +70,25 @@ namespace WebApplication8.Migrations
                 new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_ProjectEdit },
                 new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_ProjectView },
                 new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_ProjectViewAttachment },
-                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_ProjectViewCustomize }
-    );
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_ProjectViewCustomize },
+
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_ProjectAddPayment },
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_ProjectViewPayment },
+
+                 new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_Account });
+
+            context.Roles.AddOrUpdate(x => x.Name,
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_CustomerCreate },
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_CustomerEdit },
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_CustomerView }
+                );
+
+            context.Roles.AddOrUpdate(x => x.Name,
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_LPOCreate },
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_LPOEdit },
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_LPOView },
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_LPOPrint }
+                );
 
 
 

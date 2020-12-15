@@ -90,6 +90,7 @@ namespace WebApplication8.Controllers
 
 
         // GET: Payments/Create
+        [Authorize(Roles = RoleNames.ROLE_ProjectAddPayment + "," + RoleNames.ROLE_Account)]
         public ActionResult CreateByProject(int ProjectId,int? Close)
         {
             ViewBag.close = Close;
@@ -220,7 +221,9 @@ namespace WebApplication8.Controllers
             Payment payment = db.Payments.Find(id);
             db.Payments.Remove(payment);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+
+            return RedirectToAction("Details","Projects",new { id=payment.ProjectId});
         }
 
         protected override void Dispose(bool disposing)

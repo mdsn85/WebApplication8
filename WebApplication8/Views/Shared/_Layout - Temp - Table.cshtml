@@ -203,7 +203,7 @@
                     }
 
 
-                    @if (User.IsInRole("Sales Coordinator") || User.IsInRole("Admin"))
+                    @if (User.IsInRole("Sales Coordinator") || User.IsInRole("Admin") || User.IsInRole("CustomerView"))
                     {
                         <li>
                             <a href="/Customers/Index" class="waves-effect waves-dark"><i class="fa fa-users"></i> Customers </a>

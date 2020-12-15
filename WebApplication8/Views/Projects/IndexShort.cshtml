@@ -257,19 +257,12 @@
                     @Html.DisplayFor(modelItem => item.Designer.Employees.Name)
                 </td>
 
-
-
                 <td>
                     @Html.DisplayFor(modelItem => item.ProjectPaymentTerm.Name)
                 </td>
-
-
-
                 <td>
                     @Html.DisplayFor(modelItem => item.QuotationAgreementApprovedby)
                 </td>
-
-
                 <td>
 
                     @{
@@ -285,13 +278,6 @@
                     }
                 </td>
 
-
-
-
-
-
-
-
                 <td>
                     @Html.DisplayFor(modelItem => item.DeliveryDate)
                 </td>
@@ -305,21 +291,9 @@
 
 
 
-
-
-
-
-
-
-
-
-
                 <td>
                     @Html.DisplayFor(modelItem => item.Customer.Name)
                 </td>
-
-
-
 
 
                 <td>
@@ -341,8 +315,9 @@
                     {
                         @Html.ActionLink("Edit", "Edit", new { id = item.ProjectId })
                         @Html.Raw("|");
-                        @Html.ActionLink("Details", "Details", new { id = item.ProjectId })|
-}
+                        @Html.ActionLink("Details", "Details", new { id = item.ProjectId })
+                        @Html.Raw("|");
+                    }
 
 
                     @if (User.IsInRole("Admin"))
@@ -371,7 +346,7 @@
     <script>
         $(document).ready(function () {
             $('#dataTables-example').dataTable({
-                "order": [26, "desc"]
+                "order": [19, "desc"]
             });
 
 

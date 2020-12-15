@@ -7,7 +7,12 @@
     table.summartTbl {
         table-layout: auto;
         width: 320px;
-        margin-right: 320px;
+
+    }
+
+    table.center {
+        margin-left: auto;
+        margin-right: auto;
     }
 </style>
 
@@ -312,7 +317,7 @@
                 {
 
                     @*<a href="~/Uploads/CustomerDoc/@ViewBag.Contract_Copy.Name" target="_blank">@ViewBag.Contract_Copy.Name</a>   ,
-                    <span> valid until: @ViewBag.Contract_Copy.ValidUntil</span>*@
+                        <span> valid until: @ViewBag.Contract_Copy.ValidUntil</span>*@
                     @Html.Raw("  Attachments  : <br/>")
                     foreach (var f in ViewBag.AttachedFiles)
                     {
@@ -326,39 +331,42 @@
             </div>
         }
 
-        </div>
+    </div>
 
+    @{
+        var indianCulture = new System.Globalization.CultureInfo("hi-IN");
 
+    }
     <div style="float:left ;height:100%  ; padding-left:50px; width:60%">
 
         <div id="paymentDiv"></div>
 
         <div id="SummaryDiv" style="margin-top:30px;">
 
-            <table class="table table-striped table-bordered table-hover pull-right summartTbl" id="dataTables-example">
+            <table class="table table-striped table-bordered table-hover  summartTbl center" id="dataTables-example">
                 <tr>
                     <td><b>Value</b></td>
-                    <td><b>@Model.Value</b></td>
+                    <td><b> @Html.DisplayFor(model => model.Value)</b></td>
                 </tr>
 
                 <tr>
                     <td><b>Discount</b></td>
-                    <td><b>@Model.Discount</b></td>
+                    <td><b> @Html.DisplayFor(model => model.Discount)</b></td>
                 </tr>
 
                 <tr>
                     <td><b>Vat</b></td>
-                    <td><b>@Model.Vat</b></td>
+                    <td><b> @Html.DisplayFor(model => model.Vat)</b></td>
                 </tr>
 
                 <tr>
                     <td><b>Total</b></td>
-                    <td><b id="Total">@Model.Total</b></td>
+                    <td><b id="Total">   @Html.DisplayFor(model => model.Total)</b></td>
                 </tr>
 
                 <tr>
                     <td><b>Total Payment</b></td>
-                    <td><b id="totalPayment">@ViewBag.totalPayment</b></td>
+                    <td><b id="totalPayment"> @string.Format(indianCulture, "{0:N}", @ViewBag.totalPayment)  </b></td>
                 </tr>
 
                 <tr>
@@ -375,12 +383,12 @@
                             }
                             else
                             {
-                                @Html.Raw(Model.Deduction);
+                                @Html.DisplayFor(model => model.Deduction)
                             }
                         </b>
                     </td>
 
-                    <td><p id="DeductionReason">@Model.DeductionReason</p></td>
+                    <td><p id="DeductionReason">  @Model.DeductionReason</p></td>
                 </tr>
                 @{
 
@@ -389,13 +397,14 @@
                         Model.Deduction = 0;
                     }
 
-                    float balance = Model.Total - @ViewBag.totalPayment - @Model.Deduction ?? 0;
+                    double balance = Model.Total - @ViewBag.totalPayment - @Model.Deduction ?? 0;
+                    balance = Math.Round(balance, 2);
 
                 }
 
                 <tr>
                     <td><b>Balance</b></td>
-                    <td><b id="balance">@balance</b></td>
+                    <td><b id="balance">@string.Format(indianCulture, "{0:N}", @balance)   </b></td>
                 </tr>
 
 
@@ -406,55 +415,55 @@
 
         </div>
 
-
-        <div style="margin-top:30px;  padding-left:160px" >
-            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "SearchForm" }))
-            {
-                @Html.AntiForgeryToken();
-                <!-- START SEARCH -->
-
-            <div class="panel-body">
-
-                @if (User.IsInRole("Account"))
+        @if (User.IsInRole("Account"))
+        {
+            <div style="margin-top:30px;  padding-left:160px">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "SearchForm" }))
                 {
-                    <h4 style="color:red">@ViewBag.Error</h4>
-                    <div class="form-group">
-                        @Html.Label(" ", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.AntiForgeryToken();
+                    <!-- START SEARCH -->
+
+                    <div class="panel-body">
 
 
-                        <div class="col-md-10">
-                            <p>
-                                <input type="hidden" value="@Model.ProjectId" name="ProjectId" />
-                                @if (Model.AccountApproval == true)
-                                {
-                                    <input type="checkbox" id="test5" name="AccountApprovalCk" value="true" checked />
-                                }
-                                else
-                                {
-
-                                    <input type="checkbox" id="test5" name="AccountApprovalCk" value="true" />
-                                }
+                        <h4 style="color:red">@ViewBag.Error</h4>
+                        <div class="form-group">
+                            @Html.Label(" ", htmlAttributes: new { @class = "control-label col-md-2" })
 
 
-                                <label for="test5">Account Approval</label>
+                            <div class="col-md-10">
+                                <p>
+                                    <input type="hidden" value="@Model.ProjectId" name="ProjectId" />
+                                    @if (Model.AccountApproval == true)
+                                    {
+                                        <input type="checkbox" id="test5" name="AccountApprovalCk" value="true" checked />
+                                    }
+                                    else
+                                    {
+
+                                        <input type="checkbox" id="test5" name="AccountApprovalCk" value="true" />
+                                    }
 
 
-                            </p>
+                                    <label for="test5">Account Approval</label>
 
 
-                            <button class="btn btn-primary" id="saveBtn">Save</button>
+                                </p>
 
+
+                                <button class="btn btn-primary" id="saveBtn">Save</button>
+
+                            </div>
                         </div>
+
+
                     </div>
+
+
+                    <!-- END SEARCH -->
                 }
-
-
             </div>
-
-   
-                <!-- END SEARCH -->
-            }
-        </div>
+        }
 
     </div>
 
@@ -603,15 +612,19 @@
             $('#Deduction').html(a);
 
             $('#DeductionReason').html(r);
-            var totalPayment = $('#totalPayment').html();
+            var totalPayment = $('#totalPayment').html().trim().replace(",","");
 
             var balance = parseFloat("@Model.Total") - parseFloat(totalPayment) - parseFloat(a);
+           // alert(totalPayment);
 
-
-            $('#balance').html(balance);
+            $('#balance').html(thousands_separators(balance.toFixed(1)));
         }
 
-
+        function thousands_separators(num) {
+            var num_parts = num.toString().split(".");
+            num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return num_parts.join(".");
+        }
     </script>
 
 }

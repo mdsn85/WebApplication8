@@ -10,11 +10,13 @@ using WebApplication8.Models;
 
 namespace WebApplication8.Controllers
 {
+    [Authorize]
     public class CustomersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Customers
+        [Authorize(Roles = RoleNames.ROLE_CustomerView + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Index()
         {
             ViewBag.title1 = "Customers List";
@@ -37,6 +39,7 @@ namespace WebApplication8.Controllers
         }
 
         // GET: Customers/Create
+        [Authorize(Roles = RoleNames.ROLE_CustomerCreate + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Create()
         {
             ViewBag.title1 = "Create Customer";
@@ -76,6 +79,8 @@ namespace WebApplication8.Controllers
         }
 
         // GET: Customers/Edit/5
+        [Authorize(Roles = RoleNames.ROLE_CustomerEdit + "," + RoleNames.ROLE_ADMINISTRATOR)]
+
         public ActionResult Edit(int? id)
         {
             if (id == null)

@@ -41,7 +41,11 @@ namespace WebApplication8.Models
         public const string ROLE_ProjectEdit = "ProjectEdit";
         public const string ROLE_ProjectDownloadExcel = "ProjectDownloadExcel";
 
+        public const string ROLE_ProjectAddPayment = "ProjectAddPayment";
+        public const string ROLE_ProjectViewPayment = "ProjectViewPayment";
+        //public const string ProjectAccountApproval = "ProjectAccountApproval";
 
+        public const string ROLE_Account = "Account";
 
 
         public const string ROLE_LPOCreate = "LPOCreate";
@@ -49,6 +53,8 @@ namespace WebApplication8.Models
         public const string ROLE_LPOView = "LPOView";
         //public const string ROLE_LPOViewCustomize = "LPOViewCustomize";
         public const string ROLE_LPOEdit = "LPOEdit";
+        public const string ROLE_LPOPrint = "LPOPrint";
+
 
 
         public const string ROLE_MRFCreate = "MRFCreate";
@@ -58,6 +64,12 @@ namespace WebApplication8.Models
         public const string ROLE_MRFEdit = "MRFEdit";
         public const string ROLE_MRFPrint = "MRFPrint";
 
+
+        public const string ROLE_CustomerCreate = "CustomerCreate";
+
+        public const string ROLE_CustomerView = "CustomerView";
+
+        public const string ROLE_CustomerEdit = "CustomerEdit";
 
         //public const string ROLE_ProjectCreate = "ProjectCreate";
         //public const string ROLE_ProjectViewAttachment = "ProjectViewAttachment";

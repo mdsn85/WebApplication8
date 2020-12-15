@@ -192,7 +192,11 @@ namespace WebApplication8.Controllers
         {
 
 
-            Project proj = db.Projects.Find(ProjectId);
+
+
+            Project proj = db.Projects
+              .Include(i => i.ProjectPaymentTerm)
+              .FirstOrDefault(x => x.ProjectId == ProjectId);
 
             string msg = "";
             if (AccountApprovalCk != null)
@@ -200,12 +204,17 @@ namespace WebApplication8.Controllers
                 proj.AccountApproval = AccountApprovalCk ?? false;
             }
 
-            if (proj.Payments != null && proj.Payments.Count() > 0)
+            if  ((proj.ProjectPaymentTerm.Name == "COD" ) )
             {
 
                 db.SaveChanges();
 
                //return RedirectToAction("Index");
+            }
+            else  
+            if (proj.Payments != null && proj.Payments.Count() > 0)
+            { 
+                db.SaveChanges();
             }
             else
             {
