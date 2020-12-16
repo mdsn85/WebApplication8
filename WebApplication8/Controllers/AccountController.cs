@@ -178,9 +178,12 @@ namespace WebApplication8.Controllers
 
 
                     //User role
-                    foreach (string roleName in model.UserRolesList)
+                    if (model.UserRolesList != null)
                     {
-                        await this.UserManager.AddToRoleAsync(user.Id, roleName);
+                        foreach (string roleName in model.UserRolesList)
+                        {
+                            await this.UserManager.AddToRoleAsync(user.Id, roleName);
+                        }
                     }
 
 
@@ -551,12 +554,17 @@ namespace WebApplication8.Controllers
                 empid = db.EmployeeUsers.Where(eu => eu.User == id).FirstOrDefault().EmployeeId;
             }
             catch (Exception e) { }
-            string roleid = user.Roles.FirstOrDefault().RoleId;
+
+
+            //string roleid = user.Roles.FirstOrDefault().RoleId;
+
+
+
             string userId = User.Identity.GetUserId();
             ViewBag.Users = db.Roles.Select(u => new { label = u.Name, value = u.Name }).ToList();
             ViewBag.CurrentRoles =UserManager.GetRoles(user.Id).ToList();
             // get user roles
-
+          
 
 
             // ViewBag.EmployeeId = new SelectList(db.Employees.OrderBy(s => s.Name), "EmployeeId", "Name", empid);

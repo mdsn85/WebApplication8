@@ -90,7 +90,7 @@ namespace WebApplication8.Controllers
 
 
         // GET: Payments/Create
-        [Authorize(Roles = RoleNames.ROLE_ProjectAddPayment + "," + RoleNames.ROLE_Account)]
+        [Authorize(Roles = RoleNames.ROLE_ProjectAddPayment + "," + RoleNames.ROLE_Account + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult CreateByProject(int ProjectId,int? Close)
         {
             ViewBag.close = Close;
