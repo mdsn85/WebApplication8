@@ -529,7 +529,10 @@ namespace WebApplication8.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Warranty,AreaId,ProjectId,UserCreate,CreateDate,Deduction,ProjectStatusId,DeductionReason,Name,CustomersTypeId,SalesTypeId,Code,SalesDate,SalesManId,CustomerId,DesignerId,Value,Discount,Vat,Total,SalePrice,ProjectPaymentTermId,Description,DeliveryDate,ActualDeliveryDate,AccountApproval")] Project project
+
+
+        public ActionResult Edit([Bind(Include = "Warranty,AreaId,ProjectId,UserCreate,CreateDate,Deduction,ProjectStatusId,DeductionReason,Name,CustomersTypeId,SalesTypeId,Code,SalesDate,SalesManId,CustomerId,DesignerId,Value," +
+            "Discount,Vat,Total,SalePrice,ProjectPaymentTermId,Description,DeliveryDate,ActualDeliveryDate,AccountApproval,QuotationRef,QuotationAgreementApprovedby")] Project project
             , String[] FileName)
         {
             if (ModelState.IsValid)

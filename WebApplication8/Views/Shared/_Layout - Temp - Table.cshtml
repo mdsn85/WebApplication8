@@ -434,11 +434,41 @@
                         $("#messages").css("color", "red");
 
                         for (var i = 0; i < totalNotif.length; i++) {
+                            var url = "/" + totalNotif[i].URL + "/" + totalNotif[i].ObjectId;
+                            
+                            var startDate = new Date(totalNotif[i].NotificationDate);
+                            console.log("startDate" + startDate + "    not :" + totalNotif[i].NotificationDate)
+                            // Do your operations
+                            var endDate = new Date();
 
+                            
+
+                            var diffMs = endDate.getTime() - startDate.getTime();
+                            var diffDays = Math.floor(diffMs / 86400000); // days
+                            var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+                            var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+
+                            x = "";
+
+                            if (diffDays > 0) {
+                                x = diffDays + " days " + diffHrs + " HH " + diffMins + " MM";
+
+                            } else if (diffHrs > 0) {
+                                x = diffHrs + " HH " + diffMins + " MM";
+                            } else if (diffHrs > 0) {
+                                x = diffMins + " MM";
+                            } else {
+                                x = " Now ";
+                            }
+
+
+
+
+                            console.log("endDate" + endDate)
                             st = "<li>" +
-                                "<div>" +
+                                "<div> <a href = '" + url+"' style='color:gray' >" +
                                 "<i class='fa fa-comment fa-fw'></i>" + totalNotif[i].Title +
-                                "<span class='pull-right text-muted small' > 4 min</span >" +
+                                "<span class='pull-right text-muted small' > " + x +" </span >" +
                                 "</div>" +
                                 "</a>" +
                                 "</li>" +

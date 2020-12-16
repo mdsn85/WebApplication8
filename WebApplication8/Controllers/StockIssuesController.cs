@@ -16,6 +16,7 @@ namespace WebApplication8.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: StockIssues
+        [Authorize(Roles = RoleNames.ROLE_StockIssuesView + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Index(string SearchType)
         {
             ViewBag.title1 = "Stock Issues List";
@@ -93,6 +94,8 @@ namespace WebApplication8.Controllers
 
 
         // GET: StockIssues/Create
+
+        [Authorize(Roles = RoleNames.ROLE_StockIssuesCreate + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Create()
         {
             ViewBag.title1 = "Create Stock Issues";
@@ -306,6 +309,8 @@ namespace WebApplication8.Controllers
         }
 
         // GET: StockIssues/Edit/5
+
+        [Authorize(Roles = RoleNames.ROLE_StockIssuesEdit + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -341,6 +346,8 @@ namespace WebApplication8.Controllers
         }
 
         // GET: StockIssues/Delete/5
+
+        [Authorize(Roles =  RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -358,6 +365,7 @@ namespace WebApplication8.Controllers
         // POST: StockIssues/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult DeleteConfirmed(int id)
         {
 

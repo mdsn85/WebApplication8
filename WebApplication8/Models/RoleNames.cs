@@ -54,6 +54,7 @@ namespace WebApplication8.Models
         //public const string ROLE_LPOViewCustomize = "LPOViewCustomize";
         public const string ROLE_LPOEdit = "LPOEdit";
         public const string ROLE_LPOPrint = "LPOPrint";
+        public const string ROLE_LPORevise = "LPORevise";
 
 
 
@@ -66,10 +67,20 @@ namespace WebApplication8.Models
 
 
         public const string ROLE_CustomerCreate = "CustomerCreate";
-
         public const string ROLE_CustomerView = "CustomerView";
-
         public const string ROLE_CustomerEdit = "CustomerEdit";
+
+        public const string ROLE_MaterialCreate = "MaterialCreate";
+        public const string ROLE_MaterialView = "MaterialView";
+        public const string ROLE_MaterialEdit = "MaterialEdit";
+
+        public const string ROLE_StockIssuesCreate = "StockIssuesCreate";
+        public const string ROLE_StockIssuesView = "StockIssuesView";
+        public const string ROLE_StockIssuesEdit = "StockIssuesEdit";
+
+        public const string ROLE_SupplierCreate = "SupplierCreate";
+        public const string ROLE_SupplierView = "SupplierView";
+        public const string ROLE_SupplierEdit = "SupplierEdit";
 
         //public const string ROLE_ProjectCreate = "ProjectCreate";
         //public const string ROLE_ProjectViewAttachment = "ProjectViewAttachment";

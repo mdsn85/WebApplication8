@@ -13,7 +13,7 @@
 <label class="button-collapse">
     @*@if (User.IsInRole("Sales Coordinator") || User.IsInRole("Admin"))*@
 
-    @if (User.IsInRole("ProjectCreater") || User.IsInRole("Admin"))
+    @if (User.IsInRole("ProjectCreate") || User.IsInRole("Admin"))
     {
         @Html.ActionLink("Create ", "Create", null, htmlAttributes: new { @class = " btn btn-default " })
 

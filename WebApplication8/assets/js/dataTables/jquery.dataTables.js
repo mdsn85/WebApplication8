@@ -10331,7 +10331,7 @@
 		 *      } );
 		 *    } )
 		 */
-		"iDisplayLength": 5,
+		"iDisplayLength": 100,
 	
 	
 		/**

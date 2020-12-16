@@ -102,6 +102,9 @@ namespace WebApplication8.Hubs
         class note
         {
             public string Title { get; set; }
+            public string URL { get; set; }
+            public int ObjectId { get; set; }
+            public DateTime NotificationDate { get; set; }
         }
         private List<note> LoadNotifData(string userId)
         {
@@ -118,7 +121,11 @@ namespace WebApplication8.Hubs
 
             var query = (from t in context.Notifications
                          where catOfUser.Contains( t.NotificationCategory.NotificationCategoryId)
-                         select (new note { Title = t.NotificationCategory.Title}))
+                         select (new note { Title = t.NotificationCategory.Title,
+                                            ObjectId = t.ObjectId??0,
+                                            URL = t.NotificationCategory.DetailsURL,
+                                            NotificationDate = t.NotificationDate
+                         }))
                         .ToList();
             //total = query.Count;
             return query.ToList();

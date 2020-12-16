@@ -15,6 +15,7 @@ namespace WebApplication8.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: suppliers
+        [Authorize(Roles = RoleNames.ROLE_SupplierView + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Index()
         {
             return View(db.suppliers.ToList());
@@ -50,6 +51,7 @@ namespace WebApplication8.Controllers
         }
 
         // GET: suppliers/Create
+        [Authorize(Roles = RoleNames.ROLE_SupplierCreate + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Create()
         {
             ViewBag.CreditTermSupplierId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name");
@@ -74,6 +76,7 @@ namespace WebApplication8.Controllers
         }
 
         // GET: suppliers/Edit/5
+        [Authorize(Roles = RoleNames.ROLE_SupplierEdit + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -124,6 +127,7 @@ namespace WebApplication8.Controllers
         // POST: suppliers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles =  RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult DeleteConfirmed(int id)
         {
             supplier supplier = db.suppliers.Find(id);

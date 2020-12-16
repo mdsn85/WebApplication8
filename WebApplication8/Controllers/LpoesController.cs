@@ -16,6 +16,7 @@ namespace WebApplication8.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Lpoes
+        [Authorize(Roles = RoleNames.ROLE_LPOView + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Index(string st, string SearchCode, string StatusId, string supplierId, string SearchValue2)
         {
 
@@ -70,6 +71,7 @@ namespace WebApplication8.Controllers
             return View(lpo);
         }
 
+        [Authorize(Roles = RoleNames.ROLE_LPOPrint + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult PrintNewTable(int? id)
         {
 
@@ -162,6 +164,8 @@ namespace WebApplication8.Controllers
         }
 
         // GET: Lpoes/Create
+
+        [Authorize(Roles = RoleNames.ROLE_LPOCreate + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Create()
         {
             ViewBag.title1 = "Create LPO";
@@ -178,6 +182,8 @@ namespace WebApplication8.Controllers
         }
 
         // GET: Lpoes/Create
+
+        [Authorize(Roles = RoleNames.ROLE_LPORevise + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Revised(int id )
         {
             //int Sequense = GetSeq();
@@ -303,6 +309,7 @@ namespace WebApplication8.Controllers
         }
 
         // GET: Lpoes/Edit/5
+        [Authorize(Roles = RoleNames.ROLE_LPOEdit + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -338,6 +345,7 @@ namespace WebApplication8.Controllers
         }
 
         // GET: Lpoes/Delete/5
+        [Authorize(Roles = RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Delete(int? id)
         {
             if (id == null)

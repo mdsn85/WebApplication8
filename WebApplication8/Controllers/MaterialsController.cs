@@ -20,6 +20,7 @@ namespace WebApplication8.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Materials
+        [Authorize(Roles = RoleNames.ROLE_MaterialView + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Index(string sortOrder)
         {
             ViewBag.AvalableQty = String.IsNullOrEmpty(sortOrder) ? "AvalableQty" : "";//client
@@ -153,6 +154,7 @@ namespace WebApplication8.Controllers
         }
 
         // GET: Materials/Create
+        [Authorize(Roles = RoleNames.ROLE_MaterialCreate + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Create()
         {
             ViewBag.UnitId = new SelectList(db.Units, "UnitId", "Name");
@@ -236,6 +238,7 @@ namespace WebApplication8.Controllers
         }
 
         // GET: Materials/Edit/5
+        [Authorize(Roles = RoleNames.ROLE_MaterialEdit + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -337,6 +340,7 @@ namespace WebApplication8.Controllers
 
 
         // GET: Materials/Delete/5
+        [Authorize(Roles = RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
