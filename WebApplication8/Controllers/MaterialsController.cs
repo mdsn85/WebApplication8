@@ -187,17 +187,8 @@ namespace WebApplication8.Controllers
                     material.latestPrice = 0;
                 }
 
+                material.qty = material.OpeningQty;
 
-                if (material.qty == null)
-                {
-
-                    material.qty = 0;
-                    material.OpeningQty = 0;
-                }
-                else
-                {
-                    material.OpeningQty = material.qty??0;
-                }
                 material.CreatedDate = DateTime.Now;
                 material.Resevedqty = 0;
                 if(material.MinReOrder == null)

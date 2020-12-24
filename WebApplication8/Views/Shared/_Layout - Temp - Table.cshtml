@@ -31,6 +31,10 @@
         .redBell{
             color:red;
         }
+
+        table th {
+            background-color: #f44336
+        }
     </style>
 </head>
 <body>
@@ -48,7 +52,7 @@
 
                 <div id="sideNav" href=""><i class="material-icons dp48">toc</i></div>
             </div>
-            <ul class="nav navbar-top-links navbar-right">
+            <ul class="nav navbar-top-links navbar-right" id="notificationList">
                 <li style="margin-right:50PX"> @Html.Partial("_LoginPartial")</li>
                 @*<li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown4"><i class="fa fa-envelope fa-fw"></i> <i class="material-icons right">arrow_drop_down</i></a></li>
         <li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown3"><i class="fa fa-tasks fa-fw"></i> <i class="material-icons right">arrow_drop_down</i></a></li>*@
@@ -212,7 +216,7 @@
 
 
                     @*@if (User.IsInRole("Sales Coordinator") || User.IsInRole("Admin") || User.IsInRole("Account") || User.IsInRole("Factory Coordinator"))*@
-                    @if (User.IsInRole("ProjectView") || User.IsInRole("Admin") || User.IsInRole("ProjectViewShort"))
+                    @if (User.IsInRole("ProjectView") || User.IsInRole("Admin"))
                     {
                         <li>
                             <a href="/Projects/Index" class="waves-effect waves-dark"><i class="fa fa-fast-forward"></i> Project</a>
@@ -234,7 +238,7 @@
                         </li>
                     }
 
-                    @if (User.IsInRole("Purchase") || User.IsInRole("WareHouse") || User.IsInRole("Admin"))
+                    @if (User.IsInRole("LPOView") || User.IsInRole("WareHouse") || User.IsInRole("Admin"))
                     {
                         <li>
                             <a href="/Lpoes/index" class="waves-effect waves-dark"><i class="fa fa-qrcode"></i> LPO</a>
@@ -249,7 +253,7 @@
 
                     }
 
-                    @if (User.IsInRole("Purchase") || User.IsInRole("WareHouse") || User.IsInRole("Admin"))
+                    @if (User.IsInRole("MaterialView") || User.IsInRole("WareHouse") || User.IsInRole("Admin"))
                     {
                         <li>
                             <a href="/Materials/Index" class="waves-effect waves-dark"><i class="fa fa-bitbucket"></i>Materials Managment</a>
@@ -257,7 +261,7 @@
 
                     }
 
-                    @if (User.IsInRole("Purchase") || User.IsInRole("Admin"))
+                    @if (User.IsInRole("SupplierView") || User.IsInRole("Admin"))
                     {
                         <li>
                             <a href="/Suppliers/Index" class="waves-effect waves-dark"><i class="fa fa-bitbucket"></i>Supplier List</a>
@@ -463,14 +467,15 @@
 
 
 
-
+                            
                             console.log("endDate" + endDate)
-                            st = "<li>" +
-                                "<div> <a href = '" + url+"' style='color:gray' >" +
-                                "<i class='fa fa-comment fa-fw'></i>" + totalNotif[i].Title +
+                            st = "<li  class='NoyificationLink'  id='" + totalNotif[i].id + "' >" +
+                                "<a href='"+url+"'"+
+                                "<div>" +
+                                "<i class='fa fa-comment fa-fw'  ></i>" + totalNotif[i].Title +
                                 "<span class='pull-right text-muted small' > " + x +" </span >" +
                                 "</div>" +
-                                "</a>" +
+                                "</a>"+
                                 "</li>" +
                                 "<li class='divider'></li>";
                             $("#dropdown2").append(st);
@@ -486,6 +491,8 @@
 
                 //Client Call
                 hub.client.broadcaastNotif = function (totalNotif) {
+
+                    console.log("broadcaast Notif");
                     setTotalNotification(totalNotif)
                 };
 
@@ -494,8 +501,8 @@
 
                 $.connection.hub.start()
                     .done(function () {
-                        console.log("Hub Connected!");
-
+                        console.log("Hub Connected!" + $.connection.hub.id);
+                        
                         //Server Call
                         hub.server.getNotification();
 
@@ -505,7 +512,29 @@
                     });
             });
         </script>
+        <script>
+            $("#notificationList").on("click", ".NoyificationLink", function (event) {
+                var id = $(this).attr('id');
 
+                console.log(id);
+
+                $.ajax({
+                    type: "GET",
+                    async: true,
+
+                    url: "/NotificationCategories/ReadNotification",
+                    data: { "id": id   },
+                    success: function (data) {
+
+                    },
+                    Error: function (data) {
+                      
+                    }
+                });
+            });
+
+
+        </script>
         <!-- JS Scripts-->
         <!-- jQuery Js -->
         <!--<script src="~/assets/js/jquery-1.10.2.js"></script>-->

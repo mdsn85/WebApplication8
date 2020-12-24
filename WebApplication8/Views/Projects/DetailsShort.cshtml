@@ -1,0 +1,245 @@
+﻿@model WebApplication8.Models.Project
+
+@{
+    ViewBag.Title = "DetailsShort";
+}
+
+<h2> Project Details Short</h2>
+
+<div>
+    <h4></h4>
+    <hr />
+    <table class="table table-striped table-bordered table-hover" style="width:40%">
+
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.QuotationRef)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.QuotationRef)
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Code)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Code)
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Name)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Name)
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.ProjectStatusId)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.ProjectStatus.Name)
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.SalesDate)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.SalesDate)
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Area.Name)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Area.Name)
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.SalesType.Name)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.SalesType.Name)
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.SalesMan.Name)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.SalesMan.Name)
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Designer.Name)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Designer.Name)
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.DeliveryDate)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.DeliveryDate)
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.ActualDeliveryDate)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.ActualDeliveryDate)
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Warranty)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Warranty)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Description)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Description)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.AccountApproval)
+            </td>
+
+            <td>
+                @{
+                    if (@Model.AccountApproval == true)
+                    {
+                        @Html.Raw("Approved")
+
+                    }
+                    else
+                    {
+                        @Html.Raw("Pending")
+                    }
+                }
+
+
+            </td>
+        </tr>
+
+
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.UserCreate)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.UserCreate)
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.CreateDate)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.CreateDate)
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.UserLastUpdate)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.UserLastUpdate)
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.LastUpdateDate)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.LastUpdateDate)
+            </td>
+        </tr>
+
+
+
+    </table>
+
+    @if (User.IsInRole("ProjectViewAttachment") || User.IsInRole("Admin"))
+    {
+        <div>
+            @if (@ViewBag.AttachedFiles == null)
+            {<p>  No attachments was uploaded</p>}
+            else
+            {
+
+                @*<a href="~/Uploads/CustomerDoc/@ViewBag.Contract_Copy.Name" target="_blank">@ViewBag.Contract_Copy.Name</a>   ,
+                    <span> valid until: @ViewBag.Contract_Copy.ValidUntil</span>*@
+                @Html.Raw("  Attachments  : <br/>")
+                foreach (var f in ViewBag.AttachedFiles)
+                {
+
+                    <a href="~/Uploads/CustomerDoc/@f.Name" target="_blank">@f.Name</a> <br />
+                }
+
+            }
+
+
+        </div>
+    }
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ProjectId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

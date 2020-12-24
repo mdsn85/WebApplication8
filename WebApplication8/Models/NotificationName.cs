@@ -7,6 +7,12 @@ namespace WebApplication8.Models
 {
     public class NotificationName
     {
-        public const string CreateProject = "CreateProject";
+
+        public const string onCreateProject = "onCreateProject";
+        public const string onAccountApproval = "onAccountApproval";
+        public const string onCreateMRF = "onCreateMRF";
+        public const string onCreateLpo = "onCreateLpo";
+        public const string onStockIn = "onStockIn";
+        public const string onStockOut = "onStockOut";
     }
 }

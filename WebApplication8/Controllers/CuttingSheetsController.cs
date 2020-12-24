@@ -19,7 +19,13 @@ namespace WebApplication8.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         ILog log = LogManager.GetLogger("application-log");
+        private INotificationRepository notificationRepository;
 
+
+        public CuttingSheetsController()
+        {
+            this.notificationRepository = new NotificationRepository(new ApplicationDbContext());
+        }
         // GET: CuttingSheets
         [Authorize(Roles = RoleNames.ROLE_MRFView + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Index(string SearchCode, string SearchProjectCode)
@@ -128,19 +134,21 @@ namespace WebApplication8.Controllers
 
         // GET: CuttingSheets/Create
         [Authorize(Roles = RoleNames.ROLE_MRFCreate + "," + RoleNames.ROLE_ADMINISTRATOR)]
-        public ActionResult Create()
+        public ActionResult Create(int? ProjectId)
         {
             ViewBag.title1 = "Create MRF ";
             int Sequense = GetSeq();
             ViewBag.code = generateContractCode(Sequense);
 
             ViewBag.productlist = new SelectList(db.Materials, "MaterialId", "Name");
-            ViewBag.ProjectId = new SelectList(db.Projects.Where(p=>p.AccountApproval==true && p.CuttingSheets.Count==0), "ProjectId", "Code");
+            ViewBag.ProjectId = new SelectList(db.Projects.Where(p=>p.AccountApproval==true && p.CuttingSheets.Count==0), "ProjectId", "Code", ProjectId);
 
             ViewBag.date = DateTime.Now;
             ViewBag.ext = FolderPath.allowedExtensions;
             return View();
         }
+
+
 
         // POST: CuttingSheets/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -185,7 +193,7 @@ namespace WebApplication8.Controllers
             return View(cuttingSheet);
         }
 
-
+        [Authorize(Roles = RoleNames.ROLE_MRFCreate + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public JsonResult CreateJson([Bind(Include = "CuttingSheetId,ProjectId,UserCreate,CreateDate,code")] CuttingSheet cuttingSheet,
             String[] FileName)
         {
@@ -194,13 +202,18 @@ namespace WebApplication8.Controllers
             {
                 try
                 {
-
-                    var proj = db.Projects.Find(cuttingSheet.ProjectId);
-                    proj.ProjectStatusId = 4;
+                    //change status of project
+                    if (cuttingSheet.ProjectId != null)
+                    {
+                        var proj = db.Projects.Find(cuttingSheet.ProjectId);
+                        proj.ProjectStatusId = 4;
+                    }
                     cuttingSheet.StampDate = DateTime.Now;
                     cuttingSheet.UserCreate = User.Identity.GetUserName();
                     db.CuttingSheets.Add(cuttingSheet);
                     db.SaveChanges();
+
+                    this.notificationRepository.CreateNotificationAsync(cuttingSheet.CuttingSheetId, NotificationName.onCreateMRF);
 
 
                     //file link
@@ -255,6 +268,7 @@ namespace WebApplication8.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = RoleNames.ROLE_MRFCreate + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public JsonResult CreateDetailsJson(List<CuttingSheetDetail> Details)
         {
             string errors11 = "";
@@ -372,7 +386,7 @@ namespace WebApplication8.Controllers
         }
 
 
-
+        [Authorize(Roles = RoleNames.ROLE_MRFEdit + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public JsonResult EditJson([Bind(Include = "CuttingSheetId,ProjectId,UserCreate,CreateDate,code")] CuttingSheet cuttingSheet)
         {
             if (ModelState.IsValid)
@@ -399,6 +413,7 @@ namespace WebApplication8.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = RoleNames.ROLE_MRFEdit + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public JsonResult EditDetailsJson(List<CuttingSheetDetail> Details,int id)
         {
             string errors11 = "";
@@ -503,9 +518,15 @@ namespace WebApplication8.Controllers
         // POST: CuttingSheets/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult DeleteConfirmed(int id)
         {
             CuttingSheet cuttingSheet = db.CuttingSheets.Find(id);
+
+            foreach (var f in cuttingSheet.CuttingSheetFiles.ToList())
+            {
+                db.CuttingSheetFiles.Remove(f);
+            }
             db.CuttingSheets.Remove(cuttingSheet);
             db.SaveChanges();
             return RedirectToAction("Index");

@@ -26,6 +26,9 @@
         <th>
             @Html.DisplayNameFor(model => model.NotificationType)
         </th>
+        <th>
+            users
+        </th>
         <th></th>
     </tr>
 
@@ -47,9 +50,12 @@
             @Html.DisplayFor(modelItem => item.NotificationType)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.NotificationCategoryId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.NotificationCategoryId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.NotificationCategoryId })
+            @Html.DisplayFor(modelItem => item.NotificationCatUser.FirstOrDefault().UserId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.NotificationCategoryId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.NotificationCategoryId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.NotificationCategoryId })
         </td>
     </tr>
 }

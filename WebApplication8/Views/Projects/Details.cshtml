@@ -26,6 +26,16 @@
 
             <tr>
                 <td>
+                    @Html.DisplayNameFor(model => model.QuotationRef)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.QuotationRef)
+                </td>
+            </tr>
+
+            <tr>
+                <td>
                     @Html.DisplayNameFor(model => model.Code)
                 </td>
 
@@ -43,8 +53,8 @@
                 <td>
                     @Html.DisplayFor(model => model.Name)
                 </td>
-
             </tr>
+
             <tr>
                 <td>
                     @Html.DisplayNameFor(model => model.ProjectStatusId)
@@ -65,74 +75,18 @@
                 </td>
             </tr>
 
-
             <tr>
-
                 <td>
-                    @Html.DisplayNameFor(model => model.SalesType.Name)
+                    @Html.DisplayNameFor(model => model.Area.Name)
                 </td>
 
                 <td>
-                    @Html.DisplayFor(model => model.SalesType.Name)
+                    @Html.DisplayFor(model => model.Area.Name)
                 </td>
             </tr>
 
 
             <tr>
-                <td>
-                    @Html.DisplayNameFor(model => model.SalesMan.Name)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(model => model.SalesMan.Name)
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>
-                    @Html.DisplayNameFor(model => model.CustomersType.Name)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(model => model.CustomersType.Name)
-                </td>
-            </tr>
-
-
-            <tr>
-
-
-                <td>
-                    @Html.DisplayNameFor(model => model.Customer.Name)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(model => model.Customer.Name)
-                </td>
-            </tr>
-
-
-            <tr>
-
-
-                <td>
-                    @Html.DisplayNameFor(model => model.Designer.Name)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(model => model.Designer.Name)
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-
-
                 <td>
                     @Html.DisplayNameFor(model => model.Value)
                 </td>
@@ -177,6 +131,67 @@
 
 
 
+
+
+            <tr>
+
+                <td>
+                    @Html.DisplayNameFor(model => model.SalesType.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.SalesType.Name)
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.CustomersType.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.CustomersType.Name)
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.SalesMan.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.SalesMan.Name)
+                </td>
+
+            </tr>
+
+
+
+
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Customer.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.Customer.Name)
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Designer.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.Designer.Name)
+                </td>
+
+            </tr>
+
+
             <tr class="PaymentTerm ">
                 <td style=" background-color:forestgreen">
                     @Html.DisplayNameFor(model => model.ProjectPaymentTerm.Name)
@@ -188,14 +203,55 @@
 
             <tr>
                 <td>
-                    @Html.DisplayNameFor(model => model.Description)
+                    @Html.DisplayNameFor(model => model.QuotationAgreementApprovedby)
                 </td>
 
                 <td>
-                    @Html.DisplayFor(model => model.Description)
+                    @Html.DisplayFor(model => model.QuotationAgreementApprovedby)
                 </td>
             </tr>
 
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.AccountApproval)
+                </td>
+
+                <td>
+                    @{
+                        if (@Model.AccountApproval == true)
+                        {
+                            @Html.Raw("Approved")
+
+                        }
+                        else
+                        {
+                            @Html.Raw("Pending")
+                        }
+                    }
+
+
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Deduction)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.Deduction)
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Net Value
+                </td>
+
+                <td>
+                    model.Total-model.Deduction
+                </td>
+            </tr>
 
             <tr>
                 <td>
@@ -218,25 +274,26 @@
                 </td>
             </tr>
 
+
             <tr>
                 <td>
-                    @Html.DisplayNameFor(model => model.AccountApproval)
+                    @Html.DisplayNameFor(model => model.Warranty)
                 </td>
 
                 <td>
-                    @{
-                        if (@Model.AccountApproval == true)
-                        {
-                            @Html.Raw("Approved")
-
-                        }
-                        else
-                        {
-                            @Html.Raw("Pendding")
-                        }
-                    }
+                    @Html.DisplayFor(model => model.Warranty)
+                </td>
+            </tr>
 
 
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Description)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.Description)
                 </td>
             </tr>
 
@@ -283,31 +340,8 @@
                     @Html.DisplayFor(model => model.LastUpdateDate)
                 </td>
             </tr>
-
-            <tr>
-                <td>
-                    @Html.DisplayNameFor(model => model.QuotationRef)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(model => model.QuotationRef)
-                </td>
-            </tr>
-
-
-            <tr>
-                <td>
-                    @Html.DisplayNameFor(model => model.QuotationAgreementApprovedby)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(model => model.QuotationAgreementApprovedby)
-                </td>
-            </tr>
-
-
-
         </table>
+
         @if (User.IsInRole("ProjectViewAttachment") || User.IsInRole("Admin"))
         {
             <div>
@@ -317,12 +351,13 @@
                 {
 
                     @*<a href="~/Uploads/CustomerDoc/@ViewBag.Contract_Copy.Name" target="_blank">@ViewBag.Contract_Copy.Name</a>   ,
-                        <span> valid until: @ViewBag.Contract_Copy.ValidUntil</span>*@
+                    <span> valid until: @ViewBag.Contract_Copy.ValidUntil</span>*@
                     @Html.Raw("  Attachments  : <br/>")
                     foreach (var f in ViewBag.AttachedFiles)
                     {
 
-                        <a href="~/Uploads/CustomerDoc/@f.Name" target="_blank">@f.Name</a> <br />
+                        <a href="~/Uploads/CustomerDoc/@f.Name" target="_blank"  >@f.Name</a> <br />
+
                     }
 
                 }
@@ -330,7 +365,12 @@
 
             </div>
         }
-
+        @if (Model.CuttingSheets.Count == 0  && Model.AccountApproval == true)
+        {
+            <div style="padding-top:15px">
+                @Html.ActionLink("Create MRF", "create", "CuttingSheets", new { ProjectId = Model.ProjectId }, htmlAttributes: new { @class = "btn btn-default" })
+            </div>
+        }
     </div>
 
     @{

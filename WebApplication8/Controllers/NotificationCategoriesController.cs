@@ -19,7 +19,12 @@ namespace WebApplication8.Controllers
         {
             return View(db.NotificationCategorys.ToList());
         }
-
+        public void ReadNotification(int id)
+        {
+            Notification1 n = db.Notifications.Find(id);
+            n.IsRead = true;
+            db.SaveChangesAsync();
+        }
         // GET: NotificationCategories/Details/5
         public ActionResult Details(int? id)
         {
@@ -40,6 +45,13 @@ namespace WebApplication8.Controllers
         {
 
             ViewBag.Users = db.Users.Select(u=> new { label = u.UserName, value = u.Id }).ToList();
+
+
+        List<string> names = new List<string> { NotificationName.onCreateProject, NotificationName.onAccountApproval, NotificationName.onCreateMRF,
+                                                    NotificationName.onCreateLpo,NotificationName.onStockIn,NotificationName.onStockOut,};
+
+
+            ViewBag.Name = new SelectList(names);
             return View();
         }
 

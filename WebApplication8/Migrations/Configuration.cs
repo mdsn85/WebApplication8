@@ -88,7 +88,8 @@ namespace WebApplication8.Migrations
                 new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_LPOEdit },
                 new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_LPOView },
                 new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_LPOPrint },
-                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_LPOPrint }
+
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_LPORevise }
                 );
 
 
@@ -114,15 +115,26 @@ namespace WebApplication8.Migrations
                 );
 
 
+            //context.NotificationCategorys.AddOrUpdate(x => x.Name,
+            //    new NotificationCategory() {  Name = NotificationName.onAccountApproval },
+            //    new NotificationCategory() {  Name = NotificationName.onCreateProject },
+            //    new NotificationCategory() { Name = NotificationName.onCreateMRF },
+            //    new NotificationCategory() {  Name = NotificationName.onCreateLpo },
+            //    new NotificationCategory() { Name = NotificationName.onStockIn },
+            //    new NotificationCategory() {  Name = NotificationName.onStockOut }
+
+            //    );
+    
 
 
-            context.ApprovalTypes.AddOrUpdate(x => x.ApprovalTypeId,
+
+        context.ApprovalTypes.AddOrUpdate(x => x.ApprovalTypeId,
                  new ApprovalType() { ApprovalTypeId = 1, Name = "Extra Issue Material" }
 
             );
 
 
-            context.EmailServers.AddOrUpdate(x => x.EmailServerId,
+        context.EmailServers.AddOrUpdate(x => x.EmailServerId,
                 new EmailServer() { EmailServerId = 1, Name = "Main Server", EnableSsl = true , Host= "smtp.office365.com", Port = 587 }
              );
 

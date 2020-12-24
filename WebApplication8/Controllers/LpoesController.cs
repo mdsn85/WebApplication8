@@ -15,6 +15,14 @@ namespace WebApplication8.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        private INotificationRepository notificationRepository;
+
+
+        public LpoesController()
+        {
+            this.notificationRepository = new NotificationRepository(new ApplicationDbContext());
+        }
+
         // GET: Lpoes
         [Authorize(Roles = RoleNames.ROLE_LPOView + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Index(string st, string SearchCode, string StatusId, string supplierId, string SearchValue2)
@@ -245,6 +253,8 @@ namespace WebApplication8.Controllers
                     lpo.UserCreate = User.Identity.GetUserName();
                     db.Lpoes.Add(lpo);
                     db.SaveChanges();
+
+                    this.notificationRepository.CreateNotificationAsync(lpo.LpoId, NotificationName.onCreateLpo);
                     return Json(lpo.LpoId);
                 }
                 catch (Exception ex)

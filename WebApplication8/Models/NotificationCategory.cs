@@ -30,9 +30,9 @@ namespace WebApplication8.Models
 
         public virtual ICollection<NotificationCatUser> NotificationCatUser { get; set; }
 
-        public NotificationCategory()
-        {
-            NotificationCatUser = new Collection<NotificationCatUser>();
-        }
+        //public NotificationCategory()
+        //{
+        //    NotificationCatUser = new Collection<NotificationCatUser>();
+        //}
     }
 }

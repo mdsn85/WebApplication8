@@ -180,14 +180,20 @@
 
                 @Html.ActionLink("Movment", "MaterialMovment", new { id = item.MaterialId }) |
 
+                @Html.ActionLink("Details", "Details", new { id = item.MaterialId }) |
+
+
+                @Html.ActionLink("Edit", "Edit", new { id = item.MaterialId })
+                @Html.Raw("|")
+
+
 
                 @if (User.IsInRole("Admin"))
                 {
-                    @Html.ActionLink("Edit", "Edit", new { id = item.MaterialId })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.MaterialId })
                     @Html.Raw("|")
 
                 }
-                @Html.ActionLink("Details", "Details", new { id = item.MaterialId }) |
                 @*@Html.ActionLink("Delete", "Delete", new { id = item.MaterialId })*@
 
             </td>

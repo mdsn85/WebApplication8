@@ -11,6 +11,8 @@ namespace WebApplication8.Models
         void Add(Notification1 Notification);
         void Delete(Notification1 Notification);
         Task<Notification1> Get(int id, bool icludeRelated = true);
+        Task CreateNotificationAsync(int id, string category);
+
 
     }
 }

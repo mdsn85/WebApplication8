@@ -17,7 +17,7 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 
-    <div class="orm-group ">
+    <div class="form-group ">
         @Html.Label("Select Users", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <span class="autocomplete-select"></span>
@@ -25,10 +25,18 @@
         </div>
     </div>
 
-    <div class="form-group">
+    @*<div class="form-group">
         @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>*@
+
+    <div class="form-group">
+        @Html.Label("Name", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("Name", null, "Please Select", htmlAttributes: new { @class = "form-control", @id = "Name" })
             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -138,18 +146,24 @@
             //    },
             //],
             //value: ["sp"],
-            multiple: true,
+            multiple: false,
             autocomplete: true,
             icon: "fa fa-times",
             onChange: value => {
                 console.log(value);
                 $("#users").empty();
-                for (var i = 0; i < value.length; i++) {
-                    
-                    var st = '<input type="hidden" name="users[]" value="' + value[i] + '">';
-                    $("#users").append(st);
-                }
+                var st = '<input type="hidden" name="users[]" value="'+value+'">';
+                $("#users").append(st);
             },
+            //onChange: value => {
+            //    console.log(value);
+            //    $("#users").empty();
+            //    for (var i = 0; i < value.length; i++) {
+                    
+            //        var st = '<input type="hidden" name="users[]" value="' + value[i] + '">';
+            //        $("#users").append(st);
+            //    }
+            //},
             classNames: {
                 select: "select-pure__select",
                 dropdownShown: "select-pure__select--opened",

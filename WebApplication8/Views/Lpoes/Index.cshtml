@@ -11,11 +11,7 @@
 
 <p>
     @{
-
-        if (User.IsInRole("Purchase") || User.IsInRole("Admin"))
-        {
             @Html.ActionLink("Create New", "Create")
-        }
     }
 </p>
 
@@ -173,11 +169,9 @@
 
                 @Html.ActionLink("Print", "PrintNewTable", new { id = item.LpoId }) |
 
-                @if (User.IsInRole("Purchase") || User.IsInRole("Admin"))
-                {
-                    @Html.ActionLink("Revised", "Revised", new { id = item.LpoId })
-                    @Html.Raw("|")
-                }
+                @Html.ActionLink("Revised", "Revised", new { id = item.LpoId })
+                @Html.Raw("|")
+
 
 
 

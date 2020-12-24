@@ -8,6 +8,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -23,7 +24,15 @@ namespace WebApplication8.Controllers
         NotificationHub objNotifHub = new NotificationHub();
         ILog log = LogManager.GetLogger("application-log");
 
+
+
         private ApplicationDbContext db = new ApplicationDbContext();
+
+        private INotificationRepository notificationRepository;
+        public ProjectsController()
+        {
+            this.notificationRepository = new NotificationRepository(new ApplicationDbContext());
+        }
         private string[] rolesArray;
 
         // GET: Projects
@@ -39,29 +48,34 @@ namespace WebApplication8.Controllers
             ViewBag.StatusId = new SelectList(db.ProjectStatus, "ProjectStatusId", "Name", StatusId);
             ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "Name", CustomerId);
 
+            int search = 0;
 
             List<Project> projects = db.Projects.Include(p => p.ProjectStatus).Include(p => p.SalesType).Include(p => p.CustomersType).Include(p => p.Customer).Include(p => p.Designer).Include(p => p.ProjectPaymentTerm).Include(p => p.SalesMan).ToList(); ;
 
             if (NotApproved == true)
             {
                 projects = projects.Where(s => s.AccountApproval == false).ToList();
+                search = 1;
             }
             
             if (!String.IsNullOrEmpty(SearchCode))
             {
                 projects = projects.Where(s => s.Code.ToString().Contains(SearchCode, StringComparison.InvariantCultureIgnoreCase)).ToList();
+                search = 1;
             }
 
             if (!String.IsNullOrEmpty(StatusId))
             {
                 int qqqq = int.Parse(StatusId);
                 projects = projects.Where(s => s.ProjectStatusId != null && s.ProjectStatusId == qqqq).ToList();
+                search = 1;
             }
 
             if (!String.IsNullOrEmpty(CustomerId))
             {
                 int qqqq = int.Parse(CustomerId);
                 projects = projects.Where(s => s.CustomerId != null && s.CustomerId == qqqq).ToList();
+                search = 1;
             }
 
 
@@ -80,11 +94,24 @@ namespace WebApplication8.Controllers
 
                     projects = projects.Where(cb => cb.Value == v1).ToList();
                 }
+                search = 1;
             }
-            projects = projects.OrderByDescending(p => p.StampDate).ToList();
-            if (User.IsInRole(RoleNames.ROLE_FactoryCoordinator))
+
+
+            if (search == 1)
             {
-                projects = projects.Where(p => p.AccountApproval == true).ToList();
+                projects = projects.OrderByDescending(p => p.StampDate).ToList();
+                if (User.IsInRole(RoleNames.ROLE_FactoryCoordinator))
+                {
+                    projects = projects.Where(p => p.AccountApproval == true).ToList();
+                }
+            }else
+            {
+                projects = projects.Where(p=>p.CreateDate>DateTime.Now.AddMonths(-1)) .OrderByDescending(p => p.StampDate).ToList();
+                if (User.IsInRole(RoleNames.ROLE_FactoryCoordinator))
+                {
+                    projects = projects.Where(p => p.AccountApproval == true).ToList();
+                }
             }
 
             return View(projects);
@@ -156,8 +183,40 @@ namespace WebApplication8.Controllers
         }
 
 
+        //DetailsShort
+        [Authorize(Roles = RoleNames.ROLE_ProjectView + "," + RoleNames.ROLE_ProjectViewCustomize + "," + RoleNames.ROLE_ADMINISTRATOR)]
+        public ActionResult DetailsShort(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            List<Project> projects = db.Projects.Include(p => p.ProjectStatus).Include(p => p.CustomersType).Include(p => p.SalesType).Include(p => p.Customer).Include(p => p.Designer).Include(p => p.ProjectPaymentTerm).Include(p => p.SalesMan).ToList(); ;
+            Project project = db.Projects.Find(id);
+
+            float totalPayment = 0;
+            foreach (var payment in project.Payments)
+            {
+                totalPayment += payment.Amount;
+            }
+
+            ViewBag.totalPayment = totalPayment;
+
+            ViewBag.AttachedFiles = project.ProjectFiles.OrderBy(c => c.Name); ;
+            if (project == null)
+            {
+                return HttpNotFound();
+            }
+
+
+            return View(project);
+        }
+
+
+
         // GET: Projects/Details/5
-        [Authorize(Roles = RoleNames.ROLE_ProjectView + "," + RoleNames.ROLE_ADMINISTRATOR)]
+        [Authorize(Roles = RoleNames.ROLE_ProjectView + ","+ RoleNames.ROLE_ProjectViewCustomize +","+ RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Details(int? id,string msg)
         {
             if (id == null)
@@ -175,7 +234,7 @@ namespace WebApplication8.Controllers
             }
 
             ViewBag.totalPayment = totalPayment;
-
+            
             ViewBag.AttachedFiles = project.ProjectFiles.OrderBy(c => c.Name); ;
             if (project == null)
             {
@@ -183,11 +242,17 @@ namespace WebApplication8.Controllers
             }
 
             ViewBag.Error = msg;
+            if (User.IsInRole(RoleNames.ROLE_ProjectViewCustomize))
+            {
+
+
+                return RedirectToAction("DetailsShort", "Projects", new { id = project.ProjectId });
+            }
             return View(project);
         }
 
         [HttpPost]
-        [Authorize(Roles = RoleNames.ROLE_ProjectView + "," + RoleNames.ROLE_ADMINISTRATOR)]
+        [Authorize(Roles = RoleNames.ROLE_ProjectView + "," + RoleNames.ROLE_ADMINISTRATOR + "," + RoleNames.ROLE_Account)]
         public ActionResult Details(bool? AccountApprovalCk, int ProjectId)
         {
 
@@ -208,13 +273,15 @@ namespace WebApplication8.Controllers
             {
 
                 db.SaveChanges();
+                this.notificationRepository.CreateNotificationAsync(proj.ProjectId, NotificationName.onAccountApproval);
 
-               //return RedirectToAction("Index");
+                //return RedirectToAction("Index");
             }
             else  
             if (proj.Payments != null && proj.Payments.Count() > 0)
             { 
                 db.SaveChanges();
+                this.notificationRepository.CreateNotificationAsync(proj.ProjectId, NotificationName.onAccountApproval);
             }
             else
             {
@@ -345,6 +412,7 @@ namespace WebApplication8.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.ROLE_ProjectCreate + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Create([Bind(Include = "Warranty,AreaId,ProjectId,Name,CustomersTypeId,SalesTypeId,Code,SalesDate,SalesManId,CustomerId,DesignerId,Value,Discount,Vat,Total,SalePrice,ProjectPaymentTermId" +
             ",Description,DeliveryDate,ActualDeliveryDate,AccountApproval,QuotationRef,QuotationAgreementApprovedby")] Project project,
             String[] FileName)
@@ -423,27 +491,7 @@ namespace WebApplication8.Controllers
                             }
                         }
 
-                        //NotificationCategory cat = db.NotificationCategorys.Where()
-                        try
-                        {
-                            Notification1 objNotif = new Notification1();
-                            objNotif.NotificationCategoryId = db.NotificationCategorys.Where(c => c.Name == NotificationName.CreateProject).FirstOrDefault().NotificationCategoryId;
-
-                            objNotif.ObjectId = project.ProjectId;
-                            objNotif.NotificationDate = DateTime.Now;
-
-                            db.Configuration.ProxyCreationEnabled = false;
-                            db.Notifications.Add(objNotif);
-                            db.SaveChanges();
-
-                            string[] SentTo = objNotif.NotificationCategory.NotificationCatUser.Select(n => n.UserId).ToArray();
-                            objNotifHub.SendNotification(SentTo);
-                        }
-                        catch(Exception e)
-                        {
-                            log.Error(" ERROR mylog - Error while send notification for project "+project.ProjectId+":" + e.Message + " , stacktrace:" + e.StackTrace);
-                        }
-
+                        this.notificationRepository.CreateNotificationAsync(project.ProjectId, NotificationName.onCreateProject);
 
                         if (saveProject == 1)
                         {
@@ -488,6 +536,38 @@ namespace WebApplication8.Controllers
             return View(project);
         }
 
+
+        //async Task CreateNotificationAsync(Project project, string category)
+        //{
+
+        //    try
+        //    {
+        //        Notification1 objNotif = new Notification1();
+        //        objNotif.NotificationCategoryId = db.NotificationCategorys.Where(c => c.Name == NotificationName.onCreateProject).FirstOrDefault().NotificationCategoryId;
+
+        //        objNotif.ObjectId = project.ProjectId;
+        //        objNotif.NotificationDate = DateTime.Now;
+
+        //        db.Configuration.ProxyCreationEnabled = false;
+        //        db.Notifications.Add(objNotif);
+        //        db.SaveChanges();
+        //        SendNoficationAsync(objNotif);
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        log.Error(" ERROR mylog - Error while send notification for project " + project.ProjectId + ":" + e.Message + " , stacktrace:" + e.StackTrace);
+        //    }
+
+        //}
+
+        //async  Task SendNoficationAsync(Notification1 objNotif)
+        //{
+        //    string[] SentTo = objNotif.NotificationCategory.NotificationCatUser.Select(n => n.UserId).ToArray();
+        //    objNotifHub.SendNotification(SentTo);
+        //}
+
+
         // GET: Projects/Edit/5
         [Authorize(Roles = RoleNames.ROLE_ProjectEdit + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Edit(int? id)
@@ -529,8 +609,7 @@ namespace WebApplication8.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-
-
+        [Authorize(Roles = RoleNames.ROLE_ProjectEdit + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Edit([Bind(Include = "Warranty,AreaId,ProjectId,UserCreate,CreateDate,Deduction,ProjectStatusId,DeductionReason,Name,CustomersTypeId,SalesTypeId,Code,SalesDate,SalesManId,CustomerId,DesignerId,Value," +
             "Discount,Vat,Total,SalePrice,ProjectPaymentTermId,Description,DeliveryDate,ActualDeliveryDate,AccountApproval,QuotationRef,QuotationAgreementApprovedby")] Project project
             , String[] FileName)
@@ -717,6 +796,7 @@ namespace WebApplication8.Controllers
         }
 
         // POST: Projects/Delete/5
+        [Authorize(Roles = RoleNames.ROLE_ADMINISTRATOR)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

@@ -7,6 +7,8 @@ using System.Web;
 using Microsoft.AspNet.SignalR;
 using WebApplication8.Models;
 using System.Data.Entity;
+using log4net;
+
 namespace WebApplication8.Hubs
 {
     [Authorize]
@@ -18,28 +20,39 @@ namespace WebApplication8.Hubs
 
         private ApplicationDbContext context = new ApplicationDbContext();
 
+        ILog log = LogManager.GetLogger("application-log");
+
         //Logged Use Call
         public void GetNotification()
         {
             try
             {
-                string loggedUser = Context.User.Identity.Name;
 
+                string loggedUser = Context.User.Identity.Name;
+                log.Debug("start get notification:" + loggedUser);
+    
                 //Get TotalNotification
                 List<note> totalNotif = LoadNotifData(loggedUser);
-
+                log.Debug("LoadNotifData:" + totalNotif);
                 //Send To
                 UserHubModels receiver;
                 if (Users.TryGetValue(loggedUser, out receiver))
                 {
                     var cid = receiver.ConnectionIds.FirstOrDefault();
                     var context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+                    log.Debug("start prodcats :" + cid);
                     context.Clients.Client(cid).broadcaastNotif(totalNotif);
                 }
+                else
+                {
+                    log.Debug("TryGetValue fail:");
+                }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                ex.ToString();
+                log.Error(" ERROR mylog - Error while save project to server:" + e.Message + " , stacktrace:" + e.StackTrace);
+
+
             }
         }
 
@@ -101,34 +114,50 @@ namespace WebApplication8.Hubs
 
         class note
         {
+            public int id { get; set; }
             public string Title { get; set; }
             public string URL { get; set; }
             public int ObjectId { get; set; }
             public DateTime NotificationDate { get; set; }
         }
-        private List<note> LoadNotifData(string userId)
+        private List<note> LoadNotifData(string userName)
         {
-            var currentUser=  context.Users.Where(u => u.UserName == userId).FirstOrDefault();
-            //var x = context.
-            //get notificatin 
-            var listCat1 = context.NotificationCategorys.Include(nc=>nc.NotificationCatUser).ToList();
-            //7014dcd7-6824-422f-8441-fca6221acc11 , 2e1ed9d7-d498-4e15-9aeb-3c3599920b83
-            var listCat = listCat1.Where(nc => nc.NotificationCatUser.Where(a => a.UserId == currentUser.Id) != null).ToList();
+            try
+            {
+                var currentUser = context.Users.Where(u => u.UserName == userName).FirstOrDefault();
+                //var x = context.
+                //get notificatin 
+                var listCat1 = context.NotificationCategorys.Include(nc => nc.NotificationCatUser).ToList();
+                //7014dcd7-6824-422f-8441-fca6221acc11 , 2e1ed9d7-d498-4e15-9aeb-3c3599920b83
+                var listCat = listCat1.Where(nc => nc.NotificationCatUser.Select(b => b.UserId).Contains(currentUser.Id)).ToList();
 
-            var catOfUser = listCat.Select(a => a.NotificationCategoryId).ToList();
+
+
+                var catOfUser = listCat.Select(a => a.NotificationCategoryId).ToList();
 
 
 
-            var query = (from t in context.Notifications
-                         where catOfUser.Contains( t.NotificationCategory.NotificationCategoryId)
-                         select (new note { Title = t.NotificationCategory.Title,
-                                            ObjectId = t.ObjectId??0,
-                                            URL = t.NotificationCategory.DetailsURL,
-                                            NotificationDate = t.NotificationDate
-                         }))
-                        .ToList();
-            //total = query.Count;
-            return query.ToList();
+                var query = (from t in context.Notifications
+                             where catOfUser.Contains(t.NotificationCategory.NotificationCategoryId)
+                             && t.IsRead != true
+                             select (new note
+                             {
+                                 id = t.Notification1Id,
+                                 Title = t.NotificationCategory.Title,
+                                 ObjectId = t.ObjectId ?? 0,
+                                 URL = t.NotificationCategory.DetailsURL,
+                                 NotificationDate = t.NotificationDate
+                             }))
+                            .OrderByDescending(q => q.NotificationDate)
+                            .ToList();
+                //total = query.Count;
+
+                return query.ToList();
+            }catch(Exception e)
+            {
+                log.Error(" ERROR mylog - Error while save project to server:" + e.Message + " , stacktrace:" + e.StackTrace);
+            }
+            return null;
         }
 
         public override Task OnConnected()

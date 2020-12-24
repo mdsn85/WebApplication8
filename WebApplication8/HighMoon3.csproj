@@ -774,6 +774,18 @@
     <Compile Include="Migrations\202012131610598_dj.designer.cs">
       <DependentUpon>202012131610598_dj.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012181800536_jhjh.cs" />
+    <Compile Include="Migrations\202012181800536_jhjh.designer.cs">
+      <DependentUpon>202012181800536_jhjh.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012241149510_projectISOptionalInMRF.cs" />
+    <Compile Include="Migrations\202012241149510_projectISOptionalInMRF.designer.cs">
+      <DependentUpon>202012241149510_projectISOptionalInMRF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012241152104_projectISOptionalInMRF1.cs" />
+    <Compile Include="Migrations\202012241152104_projectISOptionalInMRF1.designer.cs">
+      <DependentUpon>202012241152104_projectISOptionalInMRF1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApprovalType.cs" />
@@ -821,6 +833,7 @@
     <Compile Include="Models\ProjectSequense.cs" />
     <Compile Include="Models\ProjectStatus.cs" />
     <Compile Include="Models\Quotation.cs" />
+    <Compile Include="Models\Repository\INotificationCategoryRepository.cs" />
     <Compile Include="Models\Repository\IUnitOfWork.cs" />
     <Compile Include="Models\Repository\INotificationRepository.cs" />
     <Compile Include="Models\RequestApproval.cs" />
@@ -837,6 +850,7 @@
     <Compile Include="Models\Unit.cs" />
     <Compile Include="Models\UserHubModels.cs" />
     <Compile Include="Models\Warehouse.cs" />
+    <Compile Include="Persistence\NotificationCategoryRepository.cs" />
     <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Persistence\NotificationRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1223,7 +1237,9 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1451,6 +1467,7 @@
     <Content Include="Views\Account\EditRegisterMultiRoles.cshtml" />
     <Content Include="Views\Account\ResetPasswordCust.cshtml" />
     <Content Include="Views\Projects\IndexShort.cshtml" />
+    <Content Include="Views\Projects\DetailsShort.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1881,6 +1898,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202012131610598_dj.resx">
       <DependentUpon>202012131610598_dj.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012181800536_jhjh.resx">
+      <DependentUpon>202012181800536_jhjh.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012241149510_projectISOptionalInMRF.resx">
+      <DependentUpon>202012241149510_projectISOptionalInMRF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012241152104_projectISOptionalInMRF1.resx">
+      <DependentUpon>202012241152104_projectISOptionalInMRF1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

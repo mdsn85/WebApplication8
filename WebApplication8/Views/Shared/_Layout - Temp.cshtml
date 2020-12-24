@@ -253,7 +253,7 @@
                     }
                     @*//User.IsInRole("Sales Coordinator") || User.IsInRole("Admin") || User.IsInRole("Account") || User.IsInRole("Factory Coordinator")*@
 
-                    @if (User.IsInRole("ProjectView") || User.IsInRole("Admin") || User.IsInRole("ProjectViewShort") )
+                    @if (User.IsInRole("ProjectView") || User.IsInRole("Admin")  )
                     {
                         <li>
                             <a href="/Projects/Index" class="waves-effect waves-dark"><i class="fa fa-fast-forward"></i> Project</a>
@@ -263,7 +263,7 @@
                     @if (User.IsInRole("Admin") || User.IsInRole("ProjectViewShort") )
                     {
                         <li>
-                            <a href="/Projects/IndexShort" class="waves-effect waves-dark"><i class="fa fa-fast-forward"></i> Project</a>
+                            <a href="/Projects/IndexShort" class="waves-effect waves-dark"><i class="fa fa-fast-forward"></i> Project </a>
                         </li>
                     }
 
@@ -275,7 +275,7 @@
                         </li>
                     }
 
-                    @if (User.IsInRole("Purchase") || User.IsInRole("WareHouse") || User.IsInRole("Admin"))
+                    @if (User.IsInRole("LPOView") || User.IsInRole("WareHouse") || User.IsInRole("Admin"))
                     {
                         <li>
                             <a href="/Lpoes/index" class="waves-effect waves-dark"><i class="fa fa-qrcode"></i> LPO</a>
@@ -290,7 +290,7 @@
 
                     }
 
-                    @if (User.IsInRole("Purchase") || User.IsInRole("WareHouse") || User.IsInRole("Admin"))
+                    @if (User.IsInRole("MaterialView") || User.IsInRole("WareHouse") || User.IsInRole("Admin"))
                     {
                         <li>
                             <a href="/Materials/Index" class="waves-effect waves-dark"><i class="fa fa-bitbucket"></i>Materials Managment</a>
@@ -298,7 +298,7 @@
 
                     }
 
-                    @if (User.IsInRole("Purchase") || User.IsInRole("Admin"))
+                    @if (User.IsInRole("SupplierView") || User.IsInRole("Admin"))
                     {
                         <li>
                             <a href="/Suppliers/Index" class="waves-effect waves-dark"><i class="fa fa-bitbucket"></i>Supplier List</a>

@@ -9,19 +9,18 @@
 
 <link href="~/Scripts/css/selectsearch/select2.min.css" rel="stylesheet" />
 <style>
-    .dataTables_scrollHeadInner {
-        width: 100% !important;
-    }
 
-        .dataTables_scrollHeadInner table {
-            width: 100% !important;
-        }
+    table.dataTable tbody th,
+    table.dataTable tbody td {
+        white-space: nowrap;
+        width: 100%
+    }
 </style>
 
 <label class="button-collapse">
     @*@if (User.IsInRole("Sales Coordinator") || User.IsInRole("Admin"))*@
 
-    @if (User.IsInRole("ProjectCreater") || User.IsInRole("Admin"))
+    @if (User.IsInRole("ProjectCreate") || User.IsInRole("Admin"))
     {
         @Html.ActionLink("Create ", "Create", null, htmlAttributes: new { @class = " btn btn-default " })
 
@@ -101,11 +100,9 @@
 
 
 
-<table class="table table-striped table-bordered table-hover" style="width: 100%" id="dataTables-example"  cellspacing="0" width="100%">
+<table class="table table-striped table-bordered table-hover"  id="dataTables-example" cellspacing="0" >
     <thead>
         <tr>
-
-
             <th>
                 @Html.DisplayNameFor(model => model.QuotationRef)
             </th>
@@ -131,9 +128,6 @@
 
 
             <th>
-
-
-
                 @Html.DisplayNameFor(model => model.Value)
             </th>
             <th>
@@ -191,9 +185,6 @@
                 Net Value
             </th>
 
-
-
-
             <th>
                 @Html.DisplayNameFor(model => model.DeliveryDate)
             </th>
@@ -206,22 +197,9 @@
             </th>
 
 
-
-
-
-
-
-
-
-
-
-
             <th>
                 @Html.DisplayNameFor(model => model.Customer.Name)
             </th>
-
-
-
 
 
             <th>
@@ -308,18 +286,13 @@
                 @Html.DisplayFor(modelItem => item.Designer.Employees.Name)
             </td>
 
-
-
             <td>
                 @Html.DisplayFor(modelItem => item.ProjectPaymentTerm.Name)
             </td>
 
-
-
             <td>
                 @Html.DisplayFor(modelItem => item.QuotationAgreementApprovedby)
             </td>
-
 
             <td>
 
@@ -331,12 +304,10 @@
                     }
                     else
                     {
-                        @Html.Raw("Pendding")
+                        @Html.Raw("Pending")
                     }
                 }
             </td>
-
-
 
             <td>
                 @Html.DisplayFor(modelItem => item.Deduction)
@@ -346,11 +317,7 @@
                     float x = @item.Total - @item.Deduction ?? 0;
                 }
                 @string.Format(indianCulture, "{0:N}", x)
-
             </td>
-
-
-
 
             <td>
                 @Html.DisplayFor(modelItem => item.DeliveryDate)
@@ -363,24 +330,9 @@
                 @Html.DisplayFor(modelItem => item.Warranty)
             </td>
 
-
-
-
-
-
-
-
-
-
-
-
             <td>
                 @Html.DisplayFor(modelItem => item.Customer.Name)
             </td>
-
-
-
-
 
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
@@ -397,7 +349,7 @@
             </td>
             <td>
 
-                @if (User.IsInRole("Admin"))
+                @if (User.IsInRole("Admin") || User.IsInRole("ProjectEdit"))
                 {
                     @Html.ActionLink("Edit", "Edit", new { id = item.ProjectId })
                     @Html.Raw("|");
@@ -411,8 +363,6 @@
                 }
    
             </td>
-
-
 
         </tr>
         }
@@ -431,17 +381,20 @@
 
 
         $(document).ready(function () {
-
+            $('.navbar-side').animate({ left: '-260px' });
+            $('#page-wrapper').animate({ 'margin-left': '0px' });
             $('#dataTables-example').dataTable({
                 "order": [26, "desc"],
-                "scrollY": "400px",
+                "scrollY": "300px",
+                "scrollx": "100%",
                 "scrollCollapse": true,
-
+                "initComplete": function (settings, json) {
+                    $("#dataTables-example").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                },
             });
 
 
-            $('.navbar-side').animate({ left: '-260px' });
-            $('#page-wrapper').animate({ 'margin-left': '0px' });
+
 
         });
 

@@ -36,7 +36,7 @@ namespace WebApplication8.Models
 
         public const string ROLE_ProjectCreate = "ProjectCreate";
         public const string ROLE_ProjectViewAttachment = "ProjectViewAttachment";
-        public const string ROLE_ProjectView = "ProjectView";
+        public const string ROLE_ProjectView = "ProjectView"; 
         public const string ROLE_ProjectViewCustomize = "ProjectViewShort";
         public const string ROLE_ProjectEdit = "ProjectEdit";
         public const string ROLE_ProjectDownloadExcel = "ProjectDownloadExcel";

@@ -100,8 +100,8 @@
     <div class="form-group">
         @Html.Label("Opening Qty", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.qty, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.qty, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.OpeningQty, new { htmlAttributes = new { @class = "form-control" ,@Value="0"} })
+            @Html.ValidationMessageFor(model => model.OpeningQty, "", new { @class = "text-danger" })
         </div>
     </div>
 

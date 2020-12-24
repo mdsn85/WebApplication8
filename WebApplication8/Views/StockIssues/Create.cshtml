@@ -11,79 +11,93 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4></h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.StockIssueTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("StockIssueTypeId", null, "-Please Select-", htmlAttributes: new { @class = "form-control", @id = "StockIssueTypeId" })
-                @Html.ValidationMessageFor(model => model.StockIssueTypeId, "", new { @class = "text-danger" })
-            </div>
+<div class="form-horizontal">
+    <h4></h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.StockIssueTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("StockIssueTypeId", null, "-Please Select-", htmlAttributes: new { @class = "form-control", @id = "StockIssueTypeId" })
+            @Html.ValidationMessageFor(model => model.StockIssueTypeId, "", new { @class = "text-danger" })
         </div>
+    </div>
 
 
-        <div class="form-group" id="LpoIdDiv">
-            @Html.LabelFor(model => model.LpoId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("LpoId", null, "-Please Select-", htmlAttributes: new { @class = "form-control", @id = "LpoId" })
-                @Html.ValidationMessageFor(model => model.LpoId, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group" id="LpoIdDiv">
+        @Html.LabelFor(model => model.LpoId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("LpoId", null, "-Please Select-", htmlAttributes: new { @class = "form-control", @id = "LpoId" })
+            @Html.ValidationMessageFor(model => model.LpoId, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group" id="CuttingSheetIdDiv">
-            @Html.LabelFor(model => model.CuttingSheetId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("CuttingSheetId", null, "-Please Select-", htmlAttributes: new { @class = "form-control", @id = "CuttingSheetId" })
-                @Html.ValidationMessageFor(model => model.CuttingSheetId, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group" id="CuttingSheetIdDiv">
+        @Html.LabelFor(model => model.CuttingSheetId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("CuttingSheetId", null, "-Please Select-", htmlAttributes: new { @class = "form-control", @id = "CuttingSheetId" })
+            @Html.ValidationMessageFor(model => model.CuttingSheetId, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.WarehouseId, "WarehouseId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("WarehouseId", null, "-Please Select-", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.WarehouseId, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.WarehouseId, "WarehouseId", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("WarehouseId", null, "-Please Select-", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.WarehouseId, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Code, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @id = "code" } })
-                @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Code, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @id = "code" } })
+            @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Ref, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Ref, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Ref, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Ref, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Ref, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Ref, "", new { @class = "text-danger" })
         </div>
+    </div>
 
 
 
-        <div class="form-group">
+    @*<div class="form-group">
             @Html.LabelFor(model => model.IssueDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.IssueDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.IssueDate, "", new { @class = "text-danger" })
             </div>
+        </div>*@
+
+
+
+    <div class="form-group">
+        <label for="IssueDate" class="col-md-2 control-label">Issue Date</label>
+        <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="IssueDate" data-link-format="yyyy-mm-dd">
+            <input class="form-control" size="16" type="text" value="@ViewBag.selectedDate" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
         </div>
+        <input type="hidden" id="IssueDate" name="IssueDate" value="@ViewBag.selectedDate" /><br />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
+        @Html.ValidationMessageFor(model => model.IssueDate, "", new { @class = "text-danger" })
     </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+</div>
 
     <div class="form-group">
         <div class="card-content">
@@ -241,6 +255,8 @@
 
                 //data: '{ enquery:' + JSON.stringify(Enquery) + '}',
                 success: function (result) {
+
+                    clearTable();
                     result.forEach(element => setValue("lpo",element.MaterialId, element.Name, element.Unit, element.Dimension, element.Qty,0, element.Price,0,0));
 
                 },
@@ -535,6 +551,10 @@
 
     <script>
         var Sr = 0;
+        function clearTable() {
+            $("#tbDetails tr").remove();
+        }
+
         function setValue(type,myVal, Name, Unit, Dimension, Qty, IssueQty, Price, QtyApproved, Approval) {
 
             //alert(Qty + "    " + IssueQty )

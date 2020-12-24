@@ -15,6 +15,15 @@ namespace WebApplication8.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+
+
+        private INotificationRepository notificationRepository;
+
+
+        public StockIssuesController()
+        {
+            this.notificationRepository = new NotificationRepository(new ApplicationDbContext());
+        }
         // GET: StockIssues
         [Authorize(Roles = RoleNames.ROLE_StockIssuesView + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Index(string SearchType)
@@ -102,11 +111,11 @@ namespace WebApplication8.Controllers
 
             int Sequense = GetSeq();
             ViewBag.code = generateContractCode(Sequense);
-
+            ViewBag.selectedDate = DateTime.Now;
 
             ViewBag.StockIssueTypeId = new SelectList(db.StockIssueTypes, "StockIssueTypeId", "Name");
             ViewBag.WarehouseId = new SelectList(db.Warehouses, "WarehouseId", "Name");
-            ViewBag.LpoId  = new SelectList(db.Lpoes, "LpoId", "code");
+            ViewBag.LpoId  = new SelectList(db.Lpoes.Where(l=>l.StockIssues.Count() == 0), "LpoId", "code");
 
             ViewBag.CuttingSheetId = new SelectList(db.CuttingSheets, "CuttingSheetId", "code");
             return View();
@@ -150,6 +159,18 @@ namespace WebApplication8.Controllers
                     stockIssue.UserCreate = User.Identity.GetUserName();
                     db.StockIssues.Add(stockIssue);
                     db.SaveChanges();
+                    StockIssue s = db.StockIssues.Include(w => w.StockIssueType).Where(w => w.StockIssueId == stockIssue.StockIssueId).FirstOrDefault();
+
+                    if (s.StockIssueType.Name == "Stock In (Puchase Invoice)")
+                    {
+                        this.notificationRepository.CreateNotificationAsync(stockIssue.StockIssueId, NotificationName.onStockIn);
+
+                    }
+                    else if (stockIssue.StockIssueType.Name == "Stock Out(Issue Material)")
+                    {
+                        this.notificationRepository.CreateNotificationAsync(stockIssue.StockIssueId, NotificationName.onStockOut);
+
+                    }
                     return Json(stockIssue.StockIssueId);
                 }
                 catch (Exception ex)

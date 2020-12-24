@@ -112,6 +112,7 @@ namespace WebApplication8.Controllers
         }
 
         // GET: Customers/Delete/5
+        [Authorize(Roles = RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -129,6 +130,7 @@ namespace WebApplication8.Controllers
         // POST: Customers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult DeleteConfirmed(int id)
         {
             Customer customer = db.Customers.Find(id);
