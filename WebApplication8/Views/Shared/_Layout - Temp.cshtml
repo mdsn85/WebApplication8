@@ -3,7 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>High Moon CRM Software</title>
+    <link rel="icon" href="~/assets/img/Highmoon - LOGO (1).jfif" type="image/x-icon" />
+    <meta name="description" content="CRM Software - Project Management - Warehouse - Material - LPO" />
+    <meta name="keywords" content="CRM ,Software,Mohammad Saad,developer, Project Management, Warehouse , Material , LPO ,.net,Javascript ,programming,MrSkip" />
+    <meta name="author" content="Mohammad Saad" />
+    <meta name="copyright" content="Mohammad Saad" />
+    <meta name="robots" content="index,follow" />
     @*@Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")*@
     @*<link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">*@
@@ -12,7 +18,7 @@
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Target Material Design Bootstrap Admin Template</title>
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="~/assets/materialize/css/materialize.min.css" media="screen,projection" />
     <!-- Bootstrap Styles-->
@@ -253,14 +259,14 @@
                     }
                     @*//User.IsInRole("Sales Coordinator") || User.IsInRole("Admin") || User.IsInRole("Account") || User.IsInRole("Factory Coordinator")*@
 
-                    @if (User.IsInRole("ProjectView") || User.IsInRole("Admin")  )
+                    @if (User.IsInRole("ProjectView") || User.IsInRole("Admin"))
                     {
                         <li>
                             <a href="/Projects/Index" class="waves-effect waves-dark"><i class="fa fa-fast-forward"></i> Project</a>
                         </li>
                     }
 
-                    @if (User.IsInRole("Admin") || User.IsInRole("ProjectViewShort") )
+                    @if (User.IsInRole("Admin") || User.IsInRole("ProjectViewShort"))
                     {
                         <li>
                             <a href="/Projects/IndexShort" class="waves-effect waves-dark"><i class="fa fa-fast-forward"></i> Project </a>
@@ -282,10 +288,10 @@
                         </li>
                     }
 
-                    @if (User.IsInRole("WareHouse") || User.IsInRole("Admin"))
+                    @if (User.IsInRole("WareHouse") || User.IsInRole("Admin") || User.IsInRole("StockIssuesView"))
                     {
                         <li>
-                            <a href="/StockIssues/Index" class="waves-effect waves-dark"><i class="fa fa-table"></i>Stock Issue</a>
+                            <a href="/StockIssues/Index" class="waves-effect waves-dark"><i class="fa fa-table"></i>Warehouse</a>
                         </li>
 
                     }
@@ -293,17 +299,34 @@
                     @if (User.IsInRole("MaterialView") || User.IsInRole("WareHouse") || User.IsInRole("Admin"))
                     {
                         <li>
-                            <a href="/Materials/Index" class="waves-effect waves-dark"><i class="fa fa-bitbucket"></i>Materials Managment</a>
-                        </li>
+                            <a href="#" class="waves-effect waves-dark"><i class="glyphicon glyphicon-list-alt"></i> Materials Managment<span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level">
+                                <li>@Html.ActionLink("Unit", "Index", "units")</li>
+                                <li>
+                                    <a href="/Materials/Index" class="waves-effect waves-dark"><i class="glyphicon glyphicon-list-alt"></i>Materials List</a>
+                                </li>
+                            </ul>
 
+                        </li>
                     }
 
                     @if (User.IsInRole("SupplierView") || User.IsInRole("Admin"))
                     {
                         <li>
-                            <a href="/Suppliers/Index" class="waves-effect waves-dark"><i class="fa fa-bitbucket"></i>Supplier List</a>
-                        </li>
+                            <a href="#" class="waves-effect waves-dark"><i class="fa fa-user-md"></i> Supplier Managment<span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level">
+                                <li>
+                                    @Html.ActionLink("Supplier Credit Terms", "Index", "CreditTermSuppliers")
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Supplier Payment Mode", "Index", "PaymentMoodSuppliers")
+                                </li>
+                                <li>
+                                    <a href="/Suppliers/Index" class="waves-effect waves-dark"><i class="fa fa-user-md"></i>Supplier List</a>
+                                </li>
+                            </ul>
 
+                        </li>
                     }
 
                     @if (User.IsInRole("Cutting Sheet") || User.IsInRole("Admin"))
@@ -356,10 +379,7 @@
                                     @Html.ActionLink("Project Payment Terms", "Index", "ProjectPaymentTerms3")
                                 </li>
 
-                                <li>
-                                    @Html.ActionLink("Supplier Payment Terms", "Index", "CreditTermSuppliers")
-                                </li>
-                                <li>@Html.ActionLink("Unit", "Index", "units")</li>
+
 
                                 <li>@Html.ActionLink("Customer Types", "Index", "CustomersTypes")</li>
                                 <li>@Html.ActionLink("Project Payment Terms", "Index", "ProjectPaymentTerms")</li>
@@ -491,8 +511,8 @@
 
         @*<script src="http://code.jquery.com/jquery-3.1.1.slim.min.js"></script>*@
 
-        <script src="~/Scripts/js/shortcutKey/jquery.keyboard-shortcuts.js"></script>
-        <script type="text/javascript">
+        @*<script src="~/Scripts/js/shortcutKey/jquery.keyboard-shortcuts.js"></script>*@
+        @*<script type="text/javascript">
             (function (code) {
                 code(window.jQuery, document, window);
             }(function ($, document, window) {
@@ -525,7 +545,7 @@
                         });
                 });
             }));
-        </script>
+        </script>*@
         <script type="text/javascript">
 
             var _gaq = _gaq || [];

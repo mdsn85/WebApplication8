@@ -20,10 +20,16 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.TrnNo)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Address)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreditTermSupplier.Name)
+                @Html.DisplayNameFor(model => model.CreditTermSupplierId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaymentMoodSupplierId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Attention)
@@ -49,10 +55,16 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.TrnNo)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreditTermSupplier.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaymentMoodSupplier.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Attention)

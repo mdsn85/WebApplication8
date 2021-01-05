@@ -428,19 +428,16 @@ namespace WebApplication8.Controllers
             ViewBag.ActualDeliveryDate = project.ActualDeliveryDate;
             if (ModelState.IsValid)
             {
-                if (FileName != null)
+                if (FileName != null && FileName.Count()>0)
                 {
                     try
                     {
 
                         project.Deduction = 0;
-
-
                         project.UserCreate = User.Identity.GetUserName();
                         project.CreateDate = DateTime.Now;
                         project.StampDate = DateTime.Now;
                         project.ProjectStatusId = 1;
-
 
                         db.Projects.Add(project);
 

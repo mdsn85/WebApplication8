@@ -12,108 +12,111 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4></h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.CuttingSheetId)
+<div class="form-horizontal">
+    <h4></h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.CuttingSheetId)
 
-        @Html.HiddenFor(model => model.ProjectId)
+    @*@if (!(Model.ProjectId is null))
+        {
+            Html.HiddenFor(model => model.ProjectId);
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProjectId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-
-                <input type="text" value="@Model.project.Code" class="form-control" readonly />
-                @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
-            </div>
+        }*@
+    <div class="form-group">
+        @Html.Label("Project Code", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("ProjectId", null, "Please select", htmlAttributes: new { @class = "form-control", @id = "ProjectId" })
+            @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.code, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.code, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.code, "", new { @class = "text-danger" })
-            </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.code, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.code, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.code, "", new { @class = "text-danger" })
         </div>
+    </div>
 
 
 
-        @Html.HiddenFor(model => model.UserCreate, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.HiddenFor(model => model.UserCreate, new { htmlAttributes = new { @class = "form-control" } })
 
 
-        @Html.HiddenFor(model => model.CreateDate, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.HiddenFor(model => model.CreateDate, new { htmlAttributes = new { @class = "form-control" } })
 
 
 
 
-        <div class="col-md-10 pull-left">
+    <div class="col-md-10 pull-left">
 
-            <div class="card-content">
-                <b>
-                    <p class="control-label col-md-2">
-
-
-                    </p>
-                </b>
-                <div class="table-responsive">
-                    <table class="table-bordered table-responsive table dataTable text-nowrap" style="" id="tbDetails">
-                        <thead>
-                            <tr>
+        <div class="card-content">
+            <b>
+                <p class="control-label col-md-2">
 
 
-                                <td>
-                                    Sr #
-                                </td>
-                                <td>
-                                    id
-                                </td>
-                                <td>
-                                    Material
-                                </td>
-                                <td>
-                                    Dinmension
-                                </td>
-                                <td>
-                                    Unit
-                                </td>
-                                <td>
-                                    Request Qty
-                                </td>
-                                <td>
-                                    Isssue Qty
-                                </td>
-                                <td>
-                                    Balance
-                                </td>
-
-                                <td>
-                                    delete
-                                </td>
-                            </tr>
-                        </thead>
-                        <tbody id="p_scents"></tbody>
-
-                        <div style="float: left;padding-left:10%">
-                            <span onclick="openChild()" class="btn-info">
-                                Add Material
-                            </span>
-                            <input id="CustomerId" name="CustomerId" type="hidden" />
-                            <div id="Customer"></div>
-
-                        </div>
-                    </table>
+                </p>
+            </b>
+            <div class="table-responsive">
+                <div style="float: left;padding-left:10%">
+                    <span onclick="openChild()" class="btn-info">
+                        Add Material
+                    </span>
+                    <input id="CustomerId" name="CustomerId" type="hidden" />
+                    <div id="Customer"></div>
                 </div>
-            </div>
-        </div>
+                <table class="table-bordered table-responsive table dataTable text-nowrap" style="" id="tbDetails">
+                    <thead>
+                        <tr>
 
 
-        <div class="form-group" style="margin-top : 5px">
-            <div class="col-md-offset-4 col-md-2">
-                <input type="button" id="btnSave" value="  Save  " class="btn btn-primary adminworkSaveBtn " />
+                            <td>
+                                Sr #
+                            </td>
+                            <td>
+                                id
+                            </td>
+                            <td>
+                                Material
+                            </td>
+                            <td>
+                                Type
+                            </td>
+                            <td>
+                                Unit
+                            </td>
+                            <td>
+                                Request Qty
+                            </td>
+                            <td>
+                                Isssue Qty
+                            </td>
+                            <td>
+                                Balance
+                            </td>
+
+                            <td>
+                                delete
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody id="p_scents"></tbody>
+
+
+                </table>
             </div>
         </div>
     </div>
+
+
+    <div class="form-group" style="margin-top : 5px">
+        <div class="col-md-offset-4 col-md-2">
+            <input type="button" id="btnSave" value="  Save  " class="btn btn-primary adminworkSaveBtn " />
+        </div>
+    </div>
+</div>
 }
 
 <div>
@@ -231,7 +234,10 @@
                                 Detail.qty = $(this).prop("value");
 
                             }
+                            if ($(this).attr("name") === "IssueQty") {
+                                Detail.IssueQty = $(this).prop("value");
 
+                            }
                         });
 
                         //$(this).closest('tr').find('select').each(function () {
@@ -360,12 +366,48 @@
 
         }
 
+        var getProjectId = function () {
+            let id = document.getElementById("ProjectId").value
+            return (id !== '' ? id : undefined);
+        }
+
+        var typeRequiredProject = function (projectId, type) {
+            let typeRequiredProject = ["accessories", "acrylic", "edge band", "fabrication", "boards", "glass", "flooring", "carpets", "finished product"];
+            if (projectId === undefined) {
+                if (typeRequiredProject.includes(type.toLowerCase())) {
+                    return true;
+                }
+            }
+            return false
+        }
+
     </script>
 
 
     <script>
         var Sr = 0;
-        function setValue(myVal, Name, Unit, Dinmension, Qty, IssueQty) {
+        //myVal, Name, Unit, Dinmension, Qty, IssueQty
+
+        //element.MaterialId, element.Name, element.Unit, element.Dimension, element.Qty, 0, element.BalanceQty
+        function setValue(material) {
+
+
+            let myVal = material.MaterialId, Name = material.Name, Unit = material.Unit.Name, Dinmension = "";
+            let price = material.latestPrice, Qty = material.AvalableQty;
+            let cat = material.MaterialCategory.Name;
+            let type = material.MaterialType.Name;
+            let IssueQty = 0;
+
+
+            //check does type of material is allowed to be selected
+            if (typeRequiredProject(getProjectId(), type)) {
+                alert("type of material " + type + " not allowed to be picked without project ");
+                return false;
+            }
+
+            if (Qty < 0) {
+                Qty = -1 * Qty;
+            }
 
             var current = $(".ClientId").length;
 
@@ -401,7 +443,7 @@
 
             tt = tt + '<td class="Name" > ' +
                 '<div class="" > ' +
-                '<input type="text" name="Dinmension" id="Dinmension' + nextRaw + '"  class="form-control" value="' + Dinmension + '"/> ' +
+                '<input type="text" name="type" id="type' + nextRaw + '"  class="form-control" value="' + type + '"/> ' +
                 '</div > ' +
                 '</td > ';
 
@@ -461,7 +503,100 @@
         }
 
 
+        function setValueRead(myVal, Name, Unit, Dinmension, Qty, IssueQty) {
 
+            var current = $(".ClientId").length;
+
+            var next = parseInt(current) + 1;
+            var a = "DDlforLocationsClient" + next;
+            var b = "span" + next;
+
+            Sr = Sr + 1;
+
+
+            //= $('#tbDetails tr').length;
+            nextRaw = nextRaw + 1;
+            var tt = '<tr id="item_' + nextRaw + '">';
+
+
+            tt = tt + '<td class="Name" > ' +
+                '<div class="" > ' +
+                Sr +
+                '</div > ' +
+                '</td > ';
+
+            tt = tt + '<td class="Name" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="id" id="id' + nextRaw + '"  class="form-control" value="' + myVal + '"/> ' +
+                '</div > ' +
+                '</td > ';
+
+            tt = tt + '<td class="Name" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="Name" id="Name' + nextRaw + '"  class="form-control" value="' + Name + '"/> ' +
+                '</div > ' +
+                '</td > ';
+
+            tt = tt + '<td class="Name" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="type" id="type' + nextRaw + '"  class="form-control" value="' + Dinmension + '"/> ' +
+                '</div > ' +
+                '</td > ';
+
+
+
+            tt = tt + '<td class="Name" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="Unit" id="Unit' + nextRaw + '"  class="form-control" value="' + Unit + '"/> ' +
+                '</div > ' +
+                '</td > ';
+
+
+            tt = tt + '<td class="Qty" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="Qty" id="Qty' + nextRaw + '"  class="form-control" value="' + Qty + '"/> ' +
+                '</div > ' +
+                '</td > ';
+
+
+            tt = tt + '<td class="IssueQty" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="IssueQty" id="IssueQty' + nextRaw + '"  class="form-control" value="' + IssueQty + '" readonly/> ' +
+                '</div > ' +
+                '</td > ';
+
+            var BalanceQty = Qty - IssueQty;
+
+
+            tt = tt + '<td class="BalanceQty" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="BalanceQty" id="BalanceQty' + nextRaw + '"  class="form-control" value="' + BalanceQty + '" readonly/> ' +
+                '</div > ' +
+                '</td > ';
+
+
+            //tt = tt + '<td class="Price" > ' +
+            //    '<div class="" > ' +
+            //    '<input type="text" name="Price" id="Price' + nextRaw + '"  class="form-control"/> ' +
+            //    '</div > ' +
+            //    '</td > ' +
+
+
+
+            tt = tt + ' <td>' +
+                ' <div class="delete">' +
+                '  <span id="c1" class="	glyphicon glyphicon-trash" onclick="remove(\'item_' + nextRaw + '\')"> </span>' +
+                ' </div>' +
+                ' </td>' +
+                ' </tr>';
+
+            scntDiv.append(tt);
+
+
+            var options = "";
+
+
+        }
 
 
         function ListDetails() {
@@ -478,8 +613,10 @@
 
                 //data: '{ enquery:' + JSON.stringify(Enquery) + '}',
                 success: function (result) {
-                  
-                    result.forEach(element => setValue(element.MaterialId, element.Name, element.Unit, element.Dimension, element.Qty, 0, element.BalanceQty ));
+
+
+
+                    result.forEach(element => setValueRead(element.MaterialId, element.Name, element.Unit, element.type, element.Qty, element.IssueQty ));
 
                 },
                 error: function (xhr) {

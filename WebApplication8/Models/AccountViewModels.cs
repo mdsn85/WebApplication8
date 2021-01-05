@@ -100,6 +100,16 @@ namespace WebApplication8.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
+        [Phone]
+        [Display(Name = "Telephone")]
+        public string PhoneNumber { get; set; }
+
+        [Phone]
+        [Display(Name = "Mobile")]
+        [RegularExpression(@"^\(?([0-9]{3})[-. ]?([0-9]{7})$", ErrorMessage = "Not a valid Mobile number in formate 0xx xxxxxxx")]
+        public string Mobile { get; set; }
+
+
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
@@ -135,6 +145,12 @@ namespace WebApplication8.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Display(Name = "Phone")]
+        public string Phone { get; set; }
+
+        [Display(Name = "Mobile")]
+        public string Mobile { get; set; }
 
 
         [Display(Name = "Is Enabled")]

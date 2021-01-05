@@ -229,13 +229,8 @@ namespace WebApplication8.Controllers
                     {
                         EP.InQty = float.Parse(d.InQty.ToString());
                         EP.OutQty = 0;
-
-                        
-
                         //update material qty
-
-                        oldQty = mm.qty??0;
-                        
+                        oldQty = mm.qty??0; 
                         mm.qty = oldQty + EP.InQty;                    
 
                     }
@@ -249,9 +244,7 @@ namespace WebApplication8.Controllers
 
                         //update material qty
                         oldQty = mm.qty??0;
-                        mm.qty = oldQty -  EP.OutQty;
-
-                       
+                        mm.qty = oldQty -  EP.OutQty;                
                         mm.Resevedqty = OldResevedqty - EP.OutQty;
 
                     }

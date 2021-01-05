@@ -99,7 +99,7 @@
 
                         i++;
                     }
-                    $('span[id^="removeFile"]').remove();
+                    //$('span[id^="removeFile"]').remove();
 
                     var markup = "<span id='removeFile' class='glyphicon glyphicon-cloud'></span>"; // Binding the file name
                     $(".deleteRow").append(markup);
@@ -115,7 +115,29 @@
         formdata.delete(FileName)
         $("#" + Fileid).remove();
         chkatchtbl();
+
+        removeFileFromForm(FileName);
     }
+
+
+    function removeFileFromForm(fileName) {
+       
+        const fileArray = document.getElementsByName("FileName");
+
+        for (let i = 0; i < fileArray.length; i++) {
+            let fileWithoutExtension = removeExtenstion(fileArray[i].value)
+
+            if (fileWithoutExtension.includes(removeExtenstion(fileName))) {
+
+                fileArray[i].remove();
+            }
+        }
+    }
+
+    function removeExtenstion(fileName) {
+        return fileName.slice(0, fileName.indexOf('.'));
+    }
+
     function chkatchtbl() {
         if ($('#FilesList1 tr').length > 1) {
             $("#FilesList1").css("visibility", "visible");

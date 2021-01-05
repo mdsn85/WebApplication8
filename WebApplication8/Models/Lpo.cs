@@ -11,6 +11,7 @@ namespace WebApplication8.Models
         public int LpoId { get; set; }
 
         [Display(Name = "LPO Code")]
+        [StringLength(30)]
         public string code { get; set; }
 
 
@@ -19,13 +20,20 @@ namespace WebApplication8.Models
         public virtual LpoStatus LpoStatus { get; set; }
 
         [Display(Name = "Who Created")]
+        [StringLength(20)]
         public String UserCreate { get; set; }
 
         [Display(Name = "Quotation Ref#")]
+        [StringLength(20)]
         public string QuotationRef { get; set; }
 
         [Display(Name = "Supplier Ref#")]
+        [StringLength(30)]
         public string SupplierRef { get; set; }
+
+        [Display(Name = "Remarks")]
+        [StringLength(200)]
+        public string Remarks { get; set; }
 
         [Display(Name = "LPO Date")]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
@@ -36,17 +44,25 @@ namespace WebApplication8.Models
         public int SupplierId { get; set; }
         public virtual supplier Supplier { get; set; }
 
+        [Display(Name = "Location")]
+        public int? LpoLocationId { get; set; }
+        public virtual LpoLocation LpoLocation { get; set; }
+
 
         [Display(Name = "Credit Term")]
         public int? CreditTermSupplierId { get; set; }
         public virtual CreditTermSupplier CreditTermSupplier { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:N2}")]
         public float SubTotal { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:N2}")]
         public float Discount { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:N2}")]
         public float Vat { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:N2}")]
         public float GrandTotal { get; set; }
 
         public int? Sequense { get; set; }

@@ -19,6 +19,14 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.TrnNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TrnNo)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Attention)
         </dt>
 
@@ -56,6 +64,29 @@
 
         <dd>
             @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Credit Term ")
+        </dt>
+
+        <dd>
+            @if (Model.CreditTermSupplier != null)
+            {
+                @Html.DisplayFor(model => model.CreditTermSupplier.Name);
+            }
+        </dd>
+
+
+        <dt>
+            @Html.DisplayName("Payment Mood ")
+        </dt>
+
+        <dd>
+            @if (Model.PaymentMoodSupplier != null)
+            {
+                @Html.DisplayFor(model => model.PaymentMoodSupplier.Name);
+            }
         </dd>
 
     </dl>

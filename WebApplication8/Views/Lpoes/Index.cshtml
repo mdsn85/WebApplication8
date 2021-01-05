@@ -9,15 +9,32 @@
 }
 
 
-<p>
+@*<p>
     @{
-            @Html.ActionLink("Create New", "Create")
+        @Html.ActionLink("Create New", "Create")
     }
-</p>
+</p>*@
+
+@*@if (User.IsInRole("ProjectDownloadExcel") || User.IsInRole("Admin"))
+{
+    <button id="btnExport" style="margin-left:20px" class="btn btn-default">Excel <span class=" glyphicon glyphicon-download-alt"></span></button>
+}*@
+
+    <label class="button-collapse">
+        @*@if (User.IsInRole("Sales Coordinator") || User.IsInRole("Admin"))*@
+
+        @if (User.IsInRole("LPOCreate") || User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("CreateNew ", "Create", null, htmlAttributes: new { @class = " btn btn-default " })
 
 
+        }
 
-
+        @if (User.IsInRole("LPODownloadExcel") || User.IsInRole("Admin"))
+        {
+            <button id="btnExport" style="margin-left:20px" class="btn btn-default">Excel <span class=" glyphicon glyphicon-download-alt"></span></button>
+        }
+    </label>
 
 
 
@@ -90,9 +107,7 @@
             </th>
 
 
-            <th>
-                @Html.DisplayNameFor(model => model.UserCreate)
-            </th>
+
 
             <th>
                 @Html.DisplayNameFor(model => model.SubTotal)
@@ -107,10 +122,16 @@
             <th>
                 @Html.DisplayNameFor(model => model.GrandTotal)
             </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.UserCreate)
+            </th>
             <th hidden>
                 @Html.DisplayNameFor(model => model.StampDate)
             </th>
-
+            <th hidden>
+                @Html.DisplayNameFor(model => model.LpoId)
+            </th>
 
             <th></th>
         </tr>
@@ -139,11 +160,6 @@
             <td>
                 @Html.DisplayFor(modelItem => item.CreditTermSupplier.Name)
             </td>
-
-
-            <td>
-                @Html.DisplayFor(modelItem => item.UserCreate)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SubTotal)
             </td>
@@ -159,15 +175,20 @@
             <td>
                 @Html.DisplayFor(modelItem => item.GrandTotal)
             </td>
-
+            <td>
+                @Html.DisplayFor(modelItem => item.UserCreate)
+            </td>
             <td hidden>
                 @Html.DisplayFor(modelItem => item.StampDate)
             </td>
-
+            <td hidden>
+                @Html.DisplayFor(modelItem => item.LpoId)
+            </td>
             <td>
 
 
                 @Html.ActionLink("Print", "PrintNewTable", new { id = item.LpoId }) |
+                @Html.ActionLink("Print With LH", "PrintNewTableWithLetterHead", new { id = item.LpoId }) |
 
                 @Html.ActionLink("Revised", "Revised", new { id = item.LpoId })
                 @Html.Raw("|")
@@ -200,10 +221,19 @@
     <script>
         $(document).ready(function () {
             $('#dataTables-example').dataTable({
-                "order": [11, "desc"]
+                "order": [12, "desc"]
             });
 
 
+        });
+
+        $(function () {
+            var table = $('#dataTables-example').dataTable();
+            $("#btnExport").click(function (e) {
+                e.preventDefault();
+                window.open('data:application/vnd.ms-excel,' +
+                    encodeURIComponent(table[0].outerHTML));
+            });
         });
 
     </script>

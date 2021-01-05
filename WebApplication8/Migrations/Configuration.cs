@@ -89,7 +89,9 @@ namespace WebApplication8.Migrations
                 new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_LPOView },
                 new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_LPOPrint },
 
-                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_LPORevise }
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_LPORevise },
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = RoleNames.ROLE_LPODownloadExcel }
+                
                 );
 
 

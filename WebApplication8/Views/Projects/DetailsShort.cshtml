@@ -238,6 +238,12 @@
 
         </div>
     }
+    @if (Model.CuttingSheets.Count == 0 && Model.AccountApproval == true)
+    {
+        <div style="padding-top:15px">
+            @Html.ActionLink("Create MRF", "create", "CuttingSheets", new { ProjectId = Model.ProjectId }, htmlAttributes: new { @class = "btn btn-default" })
+        </div>
+    }
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ProjectId }) |

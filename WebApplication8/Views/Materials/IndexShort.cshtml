@@ -81,12 +81,16 @@
                 @Html.DisplayNameFor(model => model.WareHouse.Name)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.MaterialCategory.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaterialType.Name)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
 
-            <th>
-                @Html.DisplayNameFor(model => model.Dimension)
-            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.Unit.Name)
             </th>
@@ -120,56 +124,61 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    <span class="btn btn-info cid" id="@item.MaterialId">@item.MaterialId </span>
+        <tr>
+            <td>
+                <span class="btn btn-info cid" id="@item.MaterialId">@item.MaterialId </span>
 
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.code)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WareHouse.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WareHouse.Name)
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Dimension)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Unit.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.qty)
-                </td>
-                <td>
-                    @{float x = item.Resevedqty ?? 0;}
-                    @x
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MinReOrder)
-                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaterialCategory.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaterialType.Name)
+            </td>
 
-                <td>
-                    @{float? a = 0;
-                        a = @item.qty - @item.Resevedqty - @item.MinReOrder;}
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
 
-                    @Html.DisplayFor(modelItem => item.AvalableQty)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AvgPrice)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.latestPrice)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.barcode)
-                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Unit.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.qty)
+            </td>
+            <td>
+                @{float x = item.Resevedqty ?? 0;}
+                @x
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MinReOrder)
+            </td>
+
+            <td>
+                @{float? a = 0;
+                    a = @item.qty - @item.Resevedqty - @item.MinReOrder;}
+
+                @Html.DisplayFor(modelItem => item.AvalableQty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AvgPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.latestPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.barcode)
+            </td>
 
 
-            </tr>
+        </tr>
         }
     </tbody>
 </table>
@@ -182,38 +191,43 @@
         var name = "";
         var unit = "";
         var oVal = this.id;
-
+        var Material = {};
+        let material = {};
         $.ajax({
             type: "GET",
             traditional: true,
             async: false,
             cache: false,
             url: '/Materials/get',
-            context: JSON,
+            //context: JSON,
+            context: document.body,
+
             data: { "id": oVal /* add other additional parameters */ },
 
             //data: '{ enquery:' + JSON.stringify(Enquery) + '}',
             success: function (result) {
-                name = result.Name;
-                unit = result.Unit;
-                unit2 = result.Unit2;
-                Dimension = result.Dimension;
-                Price = result.Price;
-                QtyApproved = result.QtyApproved;
-                Approval = result.QtyApproved;
-                AvalableQty = result.AvalableQty;
+                material = result;
+                console.log("result : " + JSON.stringify(material));
+
+
+                //name = result.Name;
+                //unit = result.Unit;
+                //unit2 = result.Unit2;
+                //Dimension = result.Dimension;
+                //Price = result.Price;
+                //QtyApproved = result.QtyApproved;
+                //Approval = result.QtyApproved;
+                //AvalableQty = result.AvalableQty;
             },
             error: function (xhr) {
                 //debugger;
                 console.log(xhr.responseText);
-                alert("Error has occurred..");
+                alert("Error has occurred of Getting material..");
             }
         });
 
-        //alert(oVal);
-
-        window.opener.setValue(oVal, name, unit, Dimension, Price, QtyApproved, Approval, AvalableQty);
-
+       // window.opener.setValue(oVal, name, unit, Dimension, Price, QtyApproved, Approval, AvalableQty,CatId,TypeId);
+        window.opener.setValue(material);
         window.close();
 
         return false;

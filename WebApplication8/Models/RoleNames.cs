@@ -55,6 +55,7 @@ namespace WebApplication8.Models
         public const string ROLE_LPOEdit = "LPOEdit";
         public const string ROLE_LPOPrint = "LPOPrint";
         public const string ROLE_LPORevise = "LPORevise";
+        public const string ROLE_LPODownloadExcel = "LPODownloadExcel";
 
 
 

@@ -15,12 +15,14 @@ namespace WebApplication8.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: CreditTermSuppliers
+        [Authorize(Roles = RoleNames.ROLE_SupplierView + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Index()
         {
             return View(db.CreditTermSuppliers.ToList());
         }
 
         // GET: CreditTermSuppliers/Details/5
+        [Authorize(Roles = RoleNames.ROLE_SupplierView + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,6 +38,7 @@ namespace WebApplication8.Controllers
         }
 
         // GET: CreditTermSuppliers/Create
+        [Authorize(Roles = RoleNames.ROLE_SupplierCreate + "," + RoleNames.ROLE_SupplierEdit + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Create()
         {
             return View();
@@ -46,6 +49,7 @@ namespace WebApplication8.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.ROLE_SupplierCreate + "," + RoleNames.ROLE_SupplierEdit + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Create([Bind(Include = "CreditTermSupplierId,Name")] CreditTermSupplier creditTermSupplier)
         {
             if (ModelState.IsValid)
@@ -59,6 +63,7 @@ namespace WebApplication8.Controllers
         }
 
         // GET: CreditTermSuppliers/Edit/5
+        [Authorize(Roles = RoleNames.ROLE_SupplierCreate + "," + RoleNames.ROLE_SupplierEdit + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -78,6 +83,7 @@ namespace WebApplication8.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.ROLE_SupplierCreate + "," + RoleNames.ROLE_SupplierEdit + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Edit([Bind(Include = "CreditTermSupplierId,Name")] CreditTermSupplier creditTermSupplier)
         {
             if (ModelState.IsValid)
@@ -90,6 +96,7 @@ namespace WebApplication8.Controllers
         }
 
         // GET: CreditTermSuppliers/Delete/5
+        [Authorize(Roles = RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -107,6 +114,7 @@ namespace WebApplication8.Controllers
         // POST: CreditTermSuppliers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult DeleteConfirmed(int id)
         {
             CreditTermSupplier creditTermSupplier = db.CreditTermSuppliers.Find(id);

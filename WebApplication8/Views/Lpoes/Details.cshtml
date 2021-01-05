@@ -89,7 +89,13 @@
             @Html.DisplayFor(model => model.GrandTotal)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Remarks)
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.Remarks)
+        </dd>
 
         <dt>
             @Html.DisplayName("Stock In (Puchase Invoice)")
@@ -99,7 +105,7 @@
             @foreach (var si in Model.StockIssues)
             {
                 @Html.ActionLink(si.Code, "Details", "StockIssues", new { id = si.StockIssueId }, new { target = "_blank" });
-  
+
                 @Html.Raw("<br/>");
             }
         </dd>
@@ -119,7 +125,7 @@
     </dl>
 </div>
 
-<table class="table">
+<table class="table dataTable table-bordered table-hover">
     <tr>
         <th>
             Material Name
@@ -157,7 +163,7 @@
         </td>
 
         <td>
-            EA
+            @Html.DisplayFor(modelItem => item.Material.Unit.Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Price)

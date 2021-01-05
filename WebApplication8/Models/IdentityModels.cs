@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -10,6 +11,12 @@ namespace WebApplication8.Models
     public class ApplicationUser : IdentityUser
     {
         public bool? IsEnabled { get; set; }
+        [RegularExpression(@"^\(?([0-9]{3})[-. ]?([0-9]{7})$", ErrorMessage = "Not a valid phone number in formate 0xx xxxxxxx")]
+        public string Mobile { get; set; }
+
+        //[RegularExpression(@"^\(?([0-9]{2})[-. ]?([0-9]{7})$", ErrorMessage = "Not a valid phone number in formate 0x xxxxxxx")]
+        //public string Telephone { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -129,11 +136,8 @@ namespace WebApplication8.Models
         public System.Data.Entity.DbSet<WebApplication8.Models.NotificationCatUser> NotificationCatUsers { get; set; }
 
         public System.Data.Entity.DbSet<WebApplication8.Models.CuttingSheetFile> CuttingSheetFiles { get; set; }
+        public System.Data.Entity.DbSet<WebApplication8.Models.LpoLocation> LpoLocations { get; set; }
 
-
-
-
-
-
+        public System.Data.Entity.DbSet<WebApplication8.Models.PaymentMoodSupplier> PaymentMoodSuppliers { get; set; }
     }
 }

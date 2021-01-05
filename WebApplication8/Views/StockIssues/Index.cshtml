@@ -62,6 +62,12 @@
                 @Html.DisplayName("Resource")
             </th>
             <th>
+                @Html.DisplayName("Project")
+            </th>
+            <th>
+                @Html.DisplayName("Proj. Name")
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Ref)
             </th>
 
@@ -81,52 +87,69 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StockIssueType.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Warehouse.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Code)
-                </td>
-                <td>
-                    @if (item.LpoId != null)
-                    {
-                        @Html.DisplayFor(modelItem => item.Lpo.code)
-                    }
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StockIssueType.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Warehouse.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @if (item.LpoId != null)
+                {
+                    @Html.DisplayFor(modelItem => item.Lpo.code)
+                }
 
-                    @if (item.CuttingSheetId != null)
-                    {
-                        @Html.DisplayFor(modelItem => item.CuttingSheet.code)
-                    }
+                @if (item.CuttingSheetId != null)
+                {
+                    @Html.DisplayFor(modelItem => item.CuttingSheet.code)
+                }
 
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Ref)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserCreate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IssueDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Note)
-                </td>
-                <td>
+            </td>
 
-                    @if (User.IsInRole("Admin"))
-                    {
-                        @Html.ActionLink("Edit", "Edit", new { id = item.StockIssueId })
+            <td>
+                @if (item.CuttingSheetId != null  && item.CuttingSheet.project != null)
+                {
+                    @Html.DisplayFor(modelItem => item.CuttingSheet.project.Code)
+                }
+            </td>
 
-                        @Html.Raw("|")
-                    }
-                    @Html.ActionLink("Details", "Details", new { id = item.StockIssueId })
-                    @Html.ActionLink("Delete", "Delete", new { id = item.StockIssueId })
-                </td>
-            </tr>
+            <td>
+                @if (item.CuttingSheetId != null &&  item.CuttingSheet.project != null)
+                {
+                    @Html.DisplayFor(modelItem => item.CuttingSheet.project.Name)
+                }
+            </td>
+           
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Ref)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserCreate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IssueDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Note)
+            </td>
+            <td>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.StockIssueId })
+
+                    @Html.Raw("|")
+                }
+                @Html.ActionLink("Details", "Details", new { id = item.StockIssueId })
+                @Html.ActionLink("Delete", "Delete", new { id = item.StockIssueId })
+            </td>
+        </tr>
         }
     </tbody>
 

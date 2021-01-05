@@ -164,7 +164,7 @@ namespace WebApplication8.Controllers
                 int eid = model.EmployeeId;
                 Employee e = db.Employees.Find(eid);
                 model.Email = e.EmailSignature;
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email ,IsEnabled =true};
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email ,IsEnabled =true,Mobile = model.Mobile, PhoneNumber = model.PhoneNumber};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -536,7 +536,7 @@ namespace WebApplication8.Controllers
         {
             List<ListUsersViewModel> allusers = null;
             allusers = (from a in db.Users
-                        select new ListUsersViewModel() { UserId = a.Id, UserName = a.UserName, Email = a.Email, IsEnabled = a.IsEnabled }).ToList();
+                        select new ListUsersViewModel() { UserId = a.Id, UserName = a.UserName, Email = a.Email, IsEnabled = a.IsEnabled , Mobile = a.Mobile,Phone = a.PhoneNumber }).ToList();
 
             foreach (var u in allusers.ToList())
             {
@@ -579,6 +579,8 @@ namespace WebApplication8.Controllers
 
             model.EmployeeId = empid;
             model.Password = "";
+            model.Mobile = user.Mobile;
+            model.PhoneNumber = user.PhoneNumber;
             //if (User.IsInRole(RoleName.Admin))
             //{
             return View(model);
@@ -600,6 +602,10 @@ namespace WebApplication8.Controllers
             // Update it with the values from the view model
             user.UserName = model.UserName;
             user.Email = model.Email;
+
+            user.PhoneNumber = model.PhoneNumber;
+
+            user.Mobile = model.Mobile;
             user.IsEnabled = model.IsEnabled;
             user.PasswordHash = user.PasswordHash;
             // var user = UserManager.FindByName(model.UserName);
@@ -635,7 +641,33 @@ namespace WebApplication8.Controllers
                 ViewBag.e = e.Message;
 
                 ViewBag.Users = db.Roles.Select(u => new { label = u.Name, value = u.Name }).ToList();
-                //ViewBag.EmployeeName = 
+
+                user = db.Users.Where(u => u.UserName == model.UserName).FirstOrDefault();
+                int empid = -1;
+                try
+                {
+                    empid = db.EmployeeUsers.Where(eu => eu.User == model.UserName).FirstOrDefault().EmployeeId;
+                }
+                catch (Exception ee) { }
+                string userId = User.Identity.GetUserId();
+                ViewBag.Users = db.Roles.Select(u => new { label = u.Name, value = u.Name }).ToList();
+                ViewBag.CurrentRoles = UserManager.GetRoles(user.Id).ToList();
+
+
+                ViewBag.EmployeeName = db.Employees.Find(empid).Name;
+                //User role
+
+
+                //model.idx = user.Id;
+                //model.Email = user.Email;
+                //model.IsEnabled = user.IsEnabled ?? false;
+                //model.UserName = user.UserName;
+
+                //model.EmployeeId = empid;
+                model.Password = "";
+
+
+
                 return View(model);
             }
 

@@ -105,6 +105,68 @@ namespace WebApplication8.Controllers
 
         }
 
+        [Authorize(Roles = RoleNames.ROLE_LPOPrint + "," + RoleNames.ROLE_ADMINISTRATOR)]
+        public ActionResult PrintNewTableWithLetterHead(int? id)
+        {
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Lpo lpo = db.Lpoes.Find(id);
+
+            if (lpo.LpoStatusId == 2)//revised
+            {
+                string message = "Sorry ,  You cant print <br/> " +
+                    " <br/> " +
+                    "Contact manaegment ";
+
+                return ErrorPermission(message);
+            }
+
+            ViewBag.LpoTerms = db.LpoTerms.ToList();
+            var username = User.Identity.GetUserName();
+
+            ViewBag.user = db.Users.Where(u => u.UserName == username).FirstOrDefault();
+            var emp = db.EmployeeUsers.Where(eu => eu.User == username).FirstOrDefault().EmployeeId;
+            ViewBag.currentEmployee = db.Employees.Find(emp);
+            string job = "";
+            DateTime currentDate = DateTime.Now;
+            int JobBySupplier = db.Lpoes.Where(l => l.Supplier.supplierId == lpo.SupplierId     
+                                                && l.LpoDate.Month == currentDate.Month && lpo.LpoDate.Year == currentDate.Year).Count();
+            job = string.Format("{0}/{1}/job {2}", currentDate.Year, currentDate.Month, JobBySupplier);
+            ViewBag.Job = job ;
+            return View(lpo);
+
+        }
+
+        [Authorize(Roles = RoleNames.ROLE_LPOPrint + "," + RoleNames.ROLE_ADMINISTRATOR)]
+        public ActionResult PrintNewTableWithLetterHead2(int? id)
+        {
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Lpo lpo = db.Lpoes.Find(id);
+
+            if (lpo.LpoStatusId == 2)//revised
+            {
+                string message = "Sorry ,  You cant print <br/> " +
+                    " <br/> " +
+                    "Contact manaegment ";
+
+                return ErrorPermission(message);
+            }
+
+            ViewBag.LpoTerms = db.LpoTerms.ToList();
+
+            return View(lpo);
+
+        }
+
 
         public ActionResult ErrorPermission(string message)
         {
@@ -122,7 +184,7 @@ namespace WebApplication8.Controllers
                 MaterialId = a.MaterialId,
                 Name = a.Material.Name,
                 Unit = a.Material.Unit.Name,
-               Dimension = a.Material.Dimension,
+               type = a.Material.MaterialType.Name,
                Qty = a.Qty,
                Price = a.Price,
 
@@ -179,34 +241,37 @@ namespace WebApplication8.Controllers
             ViewBag.title1 = "Create LPO";
 
             int Sequense = GetSeq();
-            ViewBag.code = generateContractCode(Sequense );
+            ViewBag.code = generateContractCode(Sequense);
 
     
             ViewBag.CreditTermSupplierId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name");
             ViewBag.SupplierId = new SelectList(db.suppliers, "supplierId", "Name");
-
+            ViewBag.LpoLocationId = new SelectList(db.LpoLocations, "LpoLocationId", "Name");
             ViewBag.LpoDate = DateTime.Now;
             return View();
         }
 
         // GET: Lpoes/Create
-
+        private int NumberOfRevised(string lpoBaseCode)
+        {
+            return db.Lpoes.Where(l => l.code.Contains(lpoBaseCode)).Count()-1;
+        }
         [Authorize(Roles = RoleNames.ROLE_LPORevise + "," + RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Revised(int id )
         {
-            //int Sequense = GetSeq();
-            //ViewBag.code = generateContractCode(Sequense);
             Lpo lpo = db.Lpoes.Find(id);
-            string code= lpo.code;
-            string newCode = code + "-Rev";
+            string lpoBaseCode = (lpo.code.Contains("-Rev")) ? lpo.code.Substring(0, lpo.code.IndexOf("-Rev")) : lpo.code;
+
+            string newCode = lpoBaseCode + "-Rev" + (NumberOfRevised(lpoBaseCode)+1).ToString("000");
             ViewBag.code = newCode;
 
 
             //ViewBag.CreditTermId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name");
 
             ViewBag.CreditTermSupplierId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name", lpo.CreditTermSupplierId);
-            ViewBag.SupplierId = new SelectList(db.suppliers, "supplierId", "Name");
-
+            ViewBag.SupplierId = new SelectList(db.suppliers, "supplierId", "Name",lpo.SupplierId);
+            ViewBag.LpoLocationId = new SelectList(db.LpoLocations, "LpoLocationId", "Name",lpo.LpoLocationId);
+            ViewBag.LpoDate = DateTime.Now;
 
             return View(lpo);
         }
@@ -234,7 +299,7 @@ namespace WebApplication8.Controllers
         }
 
 
-        public JsonResult CreateJson([Bind(Include = "LpoId,code,SupplierRef,LpoDate,SupplierId,CreditTermSupplierId,SubTotal,Discount,Total,Vat,GrandTotal ")] Lpo lpo)
+        public JsonResult CreateJson([Bind(Include = "LpoId,code,SupplierRef,LpoDate,SupplierId,CreditTermSupplierId,SubTotal,Discount,Total,Vat,GrandTotal,Remarks,LpoLocationId ")] Lpo lpo)
         {
             if (ModelState.IsValid)
             {

@@ -17,7 +17,7 @@ namespace WebApplication8.Models
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime CreatedDate { get; set; }
 
-        [Display(Name = "Material Name")]
+        [Display(Name = "Material Description")]
         [StringLength(250)]
         public string Name { get; set; }
 

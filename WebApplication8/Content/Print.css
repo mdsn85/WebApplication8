@@ -1,0 +1,201 @@
+﻿body {
+    font-family: 'Fira Sans';
+    font-size: 22px;
+}
+
+.Condition {
+    /*font-family: "Times New Roman", Times, serif;*/
+    font-family: 'Fira Sans';
+    font-size: 22px;
+    /**/
+    font-size: 9pt;
+    line-height: 1.4;
+}
+
+input[type=text] {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #000000;
+}
+
+TD TH {
+    /*font-family: "Times New Roman", Times, serif;*/
+    font-family: 'Fira Sans';
+    font-size: 22px;
+    /*font-family: "Calibri (Body)";*/
+    font-size: 12pt;
+    padding-left: 6px;
+}
+
+
+
+
+
+#mainTable td {
+    padding: 0px;
+    height: 0px;
+    padding-left: 6px;
+    height: 30px;
+    font-size: 14px;
+}
+
+#mainTable th {
+    padding: 0px;
+    font-size: 12px;
+}
+
+.ramrksTable {
+    padding: 0px;
+    font-size: 14px;
+}
+
+#termsTable {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+    #termsTable td {
+        padding: 0px;
+        height: 0px;
+        padding-left: 6px;
+        height: 15px;
+        font-size: 12.5px;
+    }
+
+
+
+@@media print {
+    html, body, page {
+        width: 230mm;
+        height: 297mm;
+    }
+
+
+    .CUSTOMER_ACCEPTANCE {
+        page-break-before: always;
+    }
+
+    tbody {
+        margin-left: 50px;
+    }
+    /*.content {
+                margin-left: 50px;
+                margin-top: -70px;
+                margin-bottom: 70px;
+            }*/
+    td {
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+}
+
+
+
+.footer, .footer-space {
+    height: 28mm;
+}
+
+.header, .header-space {
+    height: 33mm;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+}
+
+
+
+.borderless td, .borderless th {
+    border: none;
+}
+
+.bordered td, .bordered th {
+    border: 1px solid black;
+}
+
+@@page {
+    margin-left: 15mm
+}
+
+footer {
+    border: none !important;
+}
+
+tbody {
+    border: none !important;
+}
+
+header {
+    border: none !important;
+}
+
+tfoot tr td {
+    border: none !important;
+}
+
+thead tr td th {
+    border: none !important;
+}
+
+thead th {
+    border: none !important;
+}
+
+tbody th {
+    border: none !important;
+}
+
+table th {
+    border: none !important;
+}
+
+
+
+tbody tr:first-child td {
+    border-top: 0;
+}
+
+/* tableq tr:first-child td {
+            border-top: 1;
+        }*/
+
+
+th, td {
+    padding-left: 30px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+#mainTable tr {
+    line-height: 10px;
+}
+
+.headerLPO {
+    text-align: center;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.detailsTable {
+    font-size: 14px;
+}
+
+.supplierDetails .Shipto .LPODetails {
+    vertical-align: top;
+    float: left;
+    width: 33.33%;
+}
+
+.signatureTable {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
+

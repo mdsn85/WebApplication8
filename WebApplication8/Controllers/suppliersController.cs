@@ -55,6 +55,7 @@ namespace WebApplication8.Controllers
         public ActionResult Create()
         {
             ViewBag.CreditTermSupplierId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name");
+            ViewBag.PaymentMoodSupplierId = new SelectList(db.PaymentMoodSuppliers, "PaymentMoodSupplierId", "Name");
             return View();
         }
 
@@ -63,7 +64,8 @@ namespace WebApplication8.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "supplierId,Name,Attention,tel,mobile,email,Address,CreditTermSupplierId")] supplier supplier)
+        [Authorize(Roles = RoleNames.ROLE_SupplierCreate + "," + RoleNames.ROLE_ADMINISTRATOR)]
+        public ActionResult Create([Bind(Include = "supplierId,Name,TrnNo,Attention,tel,mobile,email,Address,CreditTermSupplierId,PaymentMoodSupplierId")] supplier supplier)
         {
             if (ModelState.IsValid)
             {
@@ -72,6 +74,7 @@ namespace WebApplication8.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CreditTermSupplierId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name", supplier.CreditTermSupplierId);
+            ViewBag.PaymentMoodSupplierId = new SelectList(db.PaymentMoodSuppliers, "PaymentMoodSupplierId", "Name", supplier.PaymentMoodSupplierId);
             return View(supplier);
         }
 
@@ -89,6 +92,7 @@ namespace WebApplication8.Controllers
                 return HttpNotFound();
             }
             ViewBag.CreditTermSupplierId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name", supplier.CreditTermSupplierId);
+            ViewBag.PaymentMoodSupplierId = new SelectList(db.PaymentMoodSuppliers, "PaymentMoodSupplierId", "Name", supplier.PaymentMoodSupplierId);
             return View(supplier);
         }
 
@@ -97,7 +101,8 @@ namespace WebApplication8.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "supplierId,Name,Attention,tel,mobile,email,Address,CreditTermSupplierId")] supplier supplier)
+        [Authorize(Roles = RoleNames.ROLE_SupplierEdit + "," + RoleNames.ROLE_ADMINISTRATOR)]
+        public ActionResult Edit([Bind(Include = "supplierId,Name,TrnNo,Attention,tel,mobile,email,Address,CreditTermSupplierId,PaymentMoodSupplierId")] supplier supplier)
         {
             if (ModelState.IsValid)
             {
@@ -106,10 +111,12 @@ namespace WebApplication8.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CreditTermSupplierId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name", supplier.CreditTermSupplierId);
+            ViewBag.PaymentMoodSupplierId = new SelectList(db.PaymentMoodSuppliers, "PaymentMoodSupplierId", "Name", supplier.PaymentMoodSupplierId);
             return View(supplier);
         }
 
         // GET: suppliers/Delete/5
+        [Authorize(Roles = RoleNames.ROLE_ADMINISTRATOR)]
         public ActionResult Delete(int? id)
         {
             if (id == null)

@@ -10,179 +10,194 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4></h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="form-horizontal">
+    <h4></h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.code, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.code, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @id = "code" } })
-                @Html.ValidationMessageFor(model => model.code, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.code, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.code, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @id = "code" } })
+            @Html.ValidationMessageFor(model => model.code, "", new { @class = "text-danger" })
         </div>
-
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SupplierRef, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SupplierRef, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SupplierRef, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-
-        <div class="form-group">
-            <label for="LpoDate" class="col-md-2 control-label">Warranty</label>
-            <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="LpoDate" data-link-format="yyyy-mm-dd">
-                <input class="form-control" size="16" type="text" value="@ViewBag.LpoDate" readonly>
-                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-            </div>
-            <input type="hidden" id="LpoDate" name="LpoDate" value="@ViewBag.LpoDate" /><br />
-
-            @Html.ValidationMessageFor(model => model.LpoDate, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SupplierId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("SupplierId", null, "Please Select Supplier", htmlAttributes: new { @class = "form-control", @id = "SupplierId" })
-                @Html.ValidationMessageFor(model => model.SupplierId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreditTermSupplierId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("CreditTermSupplierId", null, "Please Select Credit Term", htmlAttributes: new { @class = "form-control", @id = "CreditTermSupplierId" })
-                @Html.ValidationMessageFor(model => model.CreditTermSupplierId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SubTotal, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SubTotal, new { htmlAttributes = new { @class = "form-control", id = "SubTotal", Value = 0, @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.SubTotal, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Discount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control", id = "Discount", Value = 0 } })
-                @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("Total", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.Editor("Total", new { htmlAttributes = new { @class = "form-control", id = "Total", Value = 0, @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.SubTotal, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Vat, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Vat, new { htmlAttributes = new { @class = "form-control", id = "Vat", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.GrandTotal, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.GrandTotal, new { htmlAttributes = new { @class = "form-control", id = "GrandTotal", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.GrandTotal, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-
-        <div class="form-group">
-            <div class="card-content">
-                <b>
-                    <p class="control-label col-md-2">
-
-
-                    </p>
-                </b>
-                <div class="table-responsive">
-                    <table class="table-bordered table-responsive table dataTable text-nowrap" style="" id="tbDetails">
-                        <thead>
-                            <tr>
-
-
-                                <td>
-                                    Sr #
-                                </td>
-                                <td>
-                                    id
-                                </td>
-                                <td>
-                                    Material
-                                </td>
-                                <td>
-                                    Dimension
-                                </td>
-                                <td>
-                                    Unit
-                                </td>
-                                <td>
-                                    Request Qty
-                                </td>
-                                @*<td>
-                                        Unit
-                                    </td>*@
-                                <td>
-                                    Price
-                                </td>
-                                <td>
-                                    Totlal
-                                </td>
-
-                                <td>
-                                    delete
-                                </td>
-                            </tr>
-                        </thead>
-                        <tbody id="p_scents"></tbody>
-
-                        <div style="float: left;padding-left:10%">
-                            <button id="calculate" type="button" onclick="openChild()" class="fa fa-plus-square">Add Material</button><br>
-                            <br />
-
-                            <input id="CustomerId" name="CustomerId" type="hidden" />
-                            <div id="Customer"></div>
-
-                        </div>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group" style="margin-top : 5px">
-            <div class="col-md-offset-4 col-md-2">
-
-                <input type="button" id="btnSave" value="  Save  " class="btn btn-primary adminworkSaveBtn " />
-
-
-
-            </div>
-        </div>
-
     </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SupplierRef, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.SupplierRef, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.SupplierRef, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <label for="LpoDate" class="col-md-2 control-label">Warranty</label>
+        <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="LpoDate" data-link-format="yyyy-mm-dd">
+            <input class="form-control" size="16" type="text" value="@ViewBag.LpoDate" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+        <input type="hidden" id="LpoDate" name="LpoDate" value="@ViewBag.LpoDate" /><br />
+
+        @Html.ValidationMessageFor(model => model.LpoDate, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SupplierId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("SupplierId", null, "Please Select Supplier", htmlAttributes: new { @class = "form-control", @id = "SupplierId" })
+            @Html.ValidationMessageFor(model => model.SupplierId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CreditTermSupplierId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("CreditTermSupplierId", null, "Please Select Credit Term", htmlAttributes: new { @class = "form-control", @id = "CreditTermSupplierId" })
+            @Html.ValidationMessageFor(model => model.CreditTermSupplierId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SubTotal, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.SubTotal, new { htmlAttributes = new { @class = "form-control", id = "SubTotal", Value = 0, @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.SubTotal, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Discount, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control", id = "Discount", Value = 0 } })
+            @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Total", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.Editor("Total", new { htmlAttributes = new { @class = "form-control", id = "Total", Value = 0, @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.SubTotal, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Vat, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Vat, new { htmlAttributes = new { @class = "form-control", id = "Vat", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.GrandTotal, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.GrandTotal, new { htmlAttributes = new { @class = "form-control", id = "GrandTotal", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.GrandTotal, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Remarks, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "form-control", id = "Remarks", } })
+            @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.LpoLocation, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10"  style="float:left; display:inline; ">
+            @Html.DropDownList("LpoLocationId", null, htmlAttributes: new { @class = "form-control", @id = "LpoLocationId" })
+            <span class="glyphicon glyphicon-plus btn btn-danger "  onclick="AddAddress()" > Add More</span>
+            @Html.ValidationMessageFor(model => model.LpoLocationId, "", new { @class = "text-danger" })
+
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="card-content">
+            <b>
+                <p class="control-label col-md-2">
+
+
+                </p>
+            </b>
+            <div class="table-responsive">
+                <div style="float: left;padding-left:10%">
+                    <button id="calculate" type="button" onclick="openChild()" class="fa fa-plus-square btn btn-danger"> Add Material</button><br>
+                    <br />
+
+                    <input id="CustomerId" name="CustomerId" type="hidden" />
+                    <div id="Customer"></div>
+
+                </div>
+                <table class="table-bordered table-responsive table dataTable text-nowrap" style="" id="tbDetails">
+                    <thead>
+                        <tr>
+
+
+                            <td>
+                                Sr #
+                            </td>
+                            <td>
+                                id
+                            </td>
+                            <td>
+                                Material
+                            </td>
+                            <td hidden>
+                                Dimension
+                            </td>
+                            <td>
+                                Unit
+                            </td>
+                            <td>
+                                Request Qty
+                            </td>
+                            @*<td>
+                        Unit
+                    </td>*@
+                            <td>
+                                Price
+                            </td>
+                            <td>
+                                Totlal
+                            </td>
+
+                            <td>
+                                delete
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody id="p_scents"></tbody>
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group" style="margin-top : 5px">
+        <div class="col-md-offset-4 col-md-2">
+
+            <input type="button" id="btnSave" value="  Save  " class="btn btn-primary adminworkSaveBtn " />
+
+
+
+        </div>
+    </div>
+
+</div>
 
 
 }
@@ -322,7 +337,9 @@
             showModalPopUp('/Materials/IndexShort');
 
         }
-
+        function AddAddress(){
+            showModalPopUp('/LpoLocations/CreateShort');
+        }
     </script>
 
 
@@ -575,12 +592,56 @@
         }
 
     </script>
+    <script>
+        function setLocation(i) {
+            $.ajax({
+                type: "GET",
+                url: "/LpoLocations/get",
+                success: function (result) {
+                    const data = result;//JSON.stringify(result);
 
+                    FillSelect("LpoLocationId",data,i)
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+
+                }
+            });
+        }
+
+        function FillSelect(select,data,id) {
+            let dropdown = document.getElementById(select);
+            dropdown.length = 0;
+
+            let defaultOption = document.createElement('option');
+            defaultOption.text = 'Choose State/Province';
+
+            dropdown.add(defaultOption);
+            dropdown.selectedIndex = 0;
+
+            for (let i = 0; i < data.length; i++) {
+                option = document.createElement('option');
+
+                option.text = data[i].Name;
+                option.value = data[i].Id;
+                if (data[i].Id === id)
+                    option.selected = true;
+                dropdown.add(option);
+            }
+
+        }
+    </script>
 
     <script>
         var Sr = 0;
         //            window.opener.setValue(oVal, name, unit, Dimension, Price, QtyApproved, Approval, AvalableQty);
-        function setValue(myVal, Name, Unit, Deminsion, price, QtyApproved, Approval, AvalableQty) {
+        function setValue(material) {
+            let myVal = material.MaterialId, Name = material.Name, Unit = material.Unit.Name, Dinmension = "";
+            let price = material.latestPrice, AvalableQty = material.AvalableQty;
+            let cat = material.MaterialCategory.Name;
+            let type = material.MaterialType.Name;
+
+
             if (AvalableQty < 0) {
                 AvalableQty = -1 * AvalableQty;
             }
@@ -617,9 +678,9 @@
                 '</td > ';
 
 
-            tt = tt + '<td class="Name" > ' +
+            tt = tt + '<td class="Name" hidden> ' +
                 '<div class="" > ' +
-                '<input type="text" name="Deminsion" id="Deminsion' + nextRaw + '"  class="form-control" value="' + Deminsion + '"/> ' +
+                '<input type="text" name="Deminsion" id="Deminsion' + nextRaw + '"  class="form-control" value="' + Dinmension + '"/> ' +
                 '</div > ' +
                 '</td > ';
 
@@ -632,7 +693,7 @@
 
             tt = tt + '<td class="Qty" > ' +
                 '<div class="" > ' +
-                '<input type="text" name="Qty" id="Qty' + nextRaw + '"  class="form-control"  value="' + AvalableQty + '"/> ' +
+                '<input type="text" name="Qty" id="Qty' + nextRaw + '"  class="form-control" onchange="PriceChange(' + nextRaw + ')"  value="' + AvalableQty + '"/> ' +
                 '</div > ' +
                 '</td > ';
 
@@ -644,13 +705,13 @@
 
             tt = tt + '<td class="Price" > ' +
                 '<div class="" > ' +
-                '<input type="text" name="Price" id="Price' + nextRaw + '"  class="form-control Price" onchange="PriceChange(' + nextRaw + ')"/> ' +
+                '<input type="text" name="Price" id="Price' + nextRaw + '"  class="form-control Price" value="' + price+'" onchange="PriceChange(' + nextRaw + ')"/> ' +
                 '</div > ' +
                 '</td > ';
 
             tt = tt + '<td class="total" > ' +
                 '<div class="" > ' +
-                '<input type="text" name="total" id="total' + nextRaw + '"  class="form-control" onchange="TotalChange(nextRaw)" /> ' +
+                '<input type="text" name="total" id="total' + nextRaw + '"  class="form-control" " /> ' +
                 '</div > ' +
                 '</td > ';
 
@@ -664,7 +725,7 @@
                 ' </tr>';
 
             scntDiv.append(tt);
-
+            PriceChange(nextRaw);
 
             var options = "";
 
@@ -680,13 +741,8 @@
             var t = subTotal - Discount
             $("#Total").val(t);
 
-
             var v = t * 0.05
             $("#Vat").val(v);
-
-
-
-
 
             var g = 0;
             g = t + v;
@@ -717,31 +773,36 @@
         };
 
         function TotalChange(i) {
+            let subTotal = 0; 
+            let sub = 0;
+            $("#tbDetails TBODY TR").each(function () {
 
-            var subTotal = $("#SubTotal").val();
+                var row = $(this);
+                var Detail = {};
+                i++;
+                $(this).closest('tr').find('input').each(function () {
 
-            var total = $("#total" + i).val();
+                    if ($(this).attr("name") === "total") {
+                        sub = $(this).prop("value");
+                        subTotal += parseFloat( sub);
+                    }
+                });
 
-            var x = parseFloat(subTotal) + parseFloat(total)
-            $("#SubTotal").val(x);
-
-
-            var Discount = $("#Discount").val();
-            var t = x - parseFloat(Discount)
-            $("#Total").val(t);
-
-
-            var v = t * 0.05
-            $("#Vat").val(v);
-
-
+            });
 
 
+            $("#SubTotal").val(subTotal);
+            let Discount = $("#Discount").val();
+            let total = subTotal - parseFloat(Discount)
+            $("#Total").val(total);
 
-            var g = 0;
-            g = t + v;
 
-            $("#GrandTotal").val(g);
+            let vat = total * 0.05;
+            $("#Vat").val(vat);
+
+            let GrandTotal = total + vat;
+
+            $("#GrandTotal").val(GrandTotal);
 
 
         }

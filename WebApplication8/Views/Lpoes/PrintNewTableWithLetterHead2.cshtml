@@ -1,0 +1,198 @@
+﻿@model WebApplication8.Models.Lpo
+@{
+    Layout = null;
+}
+<html>
+<head>
+
+
+    <style>
+
+
+        body {
+            margin: 0 auto;
+            font-family: 'Space Mono', monospace;
+            font-size: 14px;
+            max-width: 800px;
+            width: 100%;
+            border: 1px solid #ddd;
+        }
+
+        .header, .t-head, .footer, .t-foot {
+            height: 35px;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            background: #fff;
+            h5, h3
+
+        {
+            margin: 5px;
+            color: #555;
+        }
+
+        }
+
+        .footer, .t-foot {
+            height: 25px;
+        }
+
+        .t-head, .t-foot {
+            background: #fff;
+        }
+
+        .pr {
+            position: fixed;
+            right: 0;
+            bottom: 10px;
+            color: #aaa;
+            letter-spacing: 1px;
+            font-weight: normal;
+            text-decoration: none;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            border-bottom: 1px solid #ddd;
+            button
+
+        {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            background: rgba(241, 194, 89, 0.7);
+            padding: 10px 10px 10px 5px;
+            border: 0;
+            border-radius: 0 25px 25px 0;
+            cursor: pointer;
+            margin-left: -35px;
+            transition: all .5s;
+            &:hover
+
+        {
+            background: rgba(0, 0, 0, 0.7);
+            color: #f1c259;
+            margin-left: 0;
+        }
+
+        i.fa {
+            padding-left: 5px;
+        }
+
+        }
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            border-top: 1px solid #ddd;
+            h3
+
+        {
+            color: #aaa;
+        }
+
+        }
+
+        .content {
+            background: #f5ebeb;
+            padding: 10px;
+            .page
+
+        {
+            page-break-after: always;
+            p
+
+        {
+        }
+
+        h5 {
+            display: inline-block;
+            color: #000;
+            padding: 5px 10px;
+            //border-left: 2px solid #aaa;
+            //border-right: 2px solid #aaa;
+            border-bottom: 2px solid #aaa;
+            border-radius: 20px;
+            letter-spacing: 2px;
+        }
+
+        pre {
+            background: #f5f5f5;
+            border-left: 5px solid #ccc;
+            margin-left: 2em;
+            margin-right: 2em;
+        }
+
+        img {
+            display: block;
+            height: auto;
+            max-width: 100%;
+            margin: 0 auto;
+            border: 1px dashed #ccc;
+        }
+
+        }
+        }
+
+        @@page {
+            margin: 20mm
+        }
+
+        @@media print {
+            body {
+                border: 0;
+            }
+
+            thead {
+                display: table-header-group;
+            }
+
+            tfoot {
+                display: table-footer-group;
+            }
+
+            button {
+                display: none;
+            }
+
+            body {
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h3>The Ultimate Print HTML Template with Header & Footer</h3>
+        <button type="button" onClick="window.print()" title="Print">Print <i class="fa fa-print fa-lg"></i></button>
+    </div>
+    <div class="footer">
+        <h5>Save the 🌲s <a href="https://bit.ly/37dffO1" target="_blank" class="pr">src</a></h5>
+    </div>
+
+
+
+    <table>
+        <thead><tr><th><div class="t-head">&nbsp;</div></th></tr></thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="content">
+                        <div class="page">PAGE 1 <small>(empty)</small></div>
+                        <div class="page">PAGE 2 <small>(empty)</small></div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>
+                    <div class="t-foot">&nbsp;</div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+</html>

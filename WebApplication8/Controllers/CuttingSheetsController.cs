@@ -89,7 +89,8 @@ namespace WebApplication8.Controllers
                 qtyApproved = a.qtyApproved,
                 Approval = a.Approval,
                 Remark = a.Remark,
-                 CuttingSheetDetailId = a.CuttingSheetDetailId
+                 CuttingSheetDetailId = a.CuttingSheetDetailId,
+                type = a.material.MaterialType.Name
 
             }).ToList();
             return Json(ld, JsonRequestBehavior.AllowGet);
@@ -140,8 +141,11 @@ namespace WebApplication8.Controllers
             int Sequense = GetSeq();
             ViewBag.code = generateContractCode(Sequense);
 
+            var ProjectList = db.Projects.Where(p => p.AccountApproval == true && p.CuttingSheets.Count == 0)
+                                .Select(p => new { ProjectId = p.ProjectId, Code = p.Code + " - " + p.Name });
+
             ViewBag.productlist = new SelectList(db.Materials, "MaterialId", "Name");
-            ViewBag.ProjectId = new SelectList(db.Projects.Where(p=>p.AccountApproval==true && p.CuttingSheets.Count==0), "ProjectId", "Code", ProjectId);
+            ViewBag.ProjectId = new SelectList(ProjectList, "ProjectId", "Code", ProjectId);
 
             ViewBag.date = DateTime.Now;
             ViewBag.ext = FolderPath.allowedExtensions;
@@ -163,20 +167,12 @@ namespace WebApplication8.Controllers
             if (ModelState.IsValid)
             {
 
-                if (FileName != null)
+                if (FileName != null && FileName.Count()>0)
                 {
                     var proj = db.Projects.Find(cuttingSheet.ProjectId);
                     proj.ProjectStatusId = 4;
                     db.CuttingSheets.Add(cuttingSheet);
                     db.SaveChanges();
-
-
-
-
-
-
-
-
                     return RedirectToAction("Index");
                 }
                 else
@@ -200,68 +196,76 @@ namespace WebApplication8.Controllers
             int savefiles = 0;
             if (ModelState.IsValid)
             {
-                try
+                if (FileName != null && FileName.Count() > 0)
                 {
-                    //change status of project
-                    if (cuttingSheet.ProjectId != null)
+                    try
                     {
-                        var proj = db.Projects.Find(cuttingSheet.ProjectId);
-                        proj.ProjectStatusId = 4;
-                    }
-                    cuttingSheet.StampDate = DateTime.Now;
-                    cuttingSheet.UserCreate = User.Identity.GetUserName();
-                    db.CuttingSheets.Add(cuttingSheet);
-                    db.SaveChanges();
-
-                    this.notificationRepository.CreateNotificationAsync(cuttingSheet.CuttingSheetId, NotificationName.onCreateMRF);
-
-
-                    //file link
-                    //save uploaded files record
-                    CuttingSheetFile CuttingSheetFile = new CuttingSheetFile();
-                    if (FileName != null)
-                    {
-                        foreach (string fn in FileName)
+                        //change status of project
+                        if (cuttingSheet.ProjectId != null)
                         {
-                            string st = "_CuttingSheet " + fn;
-                            CuttingSheetFile.CuttingSheetId = cuttingSheet.CuttingSheetId;
-                            //String c = db.Customers.Find(contract.CustomerId).CompanyName;
-
-                            CuttingSheetFile.Name = fn;
-                            CuttingSheetFile.Path = Path.Combine(Server.MapPath(FolderPath.FolderPathCustomerDoc), st);
-
-
-
-                            try
-                            {
-                                db.CuttingSheetFiles.Add(CuttingSheetFile);
-                                db.SaveChanges();
-
-                                savefiles = 1;
-                            }
-                            catch (Exception e)
-                            {
-
-                                ViewBag.Error += "Files not saved :" + e.Message;
-                                log.Error(" ERROR mylog - Error while save  file of project " + cuttingSheet.CuttingSheetId + ":" + e.Message + " , stacktrace:" + e.StackTrace);
-                            }
-
+                            var proj = db.Projects.Find(cuttingSheet.ProjectId);
+                            proj.ProjectStatusId = 4;
                         }
+                        cuttingSheet.StampDate = DateTime.Now;
+                        cuttingSheet.UserCreate = User.Identity.GetUserName();
+                        db.CuttingSheets.Add(cuttingSheet);
+                        db.SaveChanges();
+
+                        this.notificationRepository.CreateNotificationAsync(cuttingSheet.CuttingSheetId, NotificationName.onCreateMRF);
+
+
+                        //file link
+                        //save uploaded files record
+                        CuttingSheetFile CuttingSheetFile = new CuttingSheetFile();
+                        if (FileName != null)
+                        {
+                            foreach (string fn in FileName)
+                            {
+                                string st = "_CuttingSheet " + fn;
+                                CuttingSheetFile.CuttingSheetId = cuttingSheet.CuttingSheetId;
+                                //String c = db.Customers.Find(contract.CustomerId).CompanyName;
+
+                                CuttingSheetFile.Name = fn;
+                                CuttingSheetFile.Path = Path.Combine(Server.MapPath(FolderPath.FolderPathCustomerDoc), st);
+
+
+
+                                try
+                                {
+                                    db.CuttingSheetFiles.Add(CuttingSheetFile);
+                                    db.SaveChanges();
+
+                                    savefiles = 1;
+                                }
+                                catch (Exception e)
+                                {
+
+                                    ViewBag.Error += "Files not saved :" + e.Message;
+                                    log.Error(" ERROR mylog - Error while save  file of project " + cuttingSheet.CuttingSheetId + ":" + e.Message + " , stacktrace:" + e.StackTrace);
+                                }
+
+                            }
+                        }
+
+
+
+                        return Json(cuttingSheet.CuttingSheetId);
                     }
-
-
-
-                    return Json(cuttingSheet.CuttingSheetId);
-                }
-                catch (Exception ex)
-                {
-                    String errors11 = ex.Message;
-
-                    if (ex.InnerException != null)
+                    catch (Exception ex)
                     {
-                        errors11 = errors11 + ex.InnerException.Message + " \r\n "; ;
+                        String errors11 = ex.Message;
+
+                        if (ex.InnerException != null)
+                        {
+                            errors11 = errors11 + ex.InnerException.Message + " \r\n "; ;
+                        }
+                        return Json(errors11);
                     }
-                    return Json(errors11);
+                }
+                else
+                {
+                     string Error = "Please upload Production Sheet";
+                    return Json(Error);
                 }
             }
             return Json("errors11");
@@ -394,6 +398,9 @@ namespace WebApplication8.Controllers
                 try
                 {
                     //cuttingSheet.UserCreate = User.Identity.GetUserName();
+
+                    cuttingSheet.StampDate = DateTime.Now;
+
                     db.Entry(cuttingSheet).State = EntityState.Modified;
                     db.SaveChanges();
                     return Json(cuttingSheet.CuttingSheetId);
@@ -439,13 +446,14 @@ namespace WebApplication8.Controllers
                 try
                 {
                     EP = new CuttingSheetDetail();
-                    EP.CuttingSheetId = int.Parse(d.CuttingSheetId.ToString());
+                    EP = d;
+                    //EP.CuttingSheetId = int.Parse(d.CuttingSheetId.ToString());
                     eid = int.Parse(d.CuttingSheetId.ToString());
-                    EP.MaterialId = int.Parse(d.MaterialId.ToString());
+                    //EP.MaterialId = int.Parse(d.MaterialId.ToString());
 
                     Material mm = db.Materials.Find(EP.MaterialId);
 
-                    EP.qty = float.Parse(d.qty.ToString());
+                    //EP.qty = float.Parse(d.qty.ToString());
 
 
                     float? AvailableQty = mm.qty - mm.Resevedqty - mm.MinReOrder;

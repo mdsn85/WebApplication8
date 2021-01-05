@@ -45,11 +45,25 @@
 
 
     <div class="form-group">
+        @Html.LabelFor(model => model.PhoneNumber, new { @class = "col-md-2 control-label" })
+        <div class="col-md-3">
+            @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control PhoneNumber", value = "", id = "PhoneNumber", autocomplete = "off" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Mobile, new { @class = "col-md-2 control-label" })
+        <div class="col-md-3">
+            @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control Mobile", value = "", id = "Mobile", autocomplete = "off" })
+        </div>
+    </div>
+    <div class="form-group">
         @Html.LabelFor(model => model.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-3">
             @Html.TextBoxFor(model => model.Email, new { @class = "form-control Email", value = "", id = "Email", autocomplete = "off" })
         </div>
     </div>
+
 
     @*<div class="form-group">
             @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })

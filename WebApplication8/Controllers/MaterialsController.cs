@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using WebApplication8.Controllers.Resources;
 using WebApplication8.Models;
 
 namespace WebApplication8.Controllers
@@ -135,22 +136,36 @@ namespace WebApplication8.Controllers
             }
             Material material = db.Materials.Find(id);
 
-            //return Json(material, JsonRequestBehavior.AllowGet); ;
+            
+            MaterialFull mf = new MaterialFull();
 
-            return Json(new
-            {
-                Name = material.Name,
-                latestPrice = material.latestPrice,
-                //Unit = material.MaterialUnits.FirstOrDefault().Unit.Name,
+            //object pass to function by refrence
+            MappingMaterial(material, mf);
 
-                Unit = material.Unit.Name,
-                Unit2 ="", //material.MaterialUnits.LastOrDefault().Unit.Name,
-                Dimension = material.Dimension ?? "",
-                AvalableQty = material.AvalableQty,
-  
 
-            }
+            return Json(mf
             , JsonRequestBehavior.AllowGet);
+        }
+
+        public void MappingMaterial(Material material, MaterialFull mf)
+        {
+            mf.MaterialId = material.MaterialId;
+            mf.Name = material.Name;
+            mf.latestPrice = material.latestPrice;
+
+            mf.Dimension = material.Dimension ?? "";
+            mf.AvalableQty = material.AvalableQty;
+
+            mf.Unit = new KeyValuePair { Id = material.UnitId, Name = material.Unit.Name };
+            if (material.MaterialCategoryId != null)
+            {
+                mf.MaterialCategory = new KeyValuePair { Id = material.MaterialCategoryId, Name = material.MaterialCategory.Name };
+            }
+            if (material.MaterialTypeId != null)
+            {
+                mf.MaterialType = new KeyValuePair { Id = material.MaterialTypeId, Name = material.MaterialType.Name };
+            }
+            mf.WareHouse = new KeyValuePair { Id = material.WareHouseId, Name = material.WareHouse.Name };
         }
 
         // GET: Materials/Create

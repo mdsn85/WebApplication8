@@ -31,7 +31,7 @@
     {
         <button id="btnExport" style="margin-left:20px" class="btn btn-default">Excel <span class=" glyphicon glyphicon-download-alt"></span></button>
     }
-    </label>
+</label>
 
 
 
@@ -373,8 +373,8 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script src="~/Scripts/js/jquery1.7.1Google.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    @*<script src="~/Scripts/js/jquery1.7.1Google.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
     <script src="~/Scripts/js/selectSearch/select2.min.js"></script>
 
     <script>
@@ -392,10 +392,6 @@
                     $("#dataTables-example").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
                 },
             });
-
-
-
-
         });
 
         $("#CustomerId").select2({
@@ -404,15 +400,14 @@
         });
 
 
-        $(function () {
-            var table = $('#dataTables-example').dataTable();
 
-            $("#btnExport").click(function (e) {
-                e.preventDefault();
-                window.open('data:application/vnd.ms-excel,' +
-                    encodeURIComponent(table[0].outerHTML));
-            });
+        $("#btnExport").click(function (e) {
+            var table = $('#dataTables-example').dataTable();
+            e.preventDefault();
+            window.open('data:application/vnd.ms-excel,' +
+                encodeURIComponent(table[0].outerHTML));
         });
+
 
 
 

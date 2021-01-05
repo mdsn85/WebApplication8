@@ -108,6 +108,14 @@
                 </p>
             </b>
             <div class="table-responsive">
+                <div style="float: left;padding-left:10%">
+                    <span onclick="openChild()" class="">
+                        @*<i class="fa fa-plus-square" aria-hidden="true">   Add Material</i>*@
+                    </span>
+                    <input id="CustomerId" name="CustomerId" type="hidden" />
+                    <div id="Customer"></div>
+
+                </div>
                 <table class="table-bordered table-responsive table dataTable text-nowrap" style="" id="tbDetails">
                     <thead>
                         <tr>
@@ -132,9 +140,9 @@
                                 Request Qty
                             </td>
                             <td>
-                              <p id="qtyH"></p>
-                                
-                                
+                                <p id="qtyH"></p>
+
+
                             </td>
                             <td>
                                 Balance Qty
@@ -157,14 +165,7 @@
                     </thead>
                     <tbody id="p_scents"></tbody>
 
-                    <div style="float: left;padding-left:10%">
-                        <span onclick="openChild()" class="">
-                            @*<i class="fa fa-plus-square" aria-hidden="true">   Add Material</i>*@
-                        </span>
-                        <input id="CustomerId" name="CustomerId" type="hidden" />
-                        <div id="Customer"></div>
 
-                    </div>
                 </table>
             </div>
         </div>
@@ -237,7 +238,12 @@
                 $("#LpoIdDiv").hide("slow");
                 $("#CuttingSheetIdDiv").show();
                 document.getElementById("qtyH").innerHTML = "Issue Qty";
+
+                $("#QtyApproved").show();
+                $("#Approvaltd").show();
             }
+
+            clearTable();
             //alert(s);
         })
 
@@ -283,6 +289,7 @@
 
                 //data: '{ enquery:' + JSON.stringify(Enquery) + '}',
                 success: function (result) {
+                    clearTable();
                     result.forEach(element => setValue("cut",element.MaterialId, element.Name, element.Unit, element.Dimension, element.Qty, element.IssueQty, element.Price,
                         element.qtyApproved, element.Approval));
 
@@ -530,9 +537,7 @@
                 }
 
                 bcgDiv.style.width = "100%";
-
             }
-
         }
 
     </script>
@@ -552,7 +557,7 @@
     <script>
         var Sr = 0;
         function clearTable() {
-            $("#tbDetails tr").remove();
+            $("#tbDetails tbody tr").remove();
         }
 
         function setValue(type,myVal, Name, Unit, Dimension, Qty, IssueQty, Price, QtyApproved, Approval) {

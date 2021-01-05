@@ -14,113 +14,81 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
+    <div class="form-horizontal">
 
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.code, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.code, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.code, @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.code, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.ProjectId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("ProjectId", null, "Please select", htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-
-
-
-
-
-    <div class="form-group">
-        <label for="CreateDate" class="col-md-2 control-label">Warranty</label>
-        <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="CreateDate" data-link-format="yyyy-mm-dd">
-            <input class="form-control" size="16" type="text" value="@ViewBag.date" readonly>
-            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-        </div>
-        <input type="hidden" id="CreateDate" name="CreateDate" value="@ViewBag.date" /><br />
-
-        @Html.ValidationMessageFor(model => model.CreateDate, "", new { @class = "text-danger" })
-    </div>
-
-
-
-
-    <div class="form-group">
-
-        @Html.Label(" Upload Documents", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-
-            <p style="color:crimson">@ViewBag.message</p>
-
-            @{ Html.RenderPartial("~/Views/UploadFile/UploadFileMulti.cshtml"); }
-            <div style="padding: 10px 2px">
-                @foreach (var e in ViewBag.ext)
-                {
-                    @Html.Raw(e + ", ");
-                }
+        <div class="form-group">
+            @Html.LabelFor(model => model.code, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.code, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.code, @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.code, "", new { @class = "text-danger" })
             </div>
-            @*display name of uploaded files*@
-
-
-            @*hidden input (name is FileName ) conatin name of uploaded files to submit*@
-            <div class="filesList" id="filesList"> </div>
         </div>
-    </div>
-    <br />
-    <div class="form-group">
-
-        <div class="card-content">
-            <b>
-                <p class="control-label col-md-2">
-
-
-                </p>
-            </b>
-            <div class="table-responsive">
-                <table class="table-bordered table-responsive table dataTable text-nowrap" id="tbDetails">
-                    <thead>
-                        <tr>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProjectId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ProjectId", null, "Please select", htmlAttributes: new { @class = "form-control", @id = "ProjectId" })
+                @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
 
-                            <td>
-                                Sr #
-                            </td>
-                            <td>
-                                id
-                            </td>
-                            <td>
-                                Material
-                            </td>
-                            <td>
-                                Dinmension
-                            </td>
-                            <td>
-                                Unit
-                            </td>
-                            <td>
-                                Request Qty
-                            </td>
 
 
-                            <td>
-                                delete
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody id="p_scents"></tbody>
 
+
+        <div class="form-group">
+            <label for="CreateDate" class="col-md-2 control-label">Warranty</label>
+            <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="CreateDate" data-link-format="yyyy-mm-dd">
+                <input class="form-control" size="16" type="text" value="@ViewBag.date" readonly>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+            <input type="hidden" id="CreateDate" name="CreateDate" value="@ViewBag.date" /><br />
+
+            @Html.ValidationMessageFor(model => model.CreateDate, "", new { @class = "text-danger" })
+        </div>
+
+
+
+
+        <div class="form-group">
+
+            @Html.Label("Upload Documents", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                <p style="color:crimson">@ViewBag.message</p>
+
+                @{ Html.RenderPartial("~/Views/UploadFile/UploadFileMulti.cshtml"); }
+                <div style="padding: 10px 2px">
+                    @foreach (var e in ViewBag.ext)
+                    {
+                        @Html.Raw(e + ", ");
+                    }
+                </div>
+                @*display name of uploaded files*@
+
+
+                @*hidden input (name is FileName ) conatin name of uploaded files to submit*@
+                <div class="filesList" id="filesList"> </div>
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+
+            <div class="card-content">
+                <b>
+                    <p class="control-label col-md-2">
+
+
+                    </p>
+                </b>
+                <div class="table-responsive">
                     <div style="float: left;padding-left:10%">
 
-                        <span onclick="()" class=" ">
+                        <span class=" ">
                             <button id="calculate" type="button" onclick="openChild()" class="fa fa-plus-square">Add Material</button><br>
                             <br />
                         </span>
@@ -129,23 +97,58 @@
                         <div id="Customer"></div>
 
                     </div>
+                    <table class="table-bordered table-responsive table dataTable text-nowrap" id="tbDetails">
+                        <thead>
+                            <tr>
 
-                </table>
+
+                                <td>
+                                    Sr #
+                                </td>
+                                <td>
+                                    id
+                                </td>
+                                <td>
+                                    Material
+                                </td>
+                                <td>
+                                    Type
+                                </td>
+                                <td>
+                                    Unit
+                                </td>
+                                <td>
+                                    Request Qty
+                                </td>
+
+
+                                <td>
+                                    delete
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody id="p_scents"></tbody>
+
+
+
+                    </table>
+
+
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="form-group" style="margin-top : 5px">
-        <div class="col-md-offset-4 col-md-2">
+        <div class="form-group" style="margin-top : 5px">
+            <div class="col-md-offset-4 col-md-2">
 
-            <input type="button" id="btnSave" value="  Save  " class="btn btn-primary adminworkSaveBtn " />
-
+                <input type="button" id="btnSave" value="  Save  " class="btn btn-primary adminworkSaveBtn " />
 
 
+
+            </div>
         </div>
-    </div>
 
-</div>
+    </div>
 }
 
 <div>
@@ -155,13 +158,13 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
 
     <!--Select Search-->
 
-    <script src="~/Scripts/js/jquery1.7.1Google.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="~/Scripts/js/selectSearch/select2.min.js"></script>
+    @*<script src="~/Scripts/js/jquery1.7.1Google.min.js"></script>*@
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
+
 
     <!--Select Search-->
 
@@ -169,16 +172,6 @@
 
 
     <script>
-        $("#ProductId").select2({
-            placeholder: "Select Material",
-            allowClear: true
-        });
-
-        $("#ProjectId").select2({
-            placeholder: "Select Project",
-            allowClear: true
-        });
-
         $(document).ready(function () {
             $("form").submit(function (e) {
 
@@ -403,24 +396,31 @@
 
     </script>
 
-
     <script>
-        var Sr = 0;
-        function setValue(myVal, Name, Unit, Dinmension) {
+        var getProjectId = function () {
+            let id = document.getElementById("ProjectId").value
+            return (id !== '' ? id : undefined);
+        }
 
-            var current = $(".ClientId").length;
+        var typeRequiredProject = function (projectId, type) {
+            let typeRequiredProject = ["accessories", "acrylic", "edge band", "fabrication", "boards", "glass", "flooring", "carpets", "finished product"];
+            if (projectId === undefined) {
+                if (typeRequiredProject.includes(type.toLowerCase())) {
+                    return true;
+                }
+            }
+            return false
+        }
 
-            var next = parseInt(current) + 1;
-            var a = "DDlforLocationsClient" + next;
-            var b = "span" + next;
-
+        function insert_Row(material) {
             Sr = Sr + 1;
 
-
-            //= $('#tbDetails tr').length;
+            let myVal = material.MaterialId, Name = material.Name, Unit = material.Unit.Name, Dinmension = "";
+            let cat = material.MaterialCategory.Name;
+            let type = material.MaterialType.Name;
+            //global variable chenge on add/remove row from table
             nextRaw = nextRaw + 1;
             var tt = '<tr id="item_' + nextRaw + '">';
-
 
             tt = tt + '<td class="Name" > ' +
                 '<div class="" > ' +
@@ -442,11 +442,9 @@
 
             tt = tt + '<td class="Name" > ' +
                 '<div class="" > ' +
-                '<input type="text" name="Dinmension" id="Dinmension' + nextRaw + '"  class="form-control" value="' + Dinmension + '"/> ' +
+                '<input type="text" name="type" id="type' + nextRaw + '"  class="form-control" value="' + type + '"/> ' +
                 '</div > ' +
                 '</td > ';
-
-
 
             tt = tt + '<td class="Name" > ' +
                 '<div class="" > ' +
@@ -454,20 +452,11 @@
                 '</div > ' +
                 '</td > ';
 
-
             tt = tt + '<td class="Qty" > ' +
                 '<div class="" > ' +
                 '<input type="text" name="Qty" id="Qty' + nextRaw + '"  class="form-control"/> ' +
                 '</div > ' +
                 '</td > ';
-
-            //tt = tt + '<td class="Price" > ' +
-            //    '<div class="" > ' +
-            //    '<input type="text" name="Price" id="Price' + nextRaw + '"  class="form-control"/> ' +
-            //    '</div > ' +
-            //    '</td > ' +
-
-
 
             tt = tt + ' <td>' +
                 ' <div class="delete">' +
@@ -476,13 +465,40 @@
                 ' </td>' +
                 ' </tr>';
 
+
+            let scntDiv = $('#p_scents');
             scntDiv.append(tt);
 
+        }
+    </script>
+    <script>
+        var Sr = 0;
+        function setValue(material) {
 
-            var options = "";
+            let type = material.MaterialType.Name;
+
+            //check does type of material is allowed to be selected
+            if (typeRequiredProject(getProjectId(), type)) {
+                alert("type of material " + type + " not allowed to be picked without project ");
+                return false;
+            }
+
+            insert_Row(material);
 
 
         }
     </script>
 
+    <script src="~/Scripts/js/selectSearch/select2.min.js"></script>
+    <script>
+        $("#ProductId").select2({
+            placeholder: "Select Material",
+            allowClear: true
+        });
+
+        $("#ProjectId").select2({
+            placeholder: "Select Project",
+            allowClear: true
+        });
+    </script>
 }

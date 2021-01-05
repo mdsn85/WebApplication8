@@ -1,0 +1,330 @@
+﻿@model WebApplication8.Models.Lpo
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <title>@Model.Supplier.Name  @Model.code   </title>
+
+    <link href='https://fonts.googleapis.com/css?family=Fira Sans' rel='stylesheet'>
+
+
+
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/Print.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+
+<body style="align-content:center">
+
+    <table cellspacing="0" cellpadding="0" class="table borderless " style="margin-left:10mm">
+        <thead style="border:0px ;color:#FFF" class="nobordered">
+            <tr>
+                <td>
+                    <div class="header-space">&nbsp;</div>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="page-header">
+                    <div class="headerLPO">Purchase Order</div>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table style="width:90%  ;border: 0px" class="detailsTable borderless">
+                        <tr>
+                            <td class="supplierDetails " >
+                                Supplier : @Model.Supplier.Name<br />
+                                TRN No. : @Model.Supplier.TrnNo<br />
+                                Address : @Model.Supplier.Address<br />
+                                Attention: @Model.Supplier.Attention<br />
+                                Tel: @Model.Supplier.tel<br />
+                                Mobile: @Model.Supplier.mobile<br />
+                                Email : @Model.Supplier.email<br />
+                            </td>
+
+                            <td class="Shipto">
+                                Buyer: <br/>
+                                Mr Highmoon Furniture Trading LLC<br />
+
+                                @{string address = (@Model.LpoLocation != null) ? @Model.LpoLocation.Name : "";}
+                                @Html.Raw(address)<br />
+
+                                Attention To : @ViewBag.currentEmployee.Name<br />
+                                Tel: @ViewBag.user.PhoneNumber<br />
+                                Mobile: @ViewBag.user.Mobile<br />
+                                Email: @ViewBag.user.Email<br />
+                            </td>
+
+                            <td class="LPODetails">
+                                P. O. No# : @Model.code<br />
+
+                                Date : @Model.LpoDate.ToString("dd/MM/yyyy hh:mm")<br />
+                                Supplier Ref# :  @Model.SupplierRef<br />
+
+                                Job# : @ViewBag.Job<br />
+                                @{
+                                    string creditTerm = (@Model.Supplier.CreditTermSupplier != null) ? @Model.Supplier.CreditTermSupplier.Name : "";
+                                    string paymentTerm = (Model.Supplier.PaymentMoodSupplier != null) ? Model.Supplier.PaymentMoodSupplier.Name : "";
+                                }
+                                Credit Term :@Html.Raw(creditTerm)  <br />
+                                Payment Term :@Html.Raw(paymentTerm)  <br />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr style="border: 0px">
+                <td>
+
+                    <table class="bordered " style="width:90% ;margin-left:28px ;margin-top:30px" id="mainTable">
+                        <tr style="  border: 1px solid black;">
+                            <td>
+                                Sr. #.
+                            </td>
+                            <td>
+                                Code
+                            </td>
+                            <td>
+                                Description
+                            </td>
+                            <td>
+                                Unit
+                            </td>
+                            <td>
+                                Quantity
+                            </td>
+
+                            <td>
+                                Price
+                            </td>
+
+                            <td>
+                                Amount
+                            </td>
+                        </tr>
+                        @{int i = 0;
+                            float Amount = 0;}
+                        @foreach (var item in Model.LpoDetails)
+                        {
+                            i++;
+                            Amount = item.Qty * item.Price;
+                            <tr>
+                                <td width="3%" style="text-align:center">@i </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Material.code)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Material.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Material.Unit.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Qty)
+                                </td>
+
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Price)
+                                </td>
+
+                                <td>
+                                    
+
+                                    @Html.Raw(@Html.Raw(string.Format("{0:#,#.00}", @Amount)))
+                                </td>
+                            </tr>
+                        }
+
+                        <tr>
+
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td>
+                                <b>Sub Total :</b>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.SubTotal)
+                            </td>
+                        </tr>
+                        <tr>
+
+
+
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td>
+                                <b>Less Discount:</b>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Discount)
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <td style="border:  1px solid black;" rowspan="2"><b>Remarks:</b></td>
+                            <td style="border: 1px solid black; " rowspan="2" colspan="2">@Model.Remarks</td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td>
+                                <b>Total:</b>
+                            </td>
+                            <td>
+                                @Html.Raw(@Html.Raw(string.Format("{0:#,#.00}", @Model.SubTotal - @Model.Discount)) )
+
+
+                            </td>
+                        </tr>
+                        <tr>
+
+
+
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td>
+                                <b>Vat 5%</b>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Vat)
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td>
+                                <b>Grand Total:</b>
+                            </td>
+                            <td>
+
+                                @Html.DisplayFor(model => model.GrandTotal)
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            @*<tr>
+                    <td style="  border: 0px ">
+                        <table class="ramrksTable">
+                            <tr>
+                                <td>
+                                    <b>Remarks:</b> <u>@Model.Remarks </u>
+                                    <br />
+                                    <br />
+
+
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>*@
+
+            <tr style="padding:20px">
+                <td style="  border: 0px ">
+                    <table id="termsTable">
+                        <tr>
+                            <td>
+                                Terms & Conditions
+                            </td>
+                        </tr>
+
+                        @foreach (var item in (List<WebApplication8.Models.LpoTerms>)ViewBag.LpoTerms)
+                        {
+                            <tr>
+                                <td>
+                                    <li>
+                                        @item.Text
+                                    </li>
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div>
+
+
+                        <table style="margin-top: 40px" class="signatureTable" id="" width="100%">
+                            <tr>
+                                <td>MR High Moon Furnitures Trading LLC</td>
+                                <td>
+                                    <br />
+                                    <br />
+                                    <br />
+                                </td>
+                                <td>
+                                    For, @Model.Supplier.Name
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td style="margin-right:100px">
+                                    Auth. Signatory with Stamp<br />
+                                    (Buyer)
+                                </td>
+                                <td>
+                                    <br />
+                                    <br />
+                                </td>
+                                <td>
+                                    Auth. Signatory with Stamp<br />
+                                    (Vendor/Supplier)
+                                </td>
+                            </tr>
+                        </table>
+                        <img width="250" height="120" src="~/assets/img/Letter/highmoon signature.jpg" style="padding-left:30px" />
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot style="border:0px ;color:#FFF" class="nobordered">
+            <tr>
+                <td>
+                    <div class="footer-space">&nbsp;</div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <div class="header">
+
+        <img src="~/assets/img/Letter/Letter Head Top.jpg" />
+    </div>
+    <div class="footer">
+        <img height="100" width="100%" src="~/assets/img/Letter/Letter Head bottom.jpg" />
+    </div>
+
+    <script>
+        function thousands_separators(num) {
+            var num_parts = num.toString().split(".");
+            num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return num_parts.join(".");
+        }
+    </script>
+</body>
+</html>
+
+
+
+

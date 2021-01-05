@@ -44,14 +44,25 @@ namespace WebApplication8.Models
         [StringLength(150)]
         public string Address { get; set; }
 
+        [StringLength(25)]
+        [Display(Name = "TRN No.")]
+        public string TrnNo { get; set; }
+
         public CreditTermList CreditTerm { get; set; } 
 
         public bool PickUpOrder;
 
 
-        public virtual CreditTermSupplier CreditTermSupplier { get; set; }
+
         [Display(Name = "Credit Term")]
         public int? CreditTermSupplierId { get; set; }
+        public virtual CreditTermSupplier CreditTermSupplier { get; set; }
+
+
+
+        [Display(Name = "Payment Mood")]
+        public int? PaymentMoodSupplierId { get; set; }
+        public virtual PaymentMoodSupplier PaymentMoodSupplier { get; set; }
 
     }
 }
