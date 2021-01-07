@@ -40,9 +40,39 @@ namespace WebApplication8.Persistence
             throw new NotImplementedException();
         }
 
+
         public void Update(Material Notification)
         {
             throw new NotImplementedException();
         }
+
+        public void Save()
+        {
+            db.SaveChanges();
+        }
+
+        public void ReleaseReserveQty(int materialId, float qty)
+        {
+            Material material = db.Materials.Find(materialId);
+            float Resevedqty = material.Resevedqty ?? 0;
+            material.Resevedqty = Resevedqty - qty;
+        }
+
+        public float AvailableQty(int materialid)
+        {
+            Material material = db.Materials.Find(materialid);
+            float Resevedqty = material.Resevedqty ?? 0;
+            float MinReOrder = material.MinReOrder ?? 0;
+            float qty = material.qty ?? 0;
+            return qty - Resevedqty - MinReOrder;
+        }
+
+        public void ReserveQty(int materialId, float qty)
+        {
+            Material material = db.Materials.Find(materialId);
+            float Resevedqty = material.Resevedqty ?? 0;
+            material.Resevedqty = Resevedqty + qty;
+        }
+
     }
 }

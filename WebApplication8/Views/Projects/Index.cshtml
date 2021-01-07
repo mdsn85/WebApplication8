@@ -103,6 +103,7 @@
 <table class=" table-striped table-bordered table-hover"  id="dataTables-example"  style="width:100%" width="100%" >
     <thead>
         <tr>
+            <th>Actions</th>
             <th>
                 @Html.DisplayNameFor(model => model.QuotationRef)
             </th>
@@ -215,7 +216,7 @@
             <th hidden>
                 @Html.DisplayNameFor(model => model.StampDate)
             </th>
-            <th></th>
+
         </tr>
     </thead>
     <tbody>
@@ -223,6 +224,21 @@
         @foreach (var item in Model)
         {
         <tr>
+            <td>
+                @if (User.IsInRole("Admin") || User.IsInRole("ProjectEdit"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ProjectId })
+                    @Html.Raw("|");
+                }
+                @Html.ActionLink("Details", "Details", new { id = item.ProjectId })|
+
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ProjectId })
+                    @Html.Raw("|");
+                }
+
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.QuotationRef)
             </td>
@@ -351,22 +367,7 @@
                 @Html.Raw(a.Ticks)
 
             </td>
-            <td>
 
-                @if (User.IsInRole("Admin") || User.IsInRole("ProjectEdit"))
-                {
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ProjectId })
-                    @Html.Raw("|");
-                }
-                @Html.ActionLink("Details", "Details", new { id = item.ProjectId })|
-
-                @if (User.IsInRole("Admin"))
-                {
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ProjectId })
-                    @Html.Raw("|");
-                }
-   
-            </td>
 
         </tr>
         }

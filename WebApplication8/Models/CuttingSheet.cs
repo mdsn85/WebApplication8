@@ -15,7 +15,7 @@ namespace WebApplication8.Models
         public string code { get; set; }
 
 
-        [Display(Name = "Project Code")]
+        [Display(Name = "Project")]
         public int? ProjectId { get; set; }
         public virtual Project project { get; set; }
 

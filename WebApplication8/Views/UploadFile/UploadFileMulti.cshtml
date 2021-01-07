@@ -39,8 +39,8 @@
     (function () {
         let listOfFiles = @Html.Raw(Json.Encode(@ViewBag.listOfFile));
 
-        console.log(listOfFiles[0]);
-        if (listOfFiles.length > 0) {
+
+        if (listOfFiles !=null && listOfFiles.length > 0) {
             for (let i = 0; i < listOfFiles.length; i++) {
                 var sfilename = listOfFiles[i];
                 let srandomid = Math.random().toString(36).substring(7);

@@ -11,6 +11,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication8.Models;
+using WebApplication8.Models.Repository;
+using WebApplication8.Persistence;
 
 namespace WebApplication8.Controllers
 {
@@ -20,11 +22,12 @@ namespace WebApplication8.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         ILog log = LogManager.GetLogger("application-log");
         private INotificationRepository notificationRepository;
-
+        private readonly IMaterialRepository materialRepository;
 
         public CuttingSheetsController()
         {
             this.notificationRepository = new NotificationRepository(new ApplicationDbContext());
+            this.materialRepository = new MaterialRepository(db);
         }
         // GET: CuttingSheets
         [Authorize(Roles = RoleNames.ROLE_MRFView + "," + RoleNames.ROLE_ADMINISTRATOR)]
@@ -276,48 +279,38 @@ namespace WebApplication8.Controllers
         public JsonResult CreateDetailsJson(List<CuttingSheetDetail> Details)
         {
             string errors11 = "";
-            int aaa = 0;
             int test = 0;
-            int eid = 0;
-            CuttingSheetDetail EP = new CuttingSheetDetail();
+
+            CuttingSheetDetail Detail = new CuttingSheetDetail();
             foreach (CuttingSheetDetail d in Details)
             {
                 try
                 {
-                    EP = new CuttingSheetDetail();
-                    EP.CuttingSheetId = int.Parse(d.CuttingSheetId.ToString());
-                    eid = int.Parse(d.CuttingSheetId.ToString());
-                    EP.MaterialId = int.Parse(d.MaterialId.ToString());
+                    Detail = new CuttingSheetDetail();
+                    Detail.CuttingSheetId = int.Parse(d.CuttingSheetId.ToString());
+                    Detail.MaterialId = int.Parse(d.MaterialId.ToString());
+                    Detail.qty = float.Parse(d.qty.ToString());
 
-                    Material mm = db.Materials.Find(EP.MaterialId);
-
-                    EP.qty = float.Parse(d.qty.ToString());
-
-
-                    float? AvailableQty = mm.qty - mm.Resevedqty??0 - mm.MinReOrder??0;
-                    if (AvailableQty> EP.qty) {
-                        EP.status = statusList.InStock;
+                    //check availability of item in warehouse
+                    float AvailableQty = materialRepository.AvailableQty(Detail.MaterialId);
+                    if (AvailableQty> Detail.qty) {
+                        Detail.status = statusList.InStock;
                     }else
                     {
-                        EP.status = statusList.Purchase;
+                        Detail.status = statusList.Purchase;
                     }
-                    EP.IssueQty = 0;
-                    db.CuttingSheetDetails.Add(EP);
+                    Detail.IssueQty = 0;
+                    db.CuttingSheetDetails.Add(Detail);
                     db.SaveChanges();
 
-
-      
-
-
-                    var StockIssue = db.StockIssues.Find(eid);
-
-                    mm.Resevedqty = mm.Resevedqty??0 + EP.qty;
+                    //reserve qty in warehouse
+                    materialRepository.ReserveQty(Detail.MaterialId, Detail.qty);
                     db.SaveChanges();
 
                 }
                 catch (Exception ex)
                 {
-                    DeleteConfirmed(eid);
+                    DeleteConfirmed(Detail.CuttingSheetId);
                     test = 1;
                     errors11 = errors11 + ex.Message;
                     if (ex.InnerException != null)
@@ -368,7 +361,11 @@ namespace WebApplication8.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ProjectId = new SelectList(db.Projects, "ProjectId", "Name", cuttingSheet.ProjectId);
+            var ProjectList = db.Projects.Where(p => p.AccountApproval == true )
+                    .Select(p => new { ProjectId = p.ProjectId, Code = p.Code + " - " + p.Name });
+
+            ViewBag.ProjectId = new SelectList(ProjectList, "ProjectId", "Code", cuttingSheet.ProjectId);
+
             ViewBag.date = DateTime.Now;
             ViewBag.ext = FolderPath.allowedExtensions;
             return View(cuttingSheet);
@@ -387,7 +384,10 @@ namespace WebApplication8.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ProjectId = new SelectList(db.Projects, "ProjectId", "Code", cuttingSheet.ProjectId);
+            var ProjectList = db.Projects.Where(p => p.AccountApproval == true )
+        .Select(p => new { ProjectId = p.ProjectId, Code = p.Code + " - " + p.Name });
+
+            ViewBag.ProjectId = new SelectList(ProjectList, "ProjectId", "Code", cuttingSheet.ProjectId);
             return View(cuttingSheet);
         }
 
@@ -475,9 +475,7 @@ namespace WebApplication8.Controllers
         public JsonResult EditDetailsJson(List<CuttingSheetDetail> Details,int id)
         {
             string errors11 = "";
-            int aaa = 0;
             int test = 0;
-            int eid = 0;
 
             //delete exist
             var cs = db.CuttingSheets.Find(id);
@@ -485,54 +483,49 @@ namespace WebApplication8.Controllers
             foreach (CuttingSheetDetail d in OldDetails)
             {
                 db.CuttingSheetDetails.Remove(d);
-                
+                materialRepository.ReleaseReserveQty(d.MaterialId, d.qty);
             }
             db.SaveChanges();
 
 
 
-            CuttingSheetDetail EP = new CuttingSheetDetail();
+            CuttingSheetDetail detail = new CuttingSheetDetail();
             foreach (CuttingSheetDetail d in Details)
             {
                 try
                 {
-                    EP = new CuttingSheetDetail();
-                    EP = d;
-                    //EP.CuttingSheetId = int.Parse(d.CuttingSheetId.ToString());
-                    eid = int.Parse(d.CuttingSheetId.ToString());
-                    //EP.MaterialId = int.Parse(d.MaterialId.ToString());
+                    detail = new CuttingSheetDetail();
+                    
+                    detail.CuttingSheetId = int.Parse(d.CuttingSheetId.ToString());
+                    detail.MaterialId = int.Parse(d.MaterialId.ToString());
+                    detail.qty = float.Parse(d.qty.ToString());
 
-                    Material mm = db.Materials.Find(EP.MaterialId);
+                    Material mm = db.Materials.Find(detail.MaterialId);
 
                     //EP.qty = float.Parse(d.qty.ToString());
 
 
-                    float? AvailableQty = mm.qty - mm.Resevedqty - mm.MinReOrder;
-                    if (AvailableQty > EP.qty)
+                    float? AvailableQty = materialRepository.AvailableQty(detail.MaterialId);
+                    if (AvailableQty > detail.qty)
                     {
-                        EP.status = statusList.InStock;
+                        detail.status = statusList.InStock;
                     }
                     else
                     {
-                        EP.status = statusList.Purchase;
+                        detail.status = statusList.Purchase;
                     }
 
-                    db.CuttingSheetDetails.Add(EP);
+                    db.CuttingSheetDetails.Add(detail);
                     db.SaveChanges();
 
 
-
-
-
-                    var StockIssue = db.StockIssues.Find(eid);
-
-                    mm.Resevedqty = mm.Resevedqty + EP.qty;
-                    db.SaveChanges();
+                    materialRepository.ReserveQty(detail.MaterialId, detail.qty);
+                    materialRepository.Save();
 
                 }
                 catch (Exception ex)
                 {
-                    DeleteConfirmed(eid);
+                    DeleteConfirmed(detail.CuttingSheetId);
                     test = 1;
                     errors11 = errors11 + ex.Message;
                     if (ex.InnerException != null)
@@ -582,11 +575,19 @@ namespace WebApplication8.Controllers
         {
             CuttingSheet cuttingSheet = db.CuttingSheets.Find(id);
 
-            foreach (var f in cuttingSheet.CuttingSheetFiles.ToList())
+            foreach (var file in cuttingSheet.CuttingSheetFiles.ToList())
             {
-                db.CuttingSheetFiles.Remove(f);
+                db.CuttingSheetFiles.Remove(file);
             }
+            foreach (CuttingSheetDetail detail in cuttingSheet.CuttingSheetDetails.ToList())
+            {
+                materialRepository.ReleaseReserveQty(detail.MaterialId, detail.qty);
+            }
+
             db.CuttingSheets.Remove(cuttingSheet);
+
+
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }
