@@ -597,7 +597,7 @@ namespace WebApplication8.Controllers
             ViewBag.AreaId = new SelectList(db.Areas, "AreaId", "Name", project.AreaId);
             project.ProjectFiles = db.Projects.Find(project.ProjectId).ProjectFiles;
 
-
+            ViewBag.ext = FolderPath.allowedExtensions;
             return View(project);
         }
 
@@ -616,38 +616,17 @@ namespace WebApplication8.Controllers
                 project.UserLastUpdate = User.Identity.GetUserName();
                 project.LastUpdateDate = DateTime.Now;
 
-
                 project.StampDate = DateTime.Now;
 
                 db.Entry(project).State = EntityState.Modified;
                 db.SaveChanges();
 
-
-                List<int> csOld = db.projectFiles.Where(cf => cf.ProjectId == project.ProjectId).Select(c => c.ProjectFileId).ToList();
-
-
-                ProjectFile projectfile = new ProjectFile();
-                if (FileName != null)
+                RemoveFiles(project.ProjectId);
+                //save uploaded files record
+                if (FileName.Count() > 0)
                 {
-                    foreach (string fn in FileName)
-                    {
-                        projectfile.ProjectId = project.ProjectId;
-                        // contractFile.ValidUntil = contract.Valid1;
-                        projectfile.Name = fn;
-                        projectfile.Path = Path.Combine(FolderPath.FolderPathCustomerDoc, fn);
-
-                        db.projectFiles.Add(projectfile);
-                        db.SaveChanges();
-                    }
+                    SaveAttachedFiles(FileName, project.ProjectId);
                 }
-                foreach (int csi in csOld)
-                {
-                    ProjectFile csd = db.projectFiles.Find(csi);
-                    db.projectFiles.Remove(csd);
-                    db.SaveChanges();
-                }
-
-
 
                 return RedirectToAction("Index");
             }
@@ -665,7 +644,47 @@ namespace WebApplication8.Controllers
             return View(project);
         }
 
+        private void RemoveFiles(int projectId)
+        {
+            Project project = db.Projects.Include(c => c.ProjectFiles).Where(c => c.ProjectId == projectId).FirstOrDefault();
+            if (project.ProjectFiles.Count() > 0)
+            {
+                foreach (var file in project.ProjectFiles.ToList())
+                {
+                    ProjectFile projectFile = db.projectFiles.Find(file.ProjectFileId);
+                    db.projectFiles.Remove(projectFile);
+                }
+                db.SaveChanges();
+            }
+        }
 
+        private int SaveAttachedFiles(string[] FileNames, int projectId)
+        {
+            int savefiles = 0;
+            ProjectFile projectFile = new ProjectFile();
+            if (FileNames != null)
+            {
+                foreach (string FileName in FileNames)
+                {
+                    string st = "_CuttingSheet " + FileName;
+                    projectFile.ProjectId = projectId;
+                    projectFile.Name = FileName;
+                    projectFile.Path = Path.Combine(Server.MapPath(FolderPath.FolderPathCustomerDoc), st);
+                    try
+                    {
+                        db.projectFiles.Add(projectFile);
+                        db.SaveChanges();
+                        savefiles = 1;
+                    }
+                    catch (Exception e)
+                    {
+                        ViewBag.Error += "Files not saved :" + e.Message;
+                        log.Error(" ERROR mylog - Error while save  file of project " + projectId + ":" + e.Message + " , stacktrace:" + e.StackTrace);
+                    }
+                }
+            }
+            return savefiles;
+        }
 
 
         // GET: Projects/Edit/5

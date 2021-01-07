@@ -369,6 +369,8 @@ namespace WebApplication8.Controllers
                 return HttpNotFound();
             }
             ViewBag.ProjectId = new SelectList(db.Projects, "ProjectId", "Name", cuttingSheet.ProjectId);
+            ViewBag.date = DateTime.Now;
+            ViewBag.ext = FolderPath.allowedExtensions;
             return View(cuttingSheet);
         }
 
@@ -391,18 +393,25 @@ namespace WebApplication8.Controllers
 
 
         [Authorize(Roles = RoleNames.ROLE_MRFEdit + "," + RoleNames.ROLE_ADMINISTRATOR)]
-        public JsonResult EditJson([Bind(Include = "CuttingSheetId,ProjectId,UserCreate,CreateDate,code")] CuttingSheet cuttingSheet)
+        public JsonResult EditJson([Bind(Include = "CuttingSheetId,ProjectId,UserCreate,CreateDate,code")] CuttingSheet cuttingSheet,
+             String[] FileName)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    //cuttingSheet.UserCreate = User.Identity.GetUserName();
-
                     cuttingSheet.StampDate = DateTime.Now;
 
                     db.Entry(cuttingSheet).State = EntityState.Modified;
                     db.SaveChanges();
+
+                    RemoveFiles(cuttingSheet.CuttingSheetId);
+                    //save uploaded files record
+                    if (FileName.Count() > 0)
+                    {
+                        SaveAttachedFiles(FileName, cuttingSheet.CuttingSheetId);
+                    }
+
                     return Json(cuttingSheet.CuttingSheetId);
                 }
                 catch (Exception ex)
@@ -417,6 +426,48 @@ namespace WebApplication8.Controllers
                 }
             }
             return Json("errors11");
+        }
+
+        private void RemoveFiles(int cuttingSheetId)
+        {
+            CuttingSheet cuttingSheet = db.CuttingSheets.Include(c=>c.CuttingSheetFiles).Where(c=>c.CuttingSheetId == cuttingSheetId).FirstOrDefault();
+            if (cuttingSheet.CuttingSheetFiles.Count() > 0)
+            {
+                foreach (var file in cuttingSheet.CuttingSheetFiles.ToList())
+                {
+                    CuttingSheetFile cuttingSheetFiles= db.CuttingSheetFiles.Find(file.CuttingSheetFileId);
+                    db.CuttingSheetFiles.Remove(cuttingSheetFiles);
+                }
+                db.SaveChanges();
+            }
+        }
+
+        private  int SaveAttachedFiles(string[] FileNames,int CuttingSheetId)
+        {
+            int savefiles = 0;
+            CuttingSheetFile CuttingSheetFile = new CuttingSheetFile();
+            if (FileNames != null)
+            {
+                foreach (string FileName in FileNames)
+                {
+                    string st = "_CuttingSheet " + FileName;
+                    CuttingSheetFile.CuttingSheetId = CuttingSheetId;
+                    CuttingSheetFile.Name = FileName;
+                    CuttingSheetFile.Path = Path.Combine(Server.MapPath(FolderPath.FolderPathCustomerDoc), st);
+                    try
+                    {
+                        db.CuttingSheetFiles.Add(CuttingSheetFile);
+                        db.SaveChanges();
+                        savefiles = 1;
+                    }
+                    catch (Exception e)
+                    {
+                        ViewBag.Error += "Files not saved :" + e.Message;
+                        log.Error(" ERROR mylog - Error while save  file of project " + CuttingSheetId + ":" + e.Message + " , stacktrace:" + e.StackTrace);
+                    }
+                }
+            }
+            return savefiles;
         }
 
         [HttpPost]

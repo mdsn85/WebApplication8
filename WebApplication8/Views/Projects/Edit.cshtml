@@ -268,69 +268,59 @@
 
     }
 
-
-    <p>
-
-
-    </p>
-
-
     <div class="form-group">
 
-        @Html.Label(" Upload Document ", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Upload Documents", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
 
+            <p style="color:crimson">@ViewBag.message</p>
 
-            <div>@{ Html.RenderPartial("~/Views/UploadFile/IndexGoCaseEdit1.cshtml"); }</div>
-            @*display name of uploaded files*@
-            <div class="info" id="info" style="margin-right:25px">
-
-                @{
-                    int i = 1;
-                    if (@Model.ProjectFiles != null)
-                    {
-
-                        foreach (var a in Model.ProjectFiles)
-                        {
-                            string fff = "FileNameTxt" + i;
-                            <p id="@fff" name="FileNameTXT" class="FileNameTXT">@a.Name</p>
-                            <p style='color:red;  padding-left:50px; padding-right:50px' id='FileNameSpan' @*onclick="ResetFile(this)"*@ class="@i">      remove </p>
-
-                            i++;
-                        }
-                    }
-
+            @{
+                string[] listOfFiles = Model.ProjectFiles.Select(c => c.Name).ToArray();
+                Html.RenderAction("UploadFileMulti", "UploadFile", new { listOfFiles = listOfFiles });
+            }
+            <div style="padding: 10px 2px">
+                @foreach (var e in ViewBag.ext)
+                {
+                    @Html.Raw(e + ", ");
                 }
-
             </div>
 
+
+            @*hidden input (name is FileName ) conatin name of uploaded files to submit*@
             <div class="filesList" id="filesList">
                 @{
+                    int i = 1;
                     if (Model.ProjectFiles != null)
                     {
                         i = 1;
-                        foreach (var a in Model.ProjectFiles)
+                        foreach (var file in Model.ProjectFiles)
                         {
                             string fff = "FileNameH" + i;
 
-                            <p id="@fff"><input type="hidden" name="FileName" class="FileName" value="@a.Name"></p>
+                            <p id="@fff"><input type="hidden" id="FileName" name="FileName" class="FileName" value="@file.Name"></p>
                             i++;
                         }
                     }
                 }
             </div>
-
-        </div>
-
-
-
-
-        <div class="form-group" style="margin-top:10px ; margin-left:10%">
-            <div class="col-md-offset-3 col-md-9" style="margin-left:30px">
-                <input type="submit" value="Save" class="btn btn-primary" id="btnSaveAll" style="padding-left:30px ; padding-right:30px" />
-            </div>
         </div>
     </div>
+
+
+
+
+
+
+
+
+
+    <div class="form-group" style="margin-top:10px ; margin-left:10%">
+        <div class="col-md-offset-3 col-md-9" style="margin-left:30px">
+            <input type="submit" value="Save" class="btn btn-primary" id="btnSaveAll" style="padding-left:30px ; padding-right:30px" />
+        </div>
+    </div>
+
 </div>
 }
 

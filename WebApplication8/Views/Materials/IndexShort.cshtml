@@ -8,78 +8,74 @@
 
     Layout = "~/Views/Shared/_Layout - Temp - Table - Short.cshtml";
 }
-<h2>Material List</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-    <div class="input-group push-down-4 inner col-md-3" style="float:left">
-        <div class="input-group-btn">
-            <div class=""> @Html.ActionLink("create New", "CreateN", "Customers", new { @class = " " @*, @target = "_blank"*@})</div>
-        </div>
-    </div>
-</p>
 
+
+
+<label class="button-collapse">
+
+    @*@Html.ActionLink("Create New", "Create", null, htmlAttributes: new { @class = " btn btn-default " })*@
+
+</label>
 <!-- START SEARCH -->
 <!-- START SEARCH -->
 @using (Html.BeginForm())
 {
 
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <div class="row stacked  ">
-                <div style="display:;vertical-align: middle;">
-                    <div class="input-group push-down-3 inner col-md-3 " style="float:left">
-                        <span class="input-group-addon"><span class="fa fa-search"></span></span>
+    @*<div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row stacked  ">
+                    <div style="display:;vertical-align: middle;">
+                        <div class="input-group push-down-3 inner col-md-3 " style="float:left">
+                            <span class="input-group-addon"><span class="fa fa-search"></span></span>
 
 
-                        <input type="text" name="searchStringName" class="form-control" placeholder="Material Name..." />
-                        <div class="input-group-btn">
-                            <button class="btn btn-primary">Search</button>
+                            <input type="text" name="searchStringName" class="form-control" placeholder="Material Name..." />
+                            <div class="input-group-btn">
+                                <button class="btn btn-primary">Search</button>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="input-group push-down-4 inner col-md-3" style="float:left">
-                        <span class="input-group-addon"><span class="fa fa-search"></span></span>
+                        <div class="input-group push-down-4 inner col-md-3" style="float:left">
+                            <span class="input-group-addon"><span class="fa fa-search"></span></span>
 
 
-                        <input type="text" name="searchStringBarcode" class="form-control" placeholder="Barcode" />
-                        <div class="input-group-btn">
-                            <button class="btn btn-primary">Search</button>
+                            <input type="text" name="searchStringBarcode" class="form-control" placeholder="Barcode" />
+                            <div class="input-group-btn">
+                                <button class="btn btn-primary">Search</button>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="input-group push-down-4 inner col-md-3" style="float:left">
-                        <span class="input-group-addon"><span class="fa fa-search"></span></span>
+                        <div class="input-group push-down-4 inner col-md-3" style="float:left">
+                            <span class="input-group-addon"><span class="fa fa-search"></span></span>
 
 
-                        <input type="text" name="searchStringCode" class="form-control" placeholder="Code..." />
-                        <div class="input-group-btn">
-                            <button class="btn btn-primary">Search</button>
+                            <input type="text" name="searchStringCode" class="form-control" placeholder="Code..." />
+                            <div class="input-group-btn">
+                                <button class="btn btn-primary">Search</button>
+                            </div>
                         </div>
+
                     </div>
-
-                </div>
-                <div class="col-md-6">
+                    <div class="col-md-6">
 
 
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </div>*@
 }
 <!-- END SEARCH -->
 
-<table class="table" id="dataTables-example">
+<table class="table-hover table-bordered table-striped" id="dataTables-example">
     <thead>
         <tr>
             <th></th>
-            <th>
+            <th width="5%">
                 @Html.DisplayNameFor(model => model.code)
             </th>
 
-            <th>
-                @Html.DisplayNameFor(model => model.WareHouse.Name)
-            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.MaterialCategory.Name)
             </th>
@@ -115,6 +111,9 @@
                 @Html.DisplayNameFor(model => model.latestPrice)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.WareHouse.Name)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.barcode)
             </th>
 
@@ -126,15 +125,14 @@
         {
         <tr>
             <td>
-                <span class="btn btn-info cid" id="@item.MaterialId">@item.MaterialId </span>
+                <span class="btn btn-info cid" id="@item.MaterialId"><i class="glyphicon glyphicon-check"></i> </span>
+                @*<span class="btn btn-info cid" id="@item.MaterialId"></span>*@
 
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.code)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WareHouse.Name)
-            </td>
+
 
             <td>
                 @Html.DisplayFor(modelItem => item.MaterialCategory.Name)
@@ -172,6 +170,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.latestPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WareHouse.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.barcode)
@@ -226,20 +227,20 @@
             }
         });
 
-       // window.opener.setValue(oVal, name, unit, Dimension, Price, QtyApproved, Approval, AvalableQty,CatId,TypeId);
+        // window.opener.setValue(oVal, name, unit, Dimension, Price, QtyApproved, Approval, AvalableQty,CatId,TypeId);
         window.opener.setValue(material);
-        window.close();
+        // window.close();
 
         return false;
     });
 
 
-   
+
     $(document).ready(function () {
         $('#dataTables-example').dataTable({
             "order": [9, "asc"]
         });
-      
+
     });
 </script>
 

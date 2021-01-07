@@ -67,7 +67,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.CreateDate)
             </th>
-            <th >
+            <th hidden>
                 stamp date
             </th>
             <th></th>
@@ -92,8 +92,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.CreateDate)
                 </td>
-                <td >
-                    @Html.DisplayFor(modelItem => item.StampDate)
+                <td hidden>
+                    @{ 
+                        DateTime a = item.StampDate ?? new DateTime(1900, 1, 1);
+                    }
+                    @Html.Raw(a.Ticks)
                 </td>
                 <td>
                     @Html.ActionLink("Print", "PrintNewTable", new { id = item.CuttingSheetId }) |
@@ -120,9 +123,12 @@
 
 
     <!-- DATA TABLE SCRIPTS -->
-
+    
     <script>
         $(document).ready(function () {
+
+            $.fn.dataTable.moment('HH:mm MMM D, YY');
+            $.fn.dataTable.moment('dddd, MMMM Do, YYYY');
             $('#dataTables-example').dataTable({
                 "order": [5, "desc"]
             });

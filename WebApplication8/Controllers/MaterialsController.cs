@@ -13,38 +13,27 @@ using System.Web;
 using System.Web.Mvc;
 using WebApplication8.Controllers.Resources;
 using WebApplication8.Models;
+using WebApplication8.Models.Repository;
+using WebApplication8.Persistence;
 
 namespace WebApplication8.Controllers
 {
     public class MaterialsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private IMaterialRepository materialRepository;
 
+        public MaterialsController()
+        {
+            this.materialRepository = new MaterialRepository(new ApplicationDbContext());
+        }
         // GET: Materials
         [Authorize(Roles = RoleNames.ROLE_MaterialView + "," + RoleNames.ROLE_ADMINISTRATOR)]
-        public ActionResult Index(string sortOrder)
+        public async Task<ActionResult> Index()
         {
-            ViewBag.AvalableQty = String.IsNullOrEmpty(sortOrder) ? "AvalableQty" : "";//client
-            ViewBag.CustomerGroupsSortParm = String.IsNullOrEmpty(sortOrder) ? "CustomerGroups_desc" : "";
-            ViewBag.TradeLicenceNoSortParm = String.IsNullOrEmpty(sortOrder) ? "TradeLicenceNo_desc" : "";
+            ViewBag.title1 = "Material List";
+            IEnumerable<Material> materials =await materialRepository.Get();
 
-            List<Material> materials = db.Materials.Include(m => m.Unit).ToList();
-
-
-            switch (sortOrder)
-            {
-                case "AvalableQty":
-                    materials = materials.OrderBy(s => s.AvalableQty.ToString()).ToList();
-                    //materials = (from p in materials
-                    //             let AvalableQty = p.qty - p.MinReOrder - p.Resevedqty
-                    //             orderby AvalableQty 
-                    //             select p).ToList();
-                                
-                        
-                    break;
-
-
-            }
             return View(materials.ToList());
         }
 

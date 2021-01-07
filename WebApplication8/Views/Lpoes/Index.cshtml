@@ -179,7 +179,10 @@
                 @Html.DisplayFor(modelItem => item.UserCreate)
             </td>
             <td hidden>
-                @Html.DisplayFor(modelItem => item.StampDate)
+                @{
+                    DateTime a = item.StampDate ?? new DateTime(1900, 1, 1);
+                }
+                @Html.Raw(a.Ticks)
             </td>
             <td hidden>
                 @Html.DisplayFor(modelItem => item.LpoId)

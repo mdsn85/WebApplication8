@@ -1,4 +1,6 @@
-﻿
+﻿@{
+    Layout = null;
+}
 <style>
     .red {
         color: red;
@@ -20,7 +22,7 @@
                     </th>
                 </tr>
             </table>
-            <input type="button" id="btnupload" value="Upload" style="float:right"  class="form-control" />
+            <input type="button" id="btnupload" value="Upload" style="float:right" class="form-control" />
 
         </div>
     </div>
@@ -31,7 +33,31 @@
 
 
 <script>
+
     var formdata = new FormData(); //FormData object
+
+    (function () {
+        let listOfFiles = @Html.Raw(Json.Encode(@ViewBag.listOfFile));
+
+        console.log(listOfFiles[0]);
+        if (listOfFiles.length > 0) {
+            for (let i = 0; i < listOfFiles.length; i++) {
+                var sfilename = listOfFiles[i];
+                let srandomid = Math.random().toString(36).substring(7);
+
+                formdata.append(sfilename, fileInput.files[i]);
+
+                var markup = "<tr id='" + srandomid + "'><td>" + sfilename + "</td><td class='deleteRow'><a href='#' onclick='DeleteFile(\"" + srandomid + "\",\"" + sfilename +
+                    "\")'><span id='removeFile' class='glyphicon glyphicon-remove'></span></a></td></tr>"; // Binding the file name
+
+                //add file to table of view list of files
+                $("#FilesList1 tbody").append(markup);
+            }
+            chkatchtbl();
+            $('#fileInput').val('');
+        }
+
+    })();
     $(document).ready(function () {
 
         $("#fileInput").on("change", function () {
@@ -46,6 +72,8 @@
 
                 var markup = "<tr id='" + srandomid + "'><td>" + sfilename + "</td><td class='deleteRow'><a href='#' onclick='DeleteFile(\"" + srandomid + "\",\"" + sfilename +
                     "\")'><span id='removeFile' class='glyphicon glyphicon-remove'></span></a></td></tr>"; // Binding the file name
+
+                //add file to table of view list of files
                 $("#FilesList1 tbody").append(markup);
 
             }
@@ -64,7 +92,7 @@
                 async: false,
                 success: function (result) {
 
-                   // alert(result.length);
+                    // alert(result.length);
                     //add input of hidden  to hold filename
                     //alert(result.length);
                     for (var j = 0; j < result.length; j++) {
@@ -94,7 +122,7 @@
                         var ppp = "FileNameTxt" + i;
                         var pp = "FileNameSpan" + i;
 
-                       // element = document.getElementById("info");
+                        // element = document.getElementById("info");
                         //element.appendChild(para);
 
                         i++;
@@ -121,7 +149,7 @@
 
 
     function removeFileFromForm(fileName) {
-       
+
         const fileArray = document.getElementsByName("FileName");
 
         for (let i = 0; i < fileArray.length; i++) {

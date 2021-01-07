@@ -908,6 +908,7 @@
     <Compile Include="Models\Unit.cs" />
     <Compile Include="Models\UserHubModels.cs" />
     <Compile Include="Models\Warehouse.cs" />
+    <Compile Include="Persistence\MaterialRepository.cs" />
     <Compile Include="Persistence\NotificationCategoryRepository.cs" />
     <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Persistence\NotificationRepository.cs" />
@@ -1543,6 +1544,8 @@
     <Content Include="Views\PaymentMoodSuppliers\Details.cshtml" />
     <Content Include="Views\PaymentMoodSuppliers\Edit.cshtml" />
     <Content Include="Views\PaymentMoodSuppliers\Index.cshtml" />
+    <Content Include="Views\Shared\MainMenu.cshtml" />
+    <Content Include="Views\Shared\_Layout_DataTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -192,7 +192,45 @@
 
     </script>
 
+        <script type="text/javascript">
 
+        var popUpObj;
+
+        function showModalPopUp(url) {
+
+            popUpObj = window.open(url,
+
+                "ModalPopUp",
+
+                "toolbar=no," +
+
+                "scrollbars=no," +
+
+                "location=no," +
+
+                "statusbar=no," +
+
+                "menubar=no," +
+
+                "resizable=0," +
+
+                "width=960," +
+
+                "height=460," +
+
+                "left = 340," +
+
+                "top=10"
+
+            );
+
+            popUpObj.focus();
+
+           // LoadModalDiv();
+
+        }
+
+    </script>
 
 
     <script>
@@ -315,45 +353,7 @@
     </script>
 
 
-    <script type="text/javascript">
 
-        var popUpObj;
-
-        function showModalPopUp(url) {
-
-            popUpObj = window.open(url,
-
-                "ModalPopUp",
-
-                "toolbar=no," +
-
-                "scrollbars=no," +
-
-                "location=no," +
-
-                "statusbar=no," +
-
-                "menubar=no," +
-
-                "resizable=0," +
-
-                "width=800," +
-
-                "height=460," +
-
-                "left = 490," +
-
-                "top=300"
-
-            );
-
-            popUpObj.focus();
-
-            LoadModalDiv();
-
-        }
-
-    </script>
 
     <script type="text/javascript">
 
@@ -479,7 +479,7 @@
 
             //check does type of material is allowed to be selected
             if (typeRequiredProject(getProjectId(), type)) {
-                alert("type of material " + type + " not allowed to be picked without project ");
+                popUpObj.alert("type of material " + type + " not allowed to be picked without project ");
                 return false;
             }
 

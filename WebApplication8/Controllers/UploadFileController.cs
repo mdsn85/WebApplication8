@@ -65,12 +65,17 @@ namespace WebApplication8.Controllers
 
         }
 
+        
 
         // call UploadFiles
-        public ActionResult uploadFileMulti()
+        public ActionResult uploadFileMulti(string[] listOfFiles = null)
         {
-
-            return View(allowedExtensions);
+            if (listOfFiles == null)
+            {
+                return View(allowedExtensions);
+            }
+            ViewBag.listOfFile = listOfFiles;
+            return View(); ;
         }
 
         [HttpPost]
