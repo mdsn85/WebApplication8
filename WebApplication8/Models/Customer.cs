@@ -37,5 +37,11 @@ namespace WebApplication8.Models
         public string email { get; set; }
         [StringLength(150)]
         public string Address { get; set; }
+
+        public string City { get; set; }
+
+        public string Emirate { get; set; }
+
+        public string Country { get; set; }
     }
 }

@@ -139,5 +139,33 @@ namespace WebApplication8.Models
         public System.Data.Entity.DbSet<WebApplication8.Models.LpoLocation> LpoLocations { get; set; }
 
         public System.Data.Entity.DbSet<WebApplication8.Models.PaymentMoodSupplier> PaymentMoodSuppliers { get; set; }
+
+        public System.Data.Entity.DbSet<WebApplication8.Models.LpoNature> LpoNatures { get; set; }
+
+
+        public System.Data.Entity.DbSet<WebApplication8.Models.Invoice> Invoice { get; set; }
+
+
+        public System.Data.Entity.DbSet<WebApplication8.Models.Product> Product { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+
+            modelBuilder.Entity<InvoiceProduct>()
+           .HasKey(x => new { x.InvoiceId, x.ProductId });
+
+            modelBuilder.Entity<InvoiceProduct>()
+            .HasRequired(pt => pt.Invoice)
+            .WithMany(p => p.InvoiceProducts)
+            .HasForeignKey(pt => pt.InvoiceId);
+
+            modelBuilder.Entity<InvoiceProduct>()
+                .HasRequired(pt => pt.Product)
+                .WithMany(t => t.InvoiceProducts)
+                .HasForeignKey(pt => pt.ProductId);
+        }
+
     }
 }

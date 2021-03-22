@@ -12,152 +12,152 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4></h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.CuttingSheetId)
+    <div class="form-horizontal">
+        <h4></h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.CuttingSheetId)
 
-    @*@if (!(Model.ProjectId is null))
-        {
-            Html.HiddenFor(model => model.ProjectId);
+        @*@if (!(Model.ProjectId is null))
+            {
+                Html.HiddenFor(model => model.ProjectId);
 
-        }*@
+            }*@
 
 
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.code, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.code, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.code, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.ProjectId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("ProjectId", null, "Please select", htmlAttributes: new { @class = "form-control", @id = "ProjectId" })
-            @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-
-        @Html.Label("Upload Documents", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-
-            <p style="color:crimson">@ViewBag.message</p>
-
-            @{
-                string[] listOfFiles = Model.CuttingSheetFiles.Select(c => c.Name).ToArray();
-                Html.RenderAction("UploadFileMulti", "UploadFile", new { listOfFiles = listOfFiles });
-            }
-            <div style="padding: 10px 2px">
-                @foreach (var e in ViewBag.ext)
-                {
-                    @Html.Raw(e + ", ");
-                }
+        <div class="form-group">
+            @Html.LabelFor(model => model.code, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.code, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.code, "", new { @class = "text-danger" })
             </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProjectId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ProjectId", null, "Please select", htmlAttributes: new { @class = "form-control", @id = "ProjectId" })
+                @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
+        <div class="form-group">
 
-            @*hidden input (name is FileName ) conatin name of uploaded files to submit*@
-            <div class="filesList" id="filesList">
+            @Html.Label("Upload Documents", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                <p style="color:crimson">@ViewBag.message</p>
+
                 @{
-                    int i = 1;
-                    if (Model.CuttingSheetFiles != null)
+                    string[] listOfFiles = Model.CuttingSheetFiles.Select(c => c.Name).ToArray();
+                    Html.RenderAction("UploadFileMulti", "UploadFile", new { listOfFiles = listOfFiles });
+                }
+                <div style="padding: 10px 2px">
+                    @foreach (var e in ViewBag.ext)
                     {
-                        i = 1;
-                        foreach (var file in Model.CuttingSheetFiles)
-                        {
-                            string fff = "FileNameH" + i;
+                        @Html.Raw(e + ", ");
+                    }
+                </div>
 
-                            <p id="@fff"><input type="hidden" id="FileName" name="FileName" class="FileName" value="@file.Name"></p>
-                            i++;
+
+                @*hidden input (name is FileName ) conatin name of uploaded files to submit*@
+                <div class="filesList" id="filesList">
+                    @{
+                        int i = 1;
+                        if (Model.CuttingSheetFiles != null)
+                        {
+                            i = 1;
+                            foreach (var file in Model.CuttingSheetFiles)
+                            {
+                                string fff = "FileNameH" + i;
+
+                                <p id="@fff"><input type="hidden" id="FileName" name="FileName" class="FileName" value="@file.Name"></p>
+                                i++;
+                            }
                         }
                     }
-                }
-            </div>
-        </div>
-    </div>
-
-
-
-
-    @Html.HiddenFor(model => model.UserCreate, new { htmlAttributes = new { @class = "form-control" } })
-
-
-    @Html.HiddenFor(model => model.CreateDate, new { htmlAttributes = new { @class = "form-control" } })
-
-
-
-
-    <div class="col-md-10 pull-left">
-
-        <div class="card-content">
-            <b>
-                <p class="control-label col-md-2">
-
-
-                </p>
-            </b>
-            <div class="table-responsive">
-                <div style="float: left;padding-left:10%">
-                    <span onclick="openChild()" class="btn-info">
-                        Add Material
-                    </span>
-                    <input id="CustomerId" name="CustomerId" type="hidden" />
-                    <div id="Customer"></div>
                 </div>
-                <table class="table-bordered table-responsive table dataTable text-nowrap" style="" id="tbDetails">
-                    <thead>
-                        <tr>
+            </div>
+        </div>
 
 
-                            <td>
-                                Sr #
-                            </td>
-                            <td>
-                                id
-                            </td>
-                            <td>
-                                Material
-                            </td>
-                            <td>
-                                Type
-                            </td>
-                            <td>
-                                Unit
-                            </td>
-                            <td>
-                                Request Qty
-                            </td>
-                            <td>
-                                Isssue Qty
-                            </td>
-                            <td>
-                                Balance
-                            </td>
-
-                            <td>
-                                delete
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody id="p_scents"></tbody>
 
 
-                </table>
+        @Html.HiddenFor(model => model.UserCreate, new { htmlAttributes = new { @class = "form-control" } })
+
+
+        @Html.HiddenFor(model => model.CreateDate, new { htmlAttributes = new { @class = "form-control" } })
+
+
+
+
+        <div class="col-md-10 pull-left">
+
+            <div class="card-content">
+                <b>
+                    <p class="control-label col-md-2">
+
+
+                    </p>
+                </b>
+                <div class="table-responsive">
+                    <div style="float: left;padding-left:10%">
+                        <span onclick="openChild()" class="btn-info">
+                            Add Material
+                        </span>
+                        <input id="CustomerId" name="CustomerId" type="hidden" />
+                        <div id="Customer"></div>
+                    </div>
+                    <table class="table-bordered table-responsive table dataTable text-nowrap" style="" id="tbDetails">
+                        <thead>
+                            <tr>
+
+
+                                <td>
+                                    Sr #
+                                </td>
+                                <td hidden>
+                                    id
+                                </td>
+                                <td>
+                                    Material
+                                </td>
+                                <td>
+                                    Type
+                                </td>
+                                <td>
+                                    Unit
+                                </td>
+                                <td>
+                                    Request Qty
+                                </td>
+                                <td>
+                                    Isssue Qty
+                                </td>
+                                <td>
+                                    Balance
+                                </td>
+
+                                <td>
+                                    delete
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody id="p_scents"></tbody>
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group" style="margin-top : 5px">
+            <div class="col-md-offset-4 col-md-2">
+                <input type="button" id="btnSave" value="  Save  " class="btn btn-primary adminworkSaveBtn " />
             </div>
         </div>
     </div>
-
-
-    <div class="form-group" style="margin-top : 5px">
-        <div class="col-md-offset-4 col-md-2">
-            <input type="button" id="btnSave" value="  Save  " class="btn btn-primary adminworkSaveBtn " />
-        </div>
-    </div>
-</div>
 }
 
 <div>
@@ -167,6 +167,12 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+        @if (User.IsInRole("Admin"))
+        {
+            <script src="~/Scripts/admin.js"></script>
+        }
+
 
     <!--Select Search-->
 
@@ -180,9 +186,6 @@
 
 
     <script>
-
-
-
         $(document).ready(function () {
 
             ListDetails();
@@ -190,6 +193,11 @@
 
                 e.preventDefault(e);
             });
+            if (typeof AllowChangeQty === "function") {
+                AllowChangeQty();
+                AllowRemoveMaterial();
+            }
+
 
         });
 
@@ -362,7 +370,7 @@
 
             popUpObj.focus();
 
-           // LoadModalDiv();
+            // LoadModalDiv();
 
         }
 
@@ -464,13 +472,13 @@
             var tt = '<tr id="item_' + nextRaw + '">';
 
 
-            tt = tt + '<td class="Name" > ' +
+            tt = tt + '<td class="Name " > ' +
                 '<div class="" > ' +
                 Sr +
                 '</div > ' +
                 '</td > ';
 
-            tt = tt + '<td class="Name" > ' +
+            tt = tt + '<td class="Name " hidden> ' +
                 '<div class="" > ' +
                 '<input type="text" name="id" id="id' + nextRaw + '"  class="form-control" value="' + myVal + '"/> ' +
                 '</div > ' +
@@ -478,13 +486,13 @@
 
             tt = tt + '<td class="Name" > ' +
                 '<div class="" > ' +
-                '<input type="text" name="Name" id="Name' + nextRaw + '"  class="form-control" value="' + Name + '"/> ' +
+                '<input type="text" name="Name" id="Name' + nextRaw + '"  class="form-control" value="' + Name + '" readonly/> ' +
                 '</div > ' +
                 '</td > ';
 
             tt = tt + '<td class="Name" > ' +
                 '<div class="" > ' +
-                '<input type="text" name="type" id="type' + nextRaw + '"  class="form-control" value="' + type + '"/> ' +
+                '<input type="text" name="type" id="type' + nextRaw + '"  class="form-control" value="' + type + '" readonly/> ' +
                 '</div > ' +
                 '</td > ';
 
@@ -492,110 +500,14 @@
 
             tt = tt + '<td class="Name" > ' +
                 '<div class="" > ' +
-                '<input type="text" name="Unit" id="Unit' + nextRaw + '"  class="form-control" value="' + Unit + '"/> ' +
+                '<input type="text" name="Unit" id="Unit' + nextRaw + '"  class="form-control" value="' + Unit + '" readonly/> ' +
                 '</div > ' +
                 '</td > ';
 
 
             tt = tt + '<td class="Qty" > ' +
                 '<div class="" > ' +
-                '<input type="text" name="Qty" id="Qty' + nextRaw + '"  class="form-control" value="' + Qty + '"/> ' +
-                '</div > ' +
-                '</td > ';
-
-
-            tt = tt + '<td class="IssueQty" > ' +
-                '<div class="" > ' +
-                '<input type="text" name="IssueQty" id="IssueQty' + nextRaw + '"  class="form-control" value="' + IssueQty  + '" readonly/> ' +
-                '</div > ' +
-                '</td > ';
-
-            var BalanceQty = Qty - IssueQty ;
-
-
-            tt = tt + '<td class="BalanceQty" > ' +
-                '<div class="" > ' +
-                '<input type="text" name="BalanceQty" id="BalanceQty' + nextRaw + '"  class="form-control" value="' + BalanceQty + '" readonly/> ' +
-                '</div > ' +
-                '</td > ';
-
-
-            //tt = tt + '<td class="Price" > ' +
-            //    '<div class="" > ' +
-            //    '<input type="text" name="Price" id="Price' + nextRaw + '"  class="form-control"/> ' +
-            //    '</div > ' +
-            //    '</td > ' +
-
-
-
-            tt = tt + ' <td>' +
-                ' <div class="delete">' +
-                '  <span id="c1" class="	glyphicon glyphicon-trash" onclick="remove(\'item_' + nextRaw + '\')"> </span>' +
-                ' </div>' +
-                ' </td>' +
-                ' </tr>';
-
-            scntDiv.append(tt);
-
-
-            var options = "";
-
-
-        }
-
-
-        function setValueRead(myVal, Name, Unit, Dinmension, Qty, IssueQty) {
-
-            var current = $(".ClientId").length;
-
-            var next = parseInt(current) + 1;
-            var a = "DDlforLocationsClient" + next;
-            var b = "span" + next;
-
-            Sr = Sr + 1;
-
-
-            //= $('#tbDetails tr').length;
-            nextRaw = nextRaw + 1;
-            var tt = '<tr id="item_' + nextRaw + '">';
-
-
-            tt = tt + '<td class="Name" > ' +
-                '<div class="" > ' +
-                Sr +
-                '</div > ' +
-                '</td > ';
-
-            tt = tt + '<td class="Name" > ' +
-                '<div class="" > ' +
-                '<input type="text" name="id" id="id' + nextRaw + '"  class="form-control" value="' + myVal + '"/> ' +
-                '</div > ' +
-                '</td > ';
-
-            tt = tt + '<td class="Name" > ' +
-                '<div class="" > ' +
-                '<input type="text" name="Name" id="Name' + nextRaw + '"  class="form-control" value="' + Name + '"/> ' +
-                '</div > ' +
-                '</td > ';
-
-            tt = tt + '<td class="Name" > ' +
-                '<div class="" > ' +
-                '<input type="text" name="type" id="type' + nextRaw + '"  class="form-control" value="' + Dinmension + '"/> ' +
-                '</div > ' +
-                '</td > ';
-
-
-
-            tt = tt + '<td class="Name" > ' +
-                '<div class="" > ' +
-                '<input type="text" name="Unit" id="Unit' + nextRaw + '"  class="form-control" value="' + Unit + '"/> ' +
-                '</div > ' +
-                '</td > ';
-
-
-            tt = tt + '<td class="Qty" > ' +
-                '<div class="" > ' +
-                '<input type="text" name="Qty" id="Qty' + nextRaw + '"  class="form-control" value="' + Qty + '"/> ' +
+                '<input type="text" name="Qty" id="Qty' + nextRaw + '"  class="form-control" value="' + Qty + '" /> ' +
                 '</div > ' +
                 '</td > ';
 
@@ -640,6 +552,108 @@
         }
 
 
+        function setValueRead(material) {
+            let MaterialId = material.MaterialId;
+            let Name = material.Name;
+            let Unit = material.Unit;
+            let Type = material.type;
+            let Qty = material.Qty;
+            let IssueQty = material.IssueQty;
+
+            var current = $(".ClientId").length;
+
+            var next = parseInt(current) + 1;
+            var a = "DDlforLocationsClient" + next;
+            var b = "span" + next;
+
+            Sr = Sr + 1;
+
+
+            //= $('#tbDetails tr').length;
+            nextRaw = nextRaw + 1;
+            var tt = '<tr id="item_' + nextRaw + '">';
+
+
+            tt = tt + '<td class="Name" > ' +
+                '<div class="" > ' +
+                Sr +
+                '</div > ' +
+                '</td > ';
+
+            tt = tt + '<td class="Name" hidden> ' +
+                '<div class="" > ' +
+                '<input type="text" name="id" id="id' + nextRaw + '"  class="form-control" value="' + MaterialId + '" readonly/> ' +
+                '</div > ' +
+                '</td > ';
+
+            tt = tt + '<td class="Name" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="Name" id="Name' + nextRaw + '"  class="form-control" value="' + Name + '" readonly/> ' +
+                '</div > ' +
+                '</td > ';
+
+
+            tt = tt + '<td class="Name" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="type" id="type' + nextRaw + '"  class="form-control" value="' + Type + '" readonly/> ' +
+                '</div > ' +
+                '</td > ';
+
+
+            tt = tt + '<td class="Name" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="Unit" id="Unit' + nextRaw + '"  class="form-control" value="' + Unit + '" readonly/> ' +
+                '</div > ' +
+                '</td > ';
+
+
+            tt = tt + '<td class="Qty" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="Qty" id="Qty' + nextRaw + '"  class="form-control" value="' + Qty + '" readonly/> ' +
+                '</div > ' +
+                '</td > ';
+
+
+            tt = tt + '<td class="IssueQty" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="IssueQty" id="IssueQty' + nextRaw + '"  class="form-control" value="' + IssueQty + '" readonly/> ' +
+                '</div > ' +
+                '</td > ';
+
+            var BalanceQty = Qty - IssueQty;
+
+
+            tt = tt + '<td class="BalanceQty" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="BalanceQty" id="BalanceQty' + nextRaw + '"  class="form-control" value="' + BalanceQty + '" readonly/> ' +
+                '</div > ' +
+                '</td > ';
+
+
+            //tt = tt + '<td class="Price" > ' +
+            //    '<div class="" > ' +
+            //    '<input type="text" name="Price" id="Price' + nextRaw + '"  class="form-control"/> ' +
+            //    '</div > ' +
+            //    '</td > ' +
+
+
+
+            tt = tt + ' <td>' +
+                ' <div class="delete" hidden>' +
+                '  <span id="c1" class="	glyphicon glyphicon-trash" onclick="remove(\'item_' + nextRaw + '\')" > </span>' +
+                ' </div>' +
+                ' </td>' +
+                ' </tr>';
+
+            scntDiv.append(tt);
+
+
+            var options = "";
+
+
+        }
+
+
         function ListDetails() {
 
             CuttingSheetId = $("#CuttingSheetId").val();
@@ -657,7 +671,7 @@
 
 
 
-                    result.forEach(element => setValueRead(element.MaterialId, element.Name, element.Unit, element.type, element.Qty, element.IssueQty ));
+                    result.forEach(element => setValueRead(element));
 
                 },
                 error: function (xhr) {

@@ -16,7 +16,11 @@
         width: 100%
     }
 </style>*@
-
+<style>
+    th, td {
+        padding: 0 4px 4px 4px;
+    }
+</style>
 <label class="button-collapse">
     @*@if (User.IsInRole("Sales Coordinator") || User.IsInRole("Admin"))*@
 
@@ -140,7 +144,13 @@
             <th>
                 @Html.DisplayNameFor(model => model.Total)
             </th>
-
+            <th>
+                @Html.DisplayNameFor(model => model.TotalPayment)
+            </th>
+            <th>
+                @Html.DisplayName("Balance")
+            </th>
+            
 
             <th>
                 @Html.DisplayNameFor(model => model.SalesType.Name)
@@ -251,10 +261,8 @@
             </td>
 
 
-            <td>
-                @Html.DisplayFor(modelItem => item.SalesDate)
-            </td>
 
+            <td NOWRAP>@item.SalesDate.ToString("dd-MMM-yyyy")</td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -262,17 +270,14 @@
                 @Html.DisplayFor(modelItem => item.Area.Name)
             </td>
 
-
             <td>
-
-
                 @{
                     var indianCulture = new System.Globalization.CultureInfo("hi-IN");
-
                 }
-                @string.Format(indianCulture, "{0:N}", item.Total)
-
+                @string.Format(indianCulture, "{0:N}", item.Value)
             </td>
+
+
             <td>
                 @Html.DisplayFor(modelItem => item.Discount)
             </td>
@@ -280,10 +285,17 @@
                 @string.Format(indianCulture, "{0:N}", item.Vat)
             </td>
             <td>
-
                 @string.Format(indianCulture, "{0:N}", item.Total)
             </td>
 
+
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalPayment)
+            </td>
+            <td>
+
+                @string.Format(indianCulture, "{0:N}", item.Total - item.TotalPayment)
+            </td>
 
             <td>
                 @Html.DisplayFor(modelItem => item.SalesType.Name)
@@ -335,9 +347,11 @@
                 @string.Format(indianCulture, "{0:N}", x)
             </td>
 
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.DeliveryDate)
-            </td>
+            </td>*@
+
+            <td NOWRAP>@item.DeliveryDate.ToString("dd-MMM-yyyy")</td>
             <td>
                 @Html.DisplayFor(modelItem => item.ActualDeliveryDate)
             </td>
@@ -358,6 +372,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.CreateDate)
             </td>
+
+
+
 
 
             <td hidden>
@@ -389,7 +406,7 @@
             $('.navbar-side').animate({ left: '-260px' });
             $('#page-wrapper').animate({ 'margin-left': '0px' });
             $('#dataTables-example').dataTable({
-                "order": [26, "desc"],
+                "order": [28, "desc"],
                 "scrollY": "500px",
                 "scrollCollapse": true,
                 "pageLength": -1

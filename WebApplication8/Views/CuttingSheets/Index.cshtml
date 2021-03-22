@@ -101,12 +101,12 @@
                 <td>
                     @Html.ActionLink("Print", "PrintNewTable", new { id = item.CuttingSheetId }) |
 
-                    @if (User.IsInRole("Admin"))
+                    @if (User.IsInRole("Admin")|| User.IsInRole("MRFEdit"))
                     {
                         @Html.ActionLink("Edit", "Edit", new { id = item.CuttingSheetId })
                         @Html.Raw("|")
                     }
-                    @Html.ActionLink("Details", "Details", new { id = item.CuttingSheetId })
+                    @Html.ActionLink("Details", "Details", new { id = item.CuttingSheetId })|
 
 
                     @Html.ActionLink("Delete", "Delete", new { id = item.CuttingSheetId })

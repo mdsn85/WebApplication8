@@ -8,15 +8,15 @@ namespace WebApplication8.Models.Repository
 {
     public interface IMaterialRepository
     {
+        Task<IEnumerable<Material>> Get();
+        Material GetById(int id, bool icludeRelated = true);
         void Insert(Material material);
         void Update(Material material);
         void Delete(Material material);
-        Task<IEnumerable<Material>> Get();
-        Task<List<Material>> GetById(int id, bool icludeRelated = true);
 
-        float AvailableQty(int materialId);
-        void ReserveQty(int materialId, float qty);
-        void ReleaseReserveQty(int materialId, float qty);
+        float AvailableQty(Material material);
+        void ReserveQty(Material material, float qty);
+        void ReleaseReserveQty(Material material, float qty);
 
         void Save();
 

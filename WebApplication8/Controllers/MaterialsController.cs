@@ -1,4 +1,6 @@
-﻿using ExcelDataReader;
+﻿
+using ExcelDataReader;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -29,11 +31,16 @@ namespace WebApplication8.Controllers
         }
         // GET: Materials
         [Authorize(Roles = RoleNames.ROLE_MaterialView + "," + RoleNames.ROLE_ADMINISTRATOR)]
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index( int? issearch)
         {
             ViewBag.title1 = "Material List";
             IEnumerable<Material> materials =await materialRepository.Get();
 
+
+            if (issearch == 1)
+            {
+                ExportToExcel1(materials.ToList());
+            }
             return View(materials.ToList());
         }
 
@@ -372,6 +379,75 @@ namespace WebApplication8.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+
+        public void ExportToExcel1(List<Material> list)
+        {
+
+            ExcelPackage pck = new ExcelPackage();
+            ExcelWorksheet ws = pck.Workbook.Worksheets.Add("report");
+            //code,MaterialCategory,MaterialType,Name,Unit,qty,Resevedqty,MinReOrder,AvgPrice,latestPrice,Total,Total Avg, barcode, Location
+            ws.Cells["A1"].Value = "MAterial Managment ";
+            ws.Cells["A3"].Value = "Date";
+            ws.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}", DateTime.Now);
+
+            ws.Cells["A6"].Value = "Code";
+            ws.Cells["B6"].Value = "Category";
+            ws.Cells["C6"].Value = "Type";
+
+            ws.Cells["D6"].Value = "Name";
+
+            ws.Cells["E6"].Value = "Unit";
+            ws.Cells["F6"].Value = "Qty";
+            ws.Cells["G6"].Value = "Resevedqty";
+            ws.Cells["H6"].Value = "MinReOrder";
+            ws.Cells["I6"].Value = "AvgPrice";
+
+
+
+            ws.Cells["J6"].Value = "LatestPrice";
+            ws.Cells["K6"].Value = "Total";
+            ws.Cells["L6"].Value = "Total Avg";
+
+            ws.Cells["M6"].Value = "barcode";
+            ws.Cells["N6"].Value = "Location";
+
+            double totalAvg = 0;
+            double total = 0;
+            int row = 7;
+            foreach (var item in list)
+            {
+                totalAvg = item.qty * item.AvgPrice ?? 0;
+                total = item.qty * item.latestPrice ?? 0;                //ws.Row(row).Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                //code,MaterialCategory,MaterialType,Name,Unit,qty,Resevedqty,MinReOrder,AvgPrice,latestPrice,Total,Total Avg, barcode, Location
+                ws.Cells["A" + row.ToString()].Value = item.code;
+                ws.Cells["B" + row.ToString()].Value = (item.MaterialCategory!=null)?item.MaterialCategory.Name: "";
+                ws.Cells["C" + row.ToString()].Value = (item.MaterialType != null) ? item.MaterialType.Name : ""; 
+                ws.Cells["D" + row.ToString()].Value = item.Name;
+                ws.Cells["E" + row.ToString()].Value = item.Unit.Name;
+                ws.Cells["F" + row.ToString()].Value = item.qty;
+                //ws.Cells["F" + row.ToString()].Value = string.Format("{0:dd-MM-yyyy}", item.TripsDate); 
+                ws.Cells["G" + row.ToString()].Style.Numberformat.Format = "dd/MM/yyyy";
+
+                ws.Cells["G" + row.ToString()].Value = item.Resevedqty;
+                ws.Cells["H" + row.ToString()].Value = item.MinReOrder;
+                ws.Cells["I" + row.ToString()].Value = item.AvgPrice;
+                ws.Cells["J" + row.ToString()].Value = item.latestPrice;
+                ws.Cells["K" + row.ToString()].Value = total;
+                ws.Cells["L" + row.ToString()].Value = totalAvg;
+                ws.Cells["M" + row.ToString()].Value = item.barcode;
+                ws.Cells["N" + row.ToString()].Value = item.WareHouse.Name;
+               
+                row++;
+            }
+            ws.Cells["A:N"].AutoFitColumns();
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.speardsheetml.sheet";
+            Response.AddHeader("content-disposition", "attachment: filename=" + "ExcelReport.xlsx");
+            
+            Response.BinaryWrite(pck.GetAsByteArray());
+            Response.End();
         }
     }
 }

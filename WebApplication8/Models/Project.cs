@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -152,9 +153,25 @@ namespace WebApplication8.Models
         public virtual ICollection<Payment> Payments { get; set; }
 
 
+        public virtual ICollection<Invoice> Invoices { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Payments")]
+        [DisplayFormat(DataFormatString = "{0:N2}")]
+        public float TotalPayment
+        {
+            get {
+                return (this.Payments != null && this.Payments.Count() != 0) ?
+                     this.Payments.Sum(x => x.Amount):0;            
+            }
+        }
+
         public Project()
         {
             ProjectFiles = new Collection<ProjectFile>();
+            Invoices =new  Collection<Invoice>();
+            CuttingSheets = new Collection<CuttingSheet>();
+            Payments = new Collection<Payment>();
         }
 
 

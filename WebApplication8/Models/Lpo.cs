@@ -48,6 +48,10 @@ namespace WebApplication8.Models
         public int? LpoLocationId { get; set; }
         public virtual LpoLocation LpoLocation { get; set; }
 
+        [Display(Name = "Nature")]
+        public int? LpoNatureId { get; set; }
+        [Display(Name = "Nature")]
+        public virtual LpoNature LpoNature { get; set; }
 
         [Display(Name = "Credit Term")]
         public int? CreditTermSupplierId { get; set; }

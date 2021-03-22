@@ -117,7 +117,7 @@ namespace WebApplication8.Controllers
             ViewBag.WarehouseId = new SelectList(db.Warehouses, "WarehouseId", "Name");
             ViewBag.LpoId  = new SelectList(db.Lpoes.Where(l=>l.StockIssues.Count() == 0), "LpoId", "code");
 
-            ViewBag.CuttingSheetId = new SelectList(db.CuttingSheets, "CuttingSheetId", "code");
+            //ViewBag.CuttingSheetId = new SelectList(db.CuttingSheets, "CuttingSheetId", "code");
             return View();
         }
 

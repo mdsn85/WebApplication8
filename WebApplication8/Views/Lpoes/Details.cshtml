@@ -114,14 +114,6 @@
 
 
 
-
-
-
-
-
-
-
-
     </dl>
 </div>
 
@@ -146,7 +138,7 @@
         <th>
             Total
         </th>
-        <th></th>
+
     </tr>
 
     @foreach (var item in Model.LpoDetails)
@@ -171,7 +163,8 @@
 
         <td>
            @{var a = @item.Price * @item.Qty;}
-            @a
+
+            @Html.Raw(a.ToString("0,0.0"))
         </td>
     </tr>
     }

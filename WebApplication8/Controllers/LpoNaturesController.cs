@@ -11,136 +11,139 @@ using WebApplication8.Models;
 
 namespace WebApplication8.Controllers
 {
-    public class LpoLocationsController : Controller
+    public class LpoNaturesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: LpoLocations
+        // GET: LpoNatures
         public ActionResult Index()
         {
-            return View(db.LpoLocations.ToList());
+            return View(db.LpoNatures.ToList());
         }
 
-        // GET: LpoLocations/Details/5
+        // GET: LpoNatures/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LpoLocation lpoLocation = db.LpoLocations.Find(id);
-            if (lpoLocation == null)
+            LpoNature lpoNature = db.LpoNatures.Find(id);
+            if (lpoNature == null)
             {
                 return HttpNotFound();
             }
-            return View(lpoLocation);
+            return View(lpoNature);
         }
+
 
         public JsonResult get()
         {
 
-            List<KeyValuePair> lpoLocation = db.LpoLocations.Select(l => new KeyValuePair { Id = l.LpoLocationId , Name = l.Name }).ToList();
-            if (lpoLocation == null)
+            List<KeyValuePair> lpoNature = db.LpoNatures.Select(l => new KeyValuePair { Id = l.LpoNatureId, Name = l.Name }).ToList();
+            if (lpoNature == null)
             {
                 return Json(-1);
             }
-            return Json(lpoLocation,JsonRequestBehavior.AllowGet);
+            return Json(lpoNature, JsonRequestBehavior.AllowGet);
         }
         public ActionResult CreateShort()
         {
             return View();
         }
 
+
         [HttpPost]
         public JsonResult CreateShort(string Name)
         {
-            LpoLocation lpoLocation = new LpoLocation();
-            lpoLocation.Name = Name;
+            LpoNature lpoNature = new LpoNature();
+            lpoNature.Name = Name;
             if (ModelState.IsValid)
             {
-                db.LpoLocations.Add(lpoLocation);
+                db.LpoNatures.Add(lpoNature);
                 db.SaveChanges();
-                return Json( lpoLocation.LpoLocationId);
+                return Json(lpoNature.LpoNatureId);
             }
 
             return Json(-1);
         }
-        // GET: LpoLocations/Create
+
+        // GET: LpoNatures/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: LpoLocations/Create
+        // POST: LpoNatures/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "LpoLocationId,Name")] LpoLocation lpoLocation)
+        public ActionResult Create([Bind(Include = "LpoNatureId,Name")] LpoNature lpoNature)
         {
             if (ModelState.IsValid)
             {
-                db.LpoLocations.Add(lpoLocation);
+                db.LpoNatures.Add(lpoNature);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(lpoLocation);
+            return View(lpoNature);
         }
 
-        // GET: LpoLocations/Edit/5
+        // GET: LpoNatures/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LpoLocation lpoLocation = db.LpoLocations.Find(id);
-            if (lpoLocation == null)
+            LpoNature lpoNature = db.LpoNatures.Find(id);
+            if (lpoNature == null)
             {
                 return HttpNotFound();
             }
-            return View(lpoLocation);
+            return View(lpoNature);
         }
 
-        // POST: LpoLocations/Edit/5
+        // POST: LpoNatures/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "LpoLocationId,Name")] LpoLocation lpoLocation)
+        public ActionResult Edit([Bind(Include = "LpoNatureId,Name")] LpoNature lpoNature)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(lpoLocation).State = EntityState.Modified;
+                db.Entry(lpoNature).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(lpoLocation);
+            return View(lpoNature);
         }
 
-        // GET: LpoLocations/Delete/5
+        // GET: LpoNatures/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LpoLocation lpoLocation = db.LpoLocations.Find(id);
-            if (lpoLocation == null)
+            LpoNature lpoNature = db.LpoNatures.Find(id);
+            if (lpoNature == null)
             {
                 return HttpNotFound();
             }
-            return View(lpoLocation);
+            return View(lpoNature);
         }
 
-        // POST: LpoLocations/Delete/5
+        // POST: LpoNatures/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            LpoLocation lpoLocation = db.LpoLocations.Find(id);
-            db.LpoLocations.Remove(lpoLocation);
+            LpoNature lpoNature = db.LpoNatures.Find(id);
+            db.LpoNatures.Remove(lpoNature);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

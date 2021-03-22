@@ -25,7 +25,7 @@ namespace WebApplication8.Controllers
 
         // GET: Lpoes
         [Authorize(Roles = RoleNames.ROLE_LPOView + "," + RoleNames.ROLE_ADMINISTRATOR)]
-        public ActionResult Index(string st, string SearchCode, string StatusId, string supplierId, string SearchValue2)
+        public ActionResult Index(string st, string SearchCode, string StatusId, string supplierId, string SearchValue2 , string StartDate, string EndDate)
         {
 
             ViewBag.title1 = "LPO List";
@@ -36,6 +36,9 @@ namespace WebApplication8.Controllers
             ViewBag.StatusId = new SelectList(db.LpoStatus, "LpoStatusId", "Name", StatusId);
 
             ViewBag.supplierId = new SelectList(db.suppliers, "supplierId", "Name", supplierId);
+
+            ViewBag.StartDate = StartDate;
+            ViewBag.endDate = EndDate;
 
             List<Lpo> lpoes = db.Lpoes.Include(l => l.CreditTermSupplier).Include(l => l.Supplier).ToList();
 
@@ -58,6 +61,23 @@ namespace WebApplication8.Controllers
             }
 
 
+            if (!String.IsNullOrEmpty(StartDate))
+            {
+                if (!String.IsNullOrEmpty(EndDate))
+                {
+                    DateTime ddStart = DateTime.ParseExact(StartDate, "yyyy-MM-dd", null);
+                    DateTime ddEnd = DateTime.ParseExact(EndDate, "yyyy-MM-dd", null);
+                    ddEnd = ddEnd.AddDays(1);
+                    lpoes = lpoes.Where(cb => cb.LpoDate >= ddStart && cb.LpoDate < ddEnd).ToList();
+                }
+                else
+                {
+                    //on selected day
+                    DateTime ddStart = DateTime.ParseExact(StartDate, "yyyy-MM-dd", null);
+                    DateTime ddEnd = ddStart.AddDays(1);
+                    lpoes = lpoes.Where(cb => cb.LpoDate >= ddStart && cb.LpoDate < ddEnd).ToList();
+                }
+            }
 
             lpoes = lpoes.OrderByDescending(p => p.StampDate).ToList();
 
@@ -247,6 +267,8 @@ namespace WebApplication8.Controllers
             ViewBag.CreditTermSupplierId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name");
             ViewBag.SupplierId = new SelectList(db.suppliers, "supplierId", "Name");
             ViewBag.LpoLocationId = new SelectList(db.LpoLocations, "LpoLocationId", "Name");
+            ViewBag.LpoNatureId = new SelectList(db.LpoNatures, "LpoNatureId", "Name");
+
             ViewBag.LpoDate = DateTime.Now;
             return View();
         }
@@ -271,6 +293,7 @@ namespace WebApplication8.Controllers
             ViewBag.CreditTermSupplierId = new SelectList(db.CreditTermSuppliers, "CreditTermSupplierId", "Name", lpo.CreditTermSupplierId);
             ViewBag.SupplierId = new SelectList(db.suppliers, "supplierId", "Name",lpo.SupplierId);
             ViewBag.LpoLocationId = new SelectList(db.LpoLocations, "LpoLocationId", "Name",lpo.LpoLocationId);
+            ViewBag.LpoNatureId = new SelectList(db.LpoNatures, "LpoNatureId", "Name", lpo.LpoNatureId);
             ViewBag.LpoDate = DateTime.Now;
 
             return View(lpo);
@@ -299,7 +322,7 @@ namespace WebApplication8.Controllers
         }
 
 
-        public JsonResult CreateJson([Bind(Include = "LpoId,code,SupplierRef,LpoDate,SupplierId,CreditTermSupplierId,SubTotal,Discount,Total,Vat,GrandTotal,Remarks,LpoLocationId ")] Lpo lpo)
+        public JsonResult CreateJson([Bind(Include = "LpoId,code,SupplierRef,LpoDate,SupplierId,CreditTermSupplierId,SubTotal,Discount,Total,Vat,GrandTotal,Remarks,LpoLocationId,LpoNatureId ")] Lpo lpo)
         {
             if (ModelState.IsValid)
             {

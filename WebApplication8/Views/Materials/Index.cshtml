@@ -5,226 +5,250 @@
 @{
     ViewBag.Title = "Index";
 }
+<link href="~/Scripts/css/selectsearch/select2.min.css" rel="stylesheet" />
+<style>
+    th, td {
+        padding: 0 4px 4px 4px;
+    }
+</style>
+
+        @using (Html.BeginForm())
+        {
+            <label class=" button-collapse">
+                @*@if (User.IsInRole("Sales Coordinator") || User.IsInRole("Admin"))*@
+
+                @if (User.IsInRole("MaterialCreate") || User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Create ", "Create", null, htmlAttributes: new { @class = " btn btn-default ", @Style = "float:left" })
 
 
+                }
+
+                @if (User.IsInRole("Admin"))
+                {
 
 
+                    <button name="issearch" value="1" style="margin-left:20px" class="btn btn-default">Excel <span class=" glyphicon glyphicon-download-alt"></span></button>
+                }
 
-        <label class="button-collapse">
-            @*@if (User.IsInRole("Sales Coordinator") || User.IsInRole("Admin"))*@
-
-            @if (User.IsInRole("ProjectCreate") || User.IsInRole("Admin"))
-            {
-                @Html.ActionLink("Create ", "Create", null, htmlAttributes: new { @class = " btn btn-default " })
-
-
-            }
-
-            @if (User.IsInRole("ProjectDownloadExcel") || User.IsInRole("Admin"))
-            {
-                <button id="btnExport" style="margin-left:20px" class="btn btn-default">Excel <span class=" glyphicon glyphicon-download-alt"></span></button>
-            }
-        </label>
+   
+            </label>
+        }
 
 
-        @*@Html.ActionLink("Create New", "Create", null, htmlAttributes: new { @class = "btn" })*@
+@*@Html.ActionLink("Create New", "Create", null, htmlAttributes: new { @class = "btn" })*@
 
 
-    @*<div class="card-content">
-        <div class="table-responsive">*@
+@*<div class="card-content">
+    <div class="table-responsive">*@
 
-            <table class="table-bordered table-striped"   id="dataTables-example" style="width:100%" width="100%">
+@*<table class="table-bordered table-striped" id="dataTables-example" style="width:100%" width="100%">*@
+<table class=" table-striped table-bordered table-hover" id="dataTables-example" cellspacing="0">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaterialCategory.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaterialType.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
 
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.code)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.MaterialCategory.Name)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.MaterialType.Name)
-                        </th>
-                        <th >
-                            @Html.DisplayNameFor(model => model.Name)
-                        </th>
-
-                        <th>
-                            @Html.DisplayNameFor(model => model.Unit.Name)
-                        </th>
-
-
-                        <th>
-                            @Html.DisplayNameFor(model => model.qty)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Resevedqty)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.MinReOrder)
-                        </th>
-                        <th>
-                            Available Qty
-                            @*@Html.ActionLink("Available Qty", "Index", new { sortOrder = ViewBag.AvalableQty })*@
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.AvgPrice)
-                        </th>
-
-                        <th>
-                            @Html.DisplayNameFor(model => model.latestPrice)
-                        </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Unit.Name)
+            </th>
 
 
-                        <th>
-                            @Html.DisplayName("Total")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Total Avg")
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.barcode)
-                        </th>
+            <th>
+                @Html.DisplayNameFor(model => model.qty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Resevedqty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MinReOrder)
+            </th>
+            <th>
+                Available Qty
+                @*@Html.ActionLink("Available Qty", "Index", new { sortOrder = ViewBag.AvalableQty })*@
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvgPrice)
+            </th>
 
-                        <th>
-                            Location
-                        </th>
-
-                        <th></th>
-
-                    </tr>
-                </thead>
-                @{Double Sumtotal = 0;
-                    Double SumtotalAvg = 0;}
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-
-                            <td>
-                                @Html.DisplayFor(modelItem => item.code)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.MaterialCategory.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.MaterialType.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Name)
-                            </td>
-
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Unit.Name)
-                            </td>
-
-                            <td>
-                                @Html.DisplayFor(modelItem => item.qty)
-                            </td>
-
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Resevedqty)
-                            </td>
-
-                            <td>
-                                @Html.DisplayFor(modelItem => item.MinReOrder)
-                            </td>
-
-                            <td>
-                                @{float? a = 0;
-                                    a = @item.qty - @item.Resevedqty - @item.MinReOrder;}
-
-                                @Html.DisplayFor(modelItem => item.AvalableQty)
-                            </td>
-
-                            <td>
-                                @Html.DisplayFor(modelItem => item.AvgPrice)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.latestPrice)
-                            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.latestPrice)
+            </th>
 
 
-                            <td>
-                                @{
-                                    double total = item.qty * item.latestPrice ?? 0;
-                                    Sumtotal += total;
-                                }
-                                @total.ToString()
-                            </td>
-                            <td>
-                                @{
-                                    double totalAvg = item.qty * item.AvgPrice ?? 0;
-                                    SumtotalAvg += totalAvg;
-                                }
-                                @totalAvg.ToString()
-                            </td>
+            <th>
+                @Html.DisplayName("Total")
+            </th>
+            <th>
+                @Html.DisplayName("Total Avg")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.barcode)
+            </th>
+
+            <th>
+                Location
+            </th>
+
+            <th></th>
+
+        </tr>
+    </thead>
+    @{
+        Double Sumtotal = 0;
+        Double SumtotalAvg = 0;
+        var indianCulture = new System.Globalization.CultureInfo("hi-IN");
+    }
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaterialCategory.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaterialType.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Unit.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.qty)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Resevedqty)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.MinReOrder)
+                </td>
+
+                <td>
+                    @{float? a = 0;
+                        a = @item.qty - @item.Resevedqty - @item.MinReOrder;}
+
+                    @Html.DisplayFor(modelItem => item.AvalableQty)
+                </td>
+
+                <td>
+                    @string.Format(indianCulture, "{0:N}", @item.AvgPrice)
+                </td>
+                <td>
+                    @string.Format(indianCulture, "{0:N}", @item.latestPrice)
+                </td>
 
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.barcode)
-                            </td>
-
-                            <td>
-                                @Html.DisplayFor(modelItem => item.WareHouse.Name)
-                            </td>
-
-
-
-
-
-
-                            <td>
-
-                                @Html.ActionLink("Movment", "MaterialMovment", new { id = item.MaterialId }) |
-
-                                @Html.ActionLink("Details", "Details", new { id = item.MaterialId }) |
-
-
-                                @Html.ActionLink("Edit", "Edit", new { id = item.MaterialId })
-                                @Html.Raw("|")
-
-
-
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.MaterialId })
-                                    @Html.Raw("|")
-
-                                }
-                                @*@Html.ActionLink("Delete", "Delete", new { id = item.MaterialId })*@
-
-                            </td>
-                        </tr>
+                <td>
+                    @{
+                        double total = item.qty * item.latestPrice ?? 0;
+                        Sumtotal += total;
                     }
-                </tbody>
 
-            </table>
+                    @string.Format(indianCulture, "{0:N}", @total)
+                </td>
+                <td>
+                    @{
+                        double totalAvg = item.qty * item.AvgPrice ?? 0;
+                        SumtotalAvg += totalAvg;
+                    }
 
-        @*</div>
-    </div>
-</div>*@
+
+                    @string.Format(indianCulture, "{0:N}", @totalAvg)
+
+                </td>
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.barcode)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.WareHouse.Name)
+                </td>
+
+
+                <td>
+
+                    @Html.ActionLink("Movment", "MaterialMovment", new { id = item.MaterialId }) |
+
+                    @Html.ActionLink("Details", "Details", new { id = item.MaterialId }) |
+
+
+                    @Html.ActionLink("Edit", "Edit", new { id = item.MaterialId })
+                    @Html.Raw("|")
+
+
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Delete", "Delete", new { id = item.MaterialId })
+                        @Html.Raw("|")
+
+                    }
+                    @*@Html.ActionLink("Delete", "Delete", new { id = item.MaterialId })*@
+
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+@*</div>
+        </div>
+    </div>*@
 <div class="panel-info alert-success"><b>Store Value (Latest Price): @Sumtotal AED </b>  <br /></div>
 
 <div class="panel-info alert-success" style="padding-top:10px"><b>Store Value (Avrege Price): @SumtotalAvg AED </b> </div>
 
+
+
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @*<script src="~/Scripts/js/jquery1.7.1Google.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
+    <script src="~/Scripts/js/selectSearch/select2.min.js"></script>
+
     <script>
+
+
         $(document).ready(function () {
 
             $('#dataTables-example').dataTable({
                 "order": [6, "desc"],
                 "scrollY": "500px",
                 "scrollCollapse": true,
-                "pageLength": -1,
-            });
-
-            $("#dataTables-example").on('page.dt', function () {
-                onresize(100);
+                "pageLength": -1
             });
         });
+
+        $("#dataTables-example").on('page.dt', function () {
+            onresize(100);
+        });
+
+
+
 
 
         $("#btnExport").click(function (e) {
@@ -234,5 +258,14 @@
                 encodeURIComponent(table[0].outerHTML));
         });
 
+
+
+
     </script>
+
+
+
+    @*<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>*@
 }
+

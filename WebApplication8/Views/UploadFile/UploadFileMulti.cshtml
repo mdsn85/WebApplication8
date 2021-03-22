@@ -47,8 +47,10 @@
 
                 formdata.append(sfilename, fileInput.files[i]);
 
-                var markup = "<tr id='" + srandomid + "'><td>" + sfilename + "</td><td class='deleteRow'><a href='#' onclick='DeleteFile(\"" + srandomid + "\",\"" + sfilename +
-                    "\")'><span id='removeFile' class='glyphicon glyphicon-remove'></span></a></td></tr>"; // Binding the file name
+                //var markup = "<tr id='" + srandomid + "'><td>" + sfilename + "</td><td class='deleteRow'><a href='#' onclick='DeleteFile(\"" + srandomid + "\",\"" + sfilename +
+                //    "\")'><span id='removeFile' class='glyphicon glyphicon-remove'></span></a></td></tr>"; // Binding the file name
+
+                var markup = "<tr id='" + srandomid + "'><td>" + sfilename + "</td><td class='deleteRow'><a href='#'></a></td></tr>";
 
                 //add file to table of view list of files
                 $("#FilesList1 tbody").append(markup);

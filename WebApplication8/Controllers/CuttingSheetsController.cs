@@ -155,7 +155,7 @@ namespace WebApplication8.Controllers
             return View();
         }
 
-
+     
 
         // POST: CuttingSheets/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -291,8 +291,11 @@ namespace WebApplication8.Controllers
                     Detail.MaterialId = int.Parse(d.MaterialId.ToString());
                     Detail.qty = float.Parse(d.qty.ToString());
 
+
+                    //get material 
+                    Material material = materialRepository.GetById(Detail.MaterialId);
                     //check availability of item in warehouse
-                    float AvailableQty = materialRepository.AvailableQty(Detail.MaterialId);
+                    float AvailableQty = materialRepository.AvailableQty(material);
                     if (AvailableQty> Detail.qty) {
                         Detail.status = statusList.InStock;
                     }else
@@ -304,7 +307,7 @@ namespace WebApplication8.Controllers
                     db.SaveChanges();
 
                     //reserve qty in warehouse
-                    materialRepository.ReserveQty(Detail.MaterialId, Detail.qty);
+                    materialRepository.ReserveQty(material, Detail.qty);
                     db.SaveChanges();
 
                 }
@@ -483,7 +486,8 @@ namespace WebApplication8.Controllers
             foreach (CuttingSheetDetail d in OldDetails)
             {
                 db.CuttingSheetDetails.Remove(d);
-                materialRepository.ReleaseReserveQty(d.MaterialId, d.qty);
+                Material material = materialRepository.GetById(d.MaterialId);
+                materialRepository.ReleaseReserveQty(material, d.qty);
             }
             db.SaveChanges();
 
@@ -504,8 +508,8 @@ namespace WebApplication8.Controllers
 
                     //EP.qty = float.Parse(d.qty.ToString());
 
-
-                    float? AvailableQty = materialRepository.AvailableQty(detail.MaterialId);
+                    Material material = materialRepository.GetById(detail.MaterialId);
+                    float? AvailableQty = materialRepository.AvailableQty(material);
                     if (AvailableQty > detail.qty)
                     {
                         detail.status = statusList.InStock;
@@ -519,7 +523,7 @@ namespace WebApplication8.Controllers
                     db.SaveChanges();
 
 
-                    materialRepository.ReserveQty(detail.MaterialId, detail.qty);
+                    materialRepository.ReserveQty(material, detail.qty);
                     materialRepository.Save();
 
                 }
@@ -581,7 +585,8 @@ namespace WebApplication8.Controllers
             }
             foreach (CuttingSheetDetail detail in cuttingSheet.CuttingSheetDetails.ToList())
             {
-                materialRepository.ReleaseReserveQty(detail.MaterialId, detail.qty);
+                Material material = materialRepository.GetById(detail.MaterialId);
+                materialRepository.ReleaseReserveQty(material, detail.qty);
             }
 
             db.CuttingSheets.Remove(cuttingSheet);

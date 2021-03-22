@@ -30,9 +30,9 @@ namespace WebApplication8.Persistence
 
 
 
-        public Task<List<Material>> GetById(int id, bool icludeRelated = true)
+        public Material GetById(int id, bool icludeRelated = true)
         {
-            throw new NotImplementedException();
+            return  db.Materials.Include(m => m.Unit).Where(m => m.MaterialId == id).FirstOrDefault();
         }
 
         public void Insert(Material Notification)
@@ -51,25 +51,22 @@ namespace WebApplication8.Persistence
             db.SaveChanges();
         }
 
-        public void ReleaseReserveQty(int materialId, float qty)
+        public void ReleaseReserveQty(Material material, float qty)
         {
-            Material material = db.Materials.Find(materialId);
             float Resevedqty = material.Resevedqty ?? 0;
             material.Resevedqty = Resevedqty - qty;
         }
 
-        public float AvailableQty(int materialid)
+        public float AvailableQty(Material material)
         {
-            Material material = db.Materials.Find(materialid);
             float Resevedqty = material.Resevedqty ?? 0;
             float MinReOrder = material.MinReOrder ?? 0;
             float qty = material.qty ?? 0;
             return qty - Resevedqty - MinReOrder;
         }
 
-        public void ReserveQty(int materialId, float qty)
+        public void ReserveQty(Material material, float qty)
         {
-            Material material = db.Materials.Find(materialId);
             float Resevedqty = material.Resevedqty ?? 0;
             material.Resevedqty = Resevedqty + qty;
         }

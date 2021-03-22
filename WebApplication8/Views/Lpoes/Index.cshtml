@@ -33,6 +33,7 @@
         @if (User.IsInRole("LPODownloadExcel") || User.IsInRole("Admin"))
         {
             <button id="btnExport" style="margin-left:20px" class="btn btn-default">Excel <span class=" glyphicon glyphicon-download-alt"></span></button>
+
         }
     </label>
 
@@ -67,10 +68,28 @@
             </div>
 
 
+            <div class="form-group  push-down-4 inner col-md-3"  style="float:left;padding-left:30px">
+ 
+                <div class="input-group date form_date " data-date="" data-date-format="dd MM yyyy" data-link-field="StartDate" data-link-format="yyyy-mm-dd" >
+                    <input class="form-control" size="5" type="text" value="@ViewBag.StartDate" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+                <input type="hidden" id="StartDate" name="StartDate" value="@ViewBag.StartDate" /><br />
+            </div>
+
+            <div class="form-group  push-down-4 inner col-md-3" style="float:left;padding-left:30px">
+
+                <div class="input-group date form_date " data-date="" data-date-format="dd MM yyyy" data-link-field="EndDate" data-link-format="yyyy-mm-dd">
+                    <input class="form-control" size="6" type="text" value="@ViewBag.EndDate" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+                <input type="hidden" id="EndDate" name="EndDate" value="@ViewBag.EndDate" /><br />
+            </div>
 
 
-
-            <div class="input-group-btn" style="padding-left:60px">
+            <div class="input-group-btn" style="float:left;padding-left:30px">
                 <button class="btn btn-primary">Search</button>
 
             </div>
@@ -132,7 +151,12 @@
             <th hidden>
                 @Html.DisplayNameFor(model => model.LpoId)
             </th>
-
+            <th>
+                @Html.DisplayNameFor(model => model.LpoNature)
+            </th>
+            <th> 
+                @Html.DisplayNameFor(model => model.Remarks)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -149,9 +173,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.SupplierRef)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LpoDate)
-            </td>
+            <td NOWRAP>@item.LpoDate.ToString("dd-MMM-yyyy")</td>
 
             <td>
                 @Html.DisplayFor(modelItem => item.Supplier.Name)
@@ -188,6 +210,12 @@
                 @Html.DisplayFor(modelItem => item.LpoId)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.LpoNature.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Remarks)
+            </td>
+            <td>
 
 
                 @Html.ActionLink("Print", "PrintNewTable", new { id = item.LpoId }) |
@@ -212,11 +240,9 @@
         }
     </tbody>
 </table>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-
-
-
 
 
     <!-- DATA TABLE SCRIPTS -->

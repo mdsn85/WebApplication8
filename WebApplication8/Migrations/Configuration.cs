@@ -28,6 +28,16 @@ namespace WebApplication8.Migrations
 
 
 
+
+
+
+            context.LpoNatures.AddOrUpdate(x => x.LpoNatureId,
+                new LpoNature() { LpoNatureId = 1, Name = "factory / warehouse" },
+                new LpoNature() { LpoNatureId = 2, Name = "showroom O/M" },
+                new LpoNature() { LpoNatureId = 3, Name = "showroom AQ" },
+                new LpoNature() { LpoNatureId = 4, Name = "projects" });
+
+
             context.MaterialCategorys.AddOrUpdate(x => x.MaterialCategoryId,
                 new MaterialCategory() { MaterialCategoryId = 1, Name = "Fast Moving" },
                 new MaterialCategory() { MaterialCategoryId = 2, Name = "Raw Material" },

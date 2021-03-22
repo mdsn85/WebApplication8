@@ -94,7 +94,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Vat, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Vat, new { htmlAttributes = new { @class = "form-control", id = "Vat", @readonly = "readonly" } })
+            @Html.EditorFor(model => model.Vat, new { htmlAttributes = new { @class = "form-control", id = "Vat" } })
             @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -116,14 +116,26 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.LpoLocation, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10"  style="float:left; display:inline; ">
+        @Html.LabelFor(model => model.LpoNatureId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10" style="float:left; display:inline; ">
+            @Html.DropDownList("LpoNatureId", null ,"Please Select", htmlAttributes: new { @class = "form-control", @id = "LpoNatureId" })
+            <span class="glyphicon glyphicon-plus btn btn-danger " onclick="AddNamture()"> Add More</span>
+            @Html.ValidationMessageFor(model => model.LpoNatureId, "", new { @class = "text-danger" })
+
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.LpoLocationId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10" style="float:left; display:inline; ">
             @Html.DropDownList("LpoLocationId", null, htmlAttributes: new { @class = "form-control", @id = "LpoLocationId" })
-            <span class="glyphicon glyphicon-plus btn btn-danger "  onclick="AddAddress()" > Add More</span>
+            <span class="glyphicon glyphicon-plus btn btn-danger " onclick="AddAddress()"> Add More</span>
             @Html.ValidationMessageFor(model => model.LpoLocationId, "", new { @class = "text-danger" })
 
         </div>
     </div>
+
     <div class="form-group">
         <div class="card-content">
             <b>
@@ -165,8 +177,8 @@
                                 Request Qty
                             </td>
                             @*<td>
-                        Unit
-                    </td>*@
+                                    Unit
+                                </td>*@
                             <td>
                                 Price
                             </td>
@@ -340,6 +352,10 @@
         function AddAddress(){
             showModalPopUp('/LpoLocations/CreateShort');
         }
+        function AddNamture() {
+            showModalPopUp('/LpoNatures/CreateShort');
+        }
+        
     </script>
 
 
@@ -609,6 +625,22 @@
             });
         }
 
+        function setNature(i) {
+            $.ajax({
+                type: "GET",
+                url: "/LpoNatures/get",
+                success: function (result) {
+                    const data = result;//JSON.stringify(result);
+
+                    FillSelect("LpoNatureId", data, i)
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+
+                }
+            });
+        }
+
         function FillSelect(select,data,id) {
             let dropdown = document.getElementById(select);
             dropdown.length = 0;
@@ -756,8 +788,15 @@
             var v = subTotal * 1.05
             $("#vat").val(v);
 
+        });
 
+        $("#Vat").change(function () {
 
+            let total = parseFloat( $("#Total").val());
+            let vat = parseFloat($("#Vat").val());
+
+            let GrandTotal = total + vat ;
+            $("#GrandTotal").val(GrandTotal);
         });
 
         function PriceChange(i) {
