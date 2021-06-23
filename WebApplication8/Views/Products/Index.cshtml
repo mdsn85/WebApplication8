@@ -1,0 +1,86 @@
+﻿@model IEnumerable<WebApplication8.Models.Product>
+@{
+
+    Layout = "~/Views/Shared/_Layout - Temp - Table.cshtml";
+}
+@{
+    ViewBag.Title = "Products List";
+}
+<style>
+    th, td {
+        padding: 4px 4px 4px 14px;
+    }
+</style>
+<h2 style="padding-bottom:10px">Products List</h2>
+
+<label class="button-collapse">
+
+
+    @Html.ActionLink("Create New", "Create", null, htmlAttributes: new { @class = " btn btn-default " })
+</label>
+
+<table class=" table-striped table-bordered table-hover" id="dataTables-example">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ProductId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ProductId })
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @*<script src="~/Scripts/js/jquery1.7.1Google.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
+    <script src="~/Scripts/js/selectSearch/select2.min.js"></script>
+
+    <script>
+
+
+        $(document).ready(function () {
+
+
+            $('#dataTables-example').dataTable({
+                "order": [1, "desc"],
+
+            });
+        });
+
+
+
+
+
+
+
+        $("#btnExport").click(function (e) {
+            var table = $('#dataTables-example').dataTable();
+            e.preventDefault();
+            window.open('data:application/vnd.ms-excel,' +
+                encodeURIComponent(table[0].outerHTML));
+        });
+
+
+
+
+    </script>
+
+}

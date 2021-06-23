@@ -49,7 +49,7 @@ namespace WebApplication8.Controllers
 
             if (!String.IsNullOrEmpty(SearchProjectCode))
             {
-                cuttingSheets = cuttingSheets.Where(s => s.project.Code.ToString().Contains(SearchProjectCode, StringComparison.InvariantCultureIgnoreCase)).ToList();
+                cuttingSheets = cuttingSheets.Where(s =>s.project!=null&& s.project.Code != null && s.project.Code.ToString().Contains(SearchProjectCode, StringComparison.InvariantCultureIgnoreCase)).ToList();
             }
 
             cuttingSheets = cuttingSheets.OrderByDescending(p => p.StampDate).ToList();

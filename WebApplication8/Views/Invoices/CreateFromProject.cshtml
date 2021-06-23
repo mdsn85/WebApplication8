@@ -1,0 +1,850 @@
+﻿@model WebApplication8.Models.Invoice
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create Invoice</h2>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "Lpoform", @NAME = "Lpoform" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(Model => Model.ProjectId)
+    @Html.HiddenFor(Model => Model.CustomerId)
+    @Html.HiddenFor(Model => Model.Sequense)
+
+    @Html.HiddenFor(model => Model.Code, new { htmlAttributes = new { @class = "form-control",  id= "Code" , name= "Code" ,value = @ViewBag.code } })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Code, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @ViewBag.code
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProjectId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @ViewBag.ProjectCode
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CustomerId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @ViewBag.CustomerName
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <label for="InvoiceDate" class="col-md-2 control-label">Invoice Date</label>
+        <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="InvoiceDate" data-link-format="yyyy-mm-dd">
+            <input class="form-control" size="16" type="text" value="" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+        <input type="hidden" id="InvoiceDate" name="InvoiceDate" value="@ViewBag.InvoiceDate" /><br />
+
+        @Html.ValidationMessageFor(model => model.InvoiceDate, "", new { @class = "text-danger" })
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CustomerReference, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CustomerReference, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CustomerReference, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        @Html.LabelFor(model => model.DeliverNote, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DeliverNote, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DeliverNote, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DespatchedThrough, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DespatchedThrough, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DespatchedThrough, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TermsOfDelivery, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+
+            <textarea class="materialize-textarea" name="TermsOfDelivery" id="TermsOfDelivery">@Model.TermsOfDelivery</textarea>
+            @Html.ValidationMessageFor(model => model.TermsOfDelivery, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="card-content">
+            <b>
+                <p class="control-label col-md-2">
+
+
+                </p>
+            </b>
+            <div class="table-responsive">
+                <div style="float: left;padding-left:10%">
+                    <button id="calculate" type="button" onclick="openChild()" class="fa fa-plus-square btn btn-danger"> Add Material</button><br>
+                    <br />
+
+                    <input id="CustomerId" name="CustomerId" type="hidden" />
+                    <div id="Customer"></div>
+
+                </div>
+                <table class="table-bordered table-responsive table dataTable text-nowrap" style="" id="tbDetails">
+                    <thead>
+                        <tr>
+
+
+                            <td>
+                                Sr #
+                            </td>
+                            <td>
+                                id
+                            </td>
+                            <td>
+                                Product
+                            </td>
+                            \
+                            <td>
+                                Unit
+                            </td>
+                            <td>
+                                Request Qty
+                            </td>
+                            <td>
+                                Price
+                            </td>
+                            <td>
+                                Totlal
+                            </td>
+
+                            <td>
+                                delete
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody id="p_scents"></tbody>
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SubTotal, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.SubTotal, new { htmlAttributes = new { @class = "form-control", id = "SubTotal", Value = 0, @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.SubTotal, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Discount, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control", id = "Discount", Value = 0 } })
+            @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Total", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.Editor("Total", new { htmlAttributes = new { @class = "form-control", id = "Total", Value = 0, @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.SubTotal, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Vat, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Vat, new { htmlAttributes = new { @class = "form-control", id = "Vat" } })
+            @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.GrandTotal, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.GrandTotal, new { htmlAttributes = new { @class = "form-control", id = "GrandTotal", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.GrandTotal, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Remarks, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "form-control " } })
+            @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BankDetails, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @*@Html.TextAreaFor(model => model.BankDetails, new { htmlAttributes = new { @class = "materialize-textarea" } })*@
+
+            <textarea class="materialize-textarea" name="BankDetails" id="BankDetails">@Model.BankDetails</textarea>
+            @Html.ValidationMessageFor(model => model.BankDetails, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Declaration, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+
+            <textarea class="materialize-textarea" name="Declaration" id="Declaration">@Model.Declaration</textarea>
+
+
+        </div>
+    </div>
+
+    <div class="form-group" style="margin-top : 5px">
+        <div class="col-md-offset-4 col-md-2">
+
+            <input type="button" id="btnSave" value="  Save  " class="btn btn-primary adminworkSaveBtn " />
+
+
+
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <!--Select Search-->
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
+    <script src="~/Scripts/js/selectSearch/select2.min.js"></script>
+
+
+
+
+   
+   
+
+    <script>
+        $(document).ready(function () {
+            $("form").submit(function (e) {
+
+                e.preventDefault(e);
+            });
+
+            var x = "@ViewBag.code"
+            $("#Code").val(x);
+        });
+
+        function validateForm() {
+            //  CustomerReference, DeliverNote, DespatchedThrough, TermsOfDelivery
+            if (document.Lpoform.CustomerReference.value == '') {
+                alert("Please fill Customer Reference!");
+                document.Lpoform.CustomerReference.focus();
+                return false;
+            }
+
+            if (document.Lpoform.DeliverNote.value == '') {
+                alert("Please enter Deliver Note");
+                document.Lpoform.DeliverNote.focus();
+                return false;
+            }
+
+
+            if (document.Lpoform.DespatchedThrough.value == '') {
+                alert("Please fill Despatched Through!");
+                document.DespatchedThrough.focus();
+                return false;
+            }
+
+            if (document.Lpoform.TermsOfDelivery.value == '') {
+                alert("Please fill Terms Of Delivery!");
+                document.TermsOfDelivery.focus();
+                return false;
+            }
+            var table = document.getElementById("tbDetails");
+            var totalRowCount = table.rows.length; // 5
+            var tbodyRowCount = table.tBodies[0].rows.length; // 3
+
+
+
+            if (tbodyRowCount == '') {
+                alert("Please add materials!");
+
+                return false;
+            } else {
+
+                var i = 0;
+
+                var testnum = 0;
+                $("#tbDetails TBODY TR").each(function () {
+
+                    var row = $(this);
+                    var Detail = {};
+                    var Confirmed = 0;
+
+                    i++;
+                    $(this).closest('tr').find('input').each(function () {
+
+
+                        if ($(this).attr("name") === "Qty") {
+                            Detail.Qty = $(this).prop("value");
+                            if (Detail.Qty == '') {
+                                alert("Please fill Product QTY!");
+                                testnum = 1;
+                                //row.focus();
+                                return false;
+                            }
+                        }
+                        if ($(this).attr("name") === "Price") {
+                            Detail.Price = $(this).prop("value");
+                            if (Detail.Price == '') {
+                                alert("Please fill Product Price!");
+                                testnum = 1;
+                                //row.focus();
+                                return false;
+                            }
+                        }
+
+                    });
+                })
+            }
+
+            if (testnum === 1) {
+                return (false);
+            }
+            return (true);
+
+        }
+
+
+        function openChild() {
+            showModalPopUp('/Products/IndexShort');
+
+        }
+        //function AddAddress() {
+        //    showModalPopUp('/LpoLocations/CreateShort');
+        //}
+        //function AddNamture() {
+        //    showModalPopUp('/LpoNatures/CreateShort');
+        //}
+
+    </script>
+
+
+
+
+    <script>
+        var scntDiv = $('#p_scents');
+        var nextRaw = 0;
+
+        function remove(rowId) {
+
+            var i = rowId.substring(5);
+            var total = $("#total" + i).val();
+
+            //Remove the TR element using JQuery's remove method.
+            $('#' + rowId).fadeOut('slow', function () {
+                $('#' + rowId).remove();
+
+            });
+            nextRaw = nextRaw - 1;
+
+            Sr = Sr - 1;
+
+
+
+            TotalChangeAfterRemove(i, total);
+
+
+
+
+        }
+
+
+        function TotalChangeAfterRemove(i, val) {
+
+            var subTotal = $("#SubTotal").val();
+
+            var total = val;
+
+            var x = parseFloat(subTotal) - parseFloat(total);
+            $("#SubTotal").val(x);
+
+
+            var Discount = $("#Discount").val();
+            var t = x - parseFloat(Discount)
+            $("#Total").val(t);
+
+
+            var v = t * 0.05
+            $("#Vat").val(v);
+
+            var g = 0;
+            g = t + v;
+
+            $("#GrandTotal").val(g);
+
+
+        }
+
+
+
+    </script>
+
+
+    <script>
+
+        var getProducts = function () {
+            var Details = new Array();
+            var i = 0;
+            $("#tbDetails TBODY TR").each(function () {
+                var row = $(this);
+                var Detail = {};
+
+                i++;
+
+                Detail.InvoiceId = 0;
+                $(this).closest('tr').find('input').each(function () {
+
+                    if ($(this).attr("name") === "id") {
+                        Detail.ProductId = $(this).prop("value");
+
+                    }
+                    if ($(this).attr("name") === "Qty") {
+                        Detail.Qty = $(this).prop("value");
+                    }
+                    if ($(this).attr("name") === "Price") {
+                        Detail.Price = $(this).prop("value");
+
+                    }
+
+                });
+                Details.push(Detail);
+            });
+            return Details;
+        }
+
+
+
+
+
+
+
+        $("body").on("click", "#btnSave", function () {
+
+
+            if (validateForm() != false) {
+                //Loop through the Table rows and build a JSON array.
+                //  var LpoHeader = new Array();
+                var EnqueryId = 0;
+
+                var Enquery = $('#Lpoform').serialize();
+
+                var invoice = {};
+
+
+                var details = getProducts();
+                $.ajax({
+                    type: "POST",
+                    url: "/Invoices/GetInvoiceJson",
+                    data: '{ enquery:' + JSON.stringify(Enquery) + '}',
+                    async: false,
+                    success: function (r) {
+                        invoice = r;
+                        invoice.InvoiceDate = new Date(parseInt(invoice.InvoiceDate .replace("/Date(", "").replace(")/", ""), 10));
+
+                        console.log("Invoice:" + JSON.stringify(invoice) + " \r\n product " + JSON.stringify(details));
+                        //Send the JSON array to Controller using AJAX.
+                        $.ajax({
+                            type: "POST",
+                            url: "/Invoices/CreateJson",
+                            async: false,
+                            data: JSON.stringify({ invoice: invoice, Details: details }),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (r) {
+
+                                if (r) {
+                                    window.location.href = "@Url.Action("Index", "Invoices")";
+                                }
+                                else {
+                                    if (confirm(r + ' do you whant to retry?')) {
+                                        // Save it!
+                                    } else {
+                                        window.location.href = "@Url.Action("Index", "Projects")";
+                                    }
+                                }
+                                // confirm("Press a button!");
+                                //  alert(r + " record(s) inserted.");
+                            }
+                        });
+
+                    }
+
+                });
+
+
+
+
+
+
+
+
+            }
+        });
+    </script>
+
+
+    <script type="text/javascript">
+
+        var popUpObj;
+
+        function showModalPopUp(url) {
+
+            popUpObj = window.open(url,
+
+                "ModalPopUp",
+
+                "toolbar=no," +
+
+                "scrollbars=no," +
+
+                "location=no," +
+
+                "statusbar=no," +
+
+                "menubar=no," +
+
+                "resizable=0," +
+
+                "width=620," +
+
+                "height=360," +
+
+                "left = 340," +
+
+                "top=10"
+
+            );
+
+            popUpObj.focus();
+
+            LoadModalDiv();
+
+        }
+
+    </script>
+
+    <script type="text/javascript">
+
+        function LoadModalDiv() {
+
+            var bcgDiv = document.getElementById("divBackground");
+
+            bcgDiv.style.display = "block";
+
+            if (bcgDiv != null) {
+
+                if (document.body.clientHeight > document.body.scrollHeight) {
+
+                    bcgDiv.style.height = document.body.clientHeight + "px";
+
+                }
+
+                else {
+
+                    bcgDiv.style.height = document.body.scrollHeight + "px";
+
+                }
+
+                bcgDiv.style.width = "100%";
+
+            }
+
+        }
+
+    </script>
+    <script type="text/javascript">
+
+        function HideModalDiv() {
+
+            var bcgDiv = document.getElementById("divBackground");
+
+            bcgDiv.style.display = "none";
+
+        }
+
+    </script>
+    <script>
+        function setLocation(i) {
+            $.ajax({
+                type: "GET",
+                url: "/LpoLocations/get",
+                success: function (result) {
+                    const data = result;//JSON.stringify(result);
+
+                    FillSelect("LpoLocationId", data, i)
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+
+                }
+            });
+        }
+
+        function setNature(i) {
+            $.ajax({
+                type: "GET",
+                url: "/LpoNatures/get",
+                success: function (result) {
+                    const data = result;//JSON.stringify(result);
+
+                    FillSelect("LpoNatureId", data, i)
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+
+                }
+            });
+        }
+
+        function FillSelect(select, data, id) {
+            let dropdown = document.getElementById(select);
+            dropdown.length = 0;
+
+            let defaultOption = document.createElement('option');
+            defaultOption.text = 'Choose State/Province';
+
+            dropdown.add(defaultOption);
+            dropdown.selectedIndex = 0;
+
+            for (let i = 0; i < data.length; i++) {
+                option = document.createElement('option');
+
+                option.text = data[i].Name;
+                option.value = data[i].Id;
+                if (data[i].Id === id)
+                    option.selected = true;
+                dropdown.add(option);
+            }
+
+        }
+    </script>
+
+    <script>
+        var Sr = 0;
+        //            window.opener.setValue(oVal, name, unit, Dimension, Price, QtyApproved, Approval, AvalableQty);
+        function setValue(material) {
+            let myVal = material.ProductId, Name = material.Name, Unit = "PCS", Dinmension = "";
+            let price = '', AvalableQty = "";
+
+
+
+
+            if (AvalableQty < 0) {
+                AvalableQty = -1 * AvalableQty;
+            }
+            var current = $(".ClientId").length;
+
+            var next = parseFloat(current) + 1;
+            var a = "DDlforLocationsClient" + next;
+            var b = "span" + next;
+
+            Sr = Sr + 1;
+
+
+            //= $('#tbDetails tr').length;
+            nextRaw = nextRaw + 1;
+            var tt = '<tr id="item_' + nextRaw + '">';
+
+
+            tt = tt + '<td class="Name" > ' +
+                '<div class="" > ' +
+                Sr +
+                '</div > ' +
+                '</td > ';
+
+            tt = tt + '<td class="Name" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="id" id="id' + nextRaw + '"  class="form-control" value="' + myVal + '"/> ' +
+                '</div > ' +
+                '</td > ';
+
+            tt = tt + '<td class="Name" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="Name" id="Name' + nextRaw + '"  class="form-control" value="' + Name + '"/> ' +
+                '</div > ' +
+                '</td > ';
+
+
+
+
+            tt = tt + '<td class="Name" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="Unit" id="Unit' + nextRaw + '"  class="form-control" value="' + Unit + '"/> ' +
+                '</div > ' +
+                '</td > ';
+
+
+            tt = tt + '<td class="Qty" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="Qty" id="Qty' + nextRaw + '"  class="form-control" onchange="PriceChange(' + nextRaw + ')"  value="' + AvalableQty + '"/> ' +
+                '</div > ' +
+                '</td > ';
+
+            //tt = tt + '<td class="Name" > ' +
+            //    '<div class="" > ' +
+            //    '<input type="text" name="Unit2" id="Unit2' + nextRaw + '"  class="form-control" value="' + Unit + '"/> ' +
+            //    '</div > ' +
+            //    '</td > ';
+
+            tt = tt + '<td class="Price" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="Price" id="Price' + nextRaw + '"  class="form-control Price" value="' + price + '" onchange="PriceChange(' + nextRaw + ')"/> ' +
+                '</div > ' +
+                '</td > ';
+
+            tt = tt + '<td class="total" > ' +
+                '<div class="" > ' +
+                '<input type="text" name="total" id="total' + nextRaw + '"  class="form-control" " /> ' +
+                '</div > ' +
+                '</td > ';
+
+
+
+            tt = tt + ' <td>' +
+                ' <div class="delete">' +
+                '  <span id="c1" class="	glyphicon glyphicon-trash" onclick="remove(\'item_' + nextRaw + '\')"> </span>' +
+                ' </div>' +
+                ' </td>' +
+                ' </tr>';
+
+            scntDiv.append(tt);
+            PriceChange(nextRaw);
+
+            var options = "";
+
+
+        }
+    </script>
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>*@
+    <script>
+        $("#Discount").change(function () {
+
+            var subTotal = $("#SubTotal").val();
+            var Discount = $("#Discount").val();
+            var t = subTotal - Discount
+            $("#Total").val(t);
+
+            var v = clacVat(t)
+            $("#Vat").val(v);
+
+            var g = 0;
+            g = t + v;
+
+            $("#GrandTotal").val(g);
+
+        });
+
+        $("#SubTotal").change(function () {
+            var subTotal = $("#SubTotal").val();
+            var v = clacVat(subTotal);
+            $("#vat").val(v);
+
+        });
+
+        $("#Vat").change(function () {
+
+            let total = parseFloat($("#Total").val());
+            let vat = parseFloat($("#Vat").val());
+
+            let GrandTotal = total + vat;
+            $("#GrandTotal").val(GrandTotal);
+        });
+
+        function PriceChange(i) {
+            //alert(i);
+            var qty = $("#Qty" + i).val();
+            var price = $("#Price" + i).val();
+
+            // alert(qty + "   " + price)
+            $("#total" + i).val(qty * price);
+
+            TotalChange(i)
+
+        };
+
+        function TotalChange(i) {
+            let subTotal = 0;
+            let sub = 0;
+            $("#tbDetails TBODY TR").each(function () {
+
+                var row = $(this);
+                var Detail = {};
+                i++;
+                $(this).closest('tr').find('input').each(function () {
+
+                    if ($(this).attr("name") === "total") {
+                        sub = $(this).prop("value");
+                        subTotal += parseFloat(sub);
+                    }
+                });
+
+            });
+
+
+            $("#SubTotal").val(subTotal);
+            let Discount = $("#Discount").val();
+            let total = subTotal - parseFloat(Discount)
+            $("#Total").val(total);
+
+
+            let vat = clacVat(total);
+            $("#Vat").val(vat);
+
+            let GrandTotal = total + vat;
+
+            $("#GrandTotal").val(GrandTotal);
+
+
+        }
+
+
+        var clacVat = function (total) {
+            let vat = total * 0.05;
+            vat = parseFloat(vat.toFixed(2));
+            return vat;
+        }
+    </script>
+
+
+
+}

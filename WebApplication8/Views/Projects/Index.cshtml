@@ -48,11 +48,11 @@
 
 
 
-            <div class="input-group push-down-4 inner col-md-2" style="float:left">
+            @*<div class="input-group push-down-4 inner col-md-2" style="float:left">
                 <span class="input-group-addon"><span class="fa fa-search"></span></span>
                 <input type="text" name="SearchCode" class="form-control" placeholder="Project Code..." value="@ViewBag.SearchCode" />
 
-            </div>
+            </div>*@
 
 
 
@@ -70,7 +70,7 @@
             </div>
 
 
-            <div class="input-group push-down-4 inner col-md-2" style="float:left;padding-left:30px">
+            @*<div class="input-group push-down-4 inner col-md-2" style="float:left;padding-left:30px">
                 <span class="input-group-addon"><span class="fa fa-search"></span></span>
                 <input type="text" name="SearchValue1" class="form-control" placeholder="Project Value From..." value="@ViewBag.SearchValue1" />
 
@@ -81,17 +81,32 @@
                 <span class="input-group-addon"><span class="fa fa-search"></span></span>
                 <input type="text" name="SearchValue2" class="form-control" placeholder="Project Value To..." value="@ViewBag.SearchValue2" />
 
+            </div>*@
+
+            <div class="form-group  push-down-2 inner col-md-2" style="float:left;padding-left:30px; ">
+
+                <div class="input-group date form_date " data-date="" data-date-format="dd MM yyyy" data-link-field="StartDate" data-link-format="yyyy-mm-dd">
+                    <input class="form-control" size="5" type="text" value="@ViewBag.StartDate" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+                <input type="hidden" id="StartDate" name="StartDate" value="@ViewBag.StartDate" /><br />
             </div>
 
-            <div class="input-group push-down-4 inner col-md-2" style="float:left;padding-left:30px">
+            <div class="form-group  push-down-4 inner col-md-2" style="float:left;padding-left:30px; " >
+
+                <div class="input-group date form_date " data-date="" data-date-format="dd MM yyyy" data-link-field="EndDate" data-link-format="yyyy-mm-dd">
+                    <input class="form-control" size="6" type="text" value="@ViewBag.EndDate" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+                <input type="hidden" id="EndDate" name="EndDate" value="@ViewBag.EndDate" /><br />
+            </div>
+
+            <div class="input-group push-down-4 inner col-md-2" style="float:left;padding-left:30px; padding-top:5px">
                 <input type="checkbox" id="NotApproved" name="NotApproved" value="true" />
                 <label for="NotApproved" style="padding-right:30px">Not Approved</label>
-
-
-
-                <button class="btn btn-default" > Search <span class="glyphicon glyphicon-search"></span> </button>
-
-            
+                <button class="btn btn-default"> Search <span class="glyphicon glyphicon-search"></span> </button>
             </div>
 
         </div>
@@ -246,6 +261,16 @@
                 {
                     @Html.ActionLink("Delete", "Delete", new { id = item.ProjectId })
                     @Html.Raw("|");
+                }
+                @if (User.IsInRole("Admin") || User.IsInRole("Account"))
+                {
+                    @Html.ActionLink("Invoice", "CreateFromProject", "Invoices", new
+                        {
+                           CustomerId = item.CustomerId,
+                           ProjectId = item.ProjectId,
+                           CustomerName = item.Customer.Name,
+                           Code = item.Code
+                         }, null);@Html.Raw("|");
                 }
 
             </td>

@@ -1,0 +1,288 @@
+﻿@model WebApplication8.Models.Invoice
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <title>@Model.Customer.Name :- invoice@Model.Code    </title>
+
+    <link href='https://fonts.googleapis.com/css?family=Fira Sans' rel='stylesheet'>
+
+
+
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/Print.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        .TopColumn{
+            width:33.33%;
+            float:left;
+             
+            border:2px solid black;
+
+            padding : 1em
+
+        }
+    </style>
+</head>
+
+
+<body style="align-content:center">
+
+    <table cellspacing="0" cellpadding="0" class="table borderless " style="margin-left:10mm">
+        <thead style="border:0px ;color:#FFF" class="nobordered">
+            <tr>
+                <td>
+                    <div class="header-space">&nbsp;</div>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="page-header">
+                    <div class="headerLPO">Tax Invoice</div>
+                </td>
+            </tr>
+            <tr>
+                <td>  
+
+
+
+                    <table style="width:90%  ;border: 0px" class="detailsTable borderless">
+                        <tr>
+                            <td class="supplierDetails ">
+                                <p>Buyer Details:</p>
+                                <label class="title"> @Model.Customer.Name </label><br />
+                                Address     : @Model.Customer.Address<br />
+                                Emirates    : @Model.Customer.Emirate<br />
+                                @if (!string.IsNullOrEmpty(Model.Customer.City))
+                                {
+                                    @Html.Display("City    :" + Model.Customer.City)
+                                }
+                                Country   : @Model.Customer.Country<br />
+
+
+                            </td>
+                
+
+                            <td class="Shipto">
+                                <p>Invoice Details:</p>
+                                <b class="header">Invoice No.     : @Model.Code </b> <br />
+
+                                Invoice Date          : @Model.InvoiceDate.ToString("yyyy-MM-dd")<br />
+                                Mode/Terms of Payment : @if (@Model.Project.ProjectPaymentTerm != null) { @Model.Project.ProjectPaymentTerm.Name}<br />
+                                Customer Ref          : @Model.CustomerReference<br />
+                            </td>
+
+                            <td class="LPODetails">
+                                <p>Delivery Details: </p>
+                                Despatched Through :@Model.DespatchedThrough  <br />
+                                Terms Of Delivery :@Model.TermsOfDelivery <br />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr style="border: 0px">
+                <td>
+
+                    <table class="bordered " style="width:90% ;margin-left:28px ;margin-top:30px" id="mainTable">
+                        <tr style="  border: 1px solid black;">
+                            <td>
+                                Sr. #.
+                            </td>
+                            <td>
+                                Items Description
+                            </td>
+                            <td>
+                                Quantity
+                            </td>
+                            <td>
+                                Unit
+                            </td>
+                            <td>
+                                Price
+                            </td>
+                            <td>
+                                Amount
+                            </td>
+                        </tr>
+                        @{
+                            int i = 0;
+                            float Amount = 0;
+                            float QtySum = 0;
+                         }
+                        @foreach (var item in Model.InvoiceProducts)
+                        {
+                            i++;
+                            Amount = item.Qty * item.Price;
+                            QtySum += item.Qty;
+                        <tr>
+                            <td width="3%" style="text-align:center">@i </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.Name)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Qty)
+                            </td>
+
+                            <td>
+                               @Html.Raw( "PCS")
+                            </td>
+
+                            <td>
+                                @Html.Raw(@Html.Raw(string.Format("{0:#,#.00}", @item.Price)))
+                            </td>
+
+                            <td>
+                                @Html.Raw(@Html.Raw(string.Format("{0:#,#.00}", @Amount)))
+                            </td>
+                        </tr>
+                        }
+
+                        <tr>
+
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+
+                            <td>
+                                <b>Sub Total :</b>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.SubTotal)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td>
+                                <b>Discount:</b>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Discount)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border:  none;" ></td>
+                            <td style="border: none; " ></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td>
+                                <b>Total:</b>
+                            </td>
+                            <td>
+                                @Html.Raw(@Html.Raw(string.Format("{0:#,#.00}", @Model.SubTotal - @Model.Discount)))
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td>
+                                <b>Vat 5%</b>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Vat)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td style="border: none;"></td>
+                            <td>
+                                <b>Grand Total:</b>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.GrandTotal)
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+
+
+            <tr style="padding:80px 20px 20px 20px;">
+                <td style="  border: 0px ">
+                    <table id="">
+                        <tr>
+                            <td width="50%" >
+                                Remarks:
+                                <span style="white-space: pre-line">@Model.Remarks</span>
+                            </td>
+                            <td class="pull-right" style=" margin-right:100px;">
+                                <span style="white-space: pre-line">@Model.BankDetails</span>
+                   
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div>
+
+
+                        <table style="margin-top: 40px" class="" id="" width="95%">
+
+                            <tr>
+                                <td width="50%">
+                                    <u>Declaration</u>
+                                    <br />
+                                    <span style="white-space: pre-line">@Model.Declaration</span>
+                                </td>
+
+                                <td style="border: 1px solid black;" valign=top>
+                                    For MR HIGH MOON FURNITURESS TRADDING LLC<br />
+                                    <br />
+                                    <br />
+                                </td>
+
+                            </tr>
+                        </table>
+                            @*<img width="250" height="120" src="~/assets/img/Letter/highmoon signature.jpg" style="padding-left:30px" />*@
+                                </div>
+                            </td>
+            </tr>
+        </tbody>
+        <tfoot style="border:0px ;color:#FFF" class="nobordered">
+            <tr>
+                <td>
+                    <div class="footer-space">&nbsp;</div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <div class="header">
+
+        <img src="~/assets/img/Letter/Letter Head Top.jpg" />
+    </div>
+    <div class="footer">
+        <img height="100" width="100%" src="~/assets/img/Letter/Letter Head bottom.jpg" />
+    </div>
+
+    <script>
+        function thousands_separators(num) {
+            var num_parts = num.toString().split(".");
+            num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return num_parts.join(".");
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+

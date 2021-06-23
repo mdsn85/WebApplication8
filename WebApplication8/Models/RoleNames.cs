@@ -30,6 +30,11 @@ namespace WebApplication8.Models
         public const string ROLE_Invoice = "Invoice";
 
 
+        public const string ROLE_InvoicePrint = "InvoicePrint";
+        public const string ROLE_InvoiceCreate = "InvoiceCreate";
+        public const string ROLE_InvoiceView = "InvoiceView";
+        public const string ROLE_InvoiceDownload = "InvoiceDownload";
+
 
 
 
@@ -82,6 +87,14 @@ namespace WebApplication8.Models
         public const string ROLE_SupplierCreate = "SupplierCreate";
         public const string ROLE_SupplierView = "SupplierView";
         public const string ROLE_SupplierEdit = "SupplierEdit";
+
+        public const string ROLE_ProdutCreate = "ProdutCreate";
+        public const string ROLE_ProdutView = "ProdutView";
+        public const string ROLE_ProdutEdit = "ProdutEdit";
+
+        public const string ROLE_SalesMudole = "SalesMudole";
+
+        
 
         //public const string ROLE_ProjectCreate = "ProjectCreate";
         //public const string ROLE_ProjectViewAttachment = "ProjectViewAttachment";

@@ -11,6 +11,13 @@
             }
 
 
+            @if (User.IsInRole("SalesMudole") || User.IsInRole("Admin"))
+            {
+                <li>
+                    <a href="" class="waves-effect waves-dark" onclick="goSalesModule()" disable><i class="fa fa-dashboard"></i> Sales Module </a>
+                </li>
+            }
+
             @if (User.IsInRole("Sales Coordinator") || User.IsInRole("Admin") || User.IsInRole("CustomerView"))
             {
                 <li>
@@ -26,6 +33,20 @@
                     <a href="/Projects/Index" class="waves-effect waves-dark"><i class="fa fa-fast-forward"></i> Project</a>
                 </li>
             }
+
+            @if (User.IsInRole("InvoiceView") || User.IsInRole("Admin"))
+            {
+                <li>
+                    <a href="/Invoices/Index" class="waves-effect waves-dark"><i class="fa fa-fast-forward"></i> Invoices</a>
+                </li>
+            }
+            @if (User.IsInRole("ProdutView") || User.IsInRole("Admin"))
+            {
+                <li>
+                    <a href="/Products/Index" class="waves-effect waves-dark"><i class="fa fa-fast-forward"></i> Produts</a>
+                </li>
+            }
+
 
             @if (User.IsInRole("Admin") || User.IsInRole("ProjectViewShort"))
             {
@@ -176,4 +197,17 @@
     </div>
 
 </nav>
-
+<script>
+    function goSalesModule(){
+        //alert("hi");
+        fetch('api/salesmodule')
+            .then(response => token= response.json())
+            .then(data => {
+               // console.log("token = " + data['token']);
+                //location.replace('http://2.48.3.94:8003?token=' + data['token']);
+                if (data['token'] != "") {
+                    location.replace('http://localhost:4200/#/?token=' + data['token']);
+                }
+            });
+    }
+</script>

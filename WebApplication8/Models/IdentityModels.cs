@@ -143,10 +143,27 @@ namespace WebApplication8.Models
         public System.Data.Entity.DbSet<WebApplication8.Models.LpoNature> LpoNatures { get; set; }
 
 
-        public System.Data.Entity.DbSet<WebApplication8.Models.Invoice> Invoice { get; set; }
+        public System.Data.Entity.DbSet<WebApplication8.Models.Invoice> Invoices { get; set; }
 
 
-        public System.Data.Entity.DbSet<WebApplication8.Models.Product> Product { get; set; }
+        public System.Data.Entity.DbSet<WebApplication8.Models.Product> Products { get; set; }
+
+        public System.Data.Entity.DbSet<WebApplication8.Models.InvoiceSequense> InvoiceSequenses { get; set; }
+
+
+        public System.Data.Entity.DbSet<WebApplication8.Models.ModeOfLead> ModeOfLeads { get; set; }
+        public System.Data.Entity.DbSet<WebApplication8.Models.StatusOFLead> StatusOFLeads { get; set; }
+        public System.Data.Entity.DbSet<WebApplication8.Models.Lead> Leads { get; set; }
+
+        public System.Data.Entity.DbSet<WebApplication8.Models.Country> Countries { get; set; }
+
+
+
+        public DbSet<LeadFile> LeadFiles { get; set; }
+
+        public DbSet<NatureOfBusiness> NatureOfBusinesses { get; set; }
+
+        public DbSet<QuotaionProduct> QuotaionProducts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -165,6 +182,8 @@ namespace WebApplication8.Models
                 .HasRequired(pt => pt.Product)
                 .WithMany(t => t.InvoiceProducts)
                 .HasForeignKey(pt => pt.ProductId);
+
+
         }
 
     }

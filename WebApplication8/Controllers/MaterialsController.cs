@@ -412,7 +412,7 @@ namespace WebApplication8.Controllers
 
             ws.Cells["M6"].Value = "barcode";
             ws.Cells["N6"].Value = "Location";
-
+            ws.Cells["O6"].Value = "MaterialId";
             double totalAvg = 0;
             double total = 0;
             int row = 7;
@@ -438,6 +438,8 @@ namespace WebApplication8.Controllers
                 ws.Cells["L" + row.ToString()].Value = totalAvg;
                 ws.Cells["M" + row.ToString()].Value = item.barcode;
                 ws.Cells["N" + row.ToString()].Value = item.WareHouse.Name;
+                ws.Cells["O" + row.ToString()].Value = item.MaterialId;
+
                
                 row++;
             }

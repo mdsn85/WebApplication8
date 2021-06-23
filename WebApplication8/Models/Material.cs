@@ -76,6 +76,10 @@ namespace WebApplication8.Models
         public int WareHouseId { get; set; }
         public virtual Warehouse WareHouse { get; set; }
 
+
+        public virtual ICollection<QuotaionProduct> QuotaionProducts { get; set; }
+
+
         public virtual ICollection<MaterialUnit> MaterialUnits { get; set; }
 
         public int? MaterialCategoryId { get; set; }

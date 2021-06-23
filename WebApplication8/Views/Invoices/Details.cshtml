@@ -1,0 +1,193 @@
+﻿@model WebApplication8.Models.Invoice
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Invoice</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Project.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Project.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InvoiceDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InvoiceDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeliverNote)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeliverNote)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DespatchedThrough)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DespatchedThrough)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerReference)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerReference)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubTotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubTotal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Discount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Discount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Vat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GrandTotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GrandTotal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TermsOfDelivery)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TermsOfDelivery)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Remarks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Remarks)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BankDetails)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BankDetails)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Declaration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Declaration)
+        </dd>
+
+    </dl>
+</div>
+
+
+<table class="table dataTable table-bordered table-hover">
+    <tr>
+        <th>
+            Product Name
+        </th>
+
+        <th>
+            Qty
+        </th>
+
+        <th>
+            Price
+        </th>
+
+        <th>
+            Total
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model.InvoiceProducts)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Name)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Qty)
+            </td>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+
+            <td>
+                @{var a = @item.Price * @item.Qty;}
+
+                @Html.Raw(a.ToString("0,0.0"))
+            </td>
+        </tr>
+    }
+
+</table>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.InvoiceId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

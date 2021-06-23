@@ -1,0 +1,212 @@
+﻿@model IEnumerable<WebApplication8.Models.Invoice>
+
+@{
+
+    Layout = "~/Views/Shared/_Layout - Temp - Table.cshtml";
+}
+
+<h2>Invoices List</h2>
+
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+</p>
+@using (Html.BeginForm(null, null, FormMethod.Get, new { id = "SearchForm" }))
+{
+    <!-- START SEARCH -->
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+
+
+            <div class="input-group push-down-4 inner col-md-2" style="float:left">
+                <span class="input-group-addon"><span class="fa fa-search"></span></span>
+                <input type="text" name="SearchCode" class="form-control" placeholder="Invoice Code..." value="@ViewBag.SearchCode" />
+
+            </div>
+
+
+
+
+            <div class="input-group push-down-4 inner col-md-2" style="float:left;padding-left:30px">
+                <span class="input-group-addon"><span class="fa fa-search"></span></span>
+                @Html.DropDownList("CustomerId", null, "Customer ...", htmlAttributes: new { @class = " form-control selectpicker", @Name = "CustomerId", @Id = "CustomerId" })
+            </div>
+
+
+            <div class="input-group push-down-4 inner col-md-2" style="float:left;padding-left:30px">
+                <span class="input-group-addon"><span class="fa fa-search"></span></span>
+                @Html.DropDownList("ProjectId", null, "Project ...", htmlAttributes: new { @class = " form-control selectpicker", @Name = "ProjectId", @Id = "ProjectId" })
+            </div>
+
+
+            <div class="form-group  push-down-4 inner col-md-3" style="float:left;padding-left:30px">
+
+                <div class="input-group date form_date " data-date="" data-date-format="dd MM yyyy" data-link-field="StartDate" data-link-format="yyyy-mm-dd">
+                    <input class="form-control" size="5" type="text" value="@ViewBag.StartDate" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+                <input type="hidden" id="StartDate" name="StartDate" value="@ViewBag.StartDate" /><br />
+            </div>
+
+            <div class="form-group  push-down-4 inner col-md-3" style="float:left;padding-left:30px">
+
+                <div class="input-group date form_date " data-date="" data-date-format="dd MM yyyy" data-link-field="EndDate" data-link-format="yyyy-mm-dd">
+                    <input class="form-control" size="6" type="text" value="@ViewBag.EndDate" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+                <input type="hidden" id="EndDate" name="EndDate" value="@ViewBag.EndDate" /><br />
+            </div>
+
+
+            <div class="input-group-btn" style="float:left;padding-left:30px">
+                <button class="btn btn-primary">Search</button>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- END SEARCH -->
+}
+<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Project.Code)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.InvoiceDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeliverNote)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DespatchedThrough)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerReference)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubTotal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Discount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vat)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GrandTotal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TermsOfDelivery)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Remarks)
+        </th>
+
+        <th></th>
+        <th hidden></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Project.Code)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.InvoiceDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeliverNote)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DespatchedThrough)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CustomerReference)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubTotal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Discount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vat)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GrandTotal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TermsOfDelivery)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Remarks)
+        </td>
+
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.InvoiceId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.InvoiceId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.InvoiceId }) |
+            @Html.ActionLink("Print", "PrintNewTableWithLetterHead", new { id = item.InvoiceId })
+        </td>
+        <td hidden>
+            @{
+                DateTime a = item.StampDate ?? new DateTime(1900, 1, 1);
+            }
+            @Html.Raw(a.Ticks)
+        </td>
+    </tr>
+    }
+
+</table>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <!-- DATA TABLE SCRIPTS -->
+
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable({
+                "order": [15, "desc"]
+            });
+
+
+        });
+
+        $(function () {
+            var table = $('#dataTables-example').dataTable();
+            $("#btnExport").click(function (e) {
+                e.preventDefault();
+                window.open('data:application/vnd.ms-excel,' +
+                    encodeURIComponent(table[0].outerHTML));
+            });
+        });
+
+    </script>
+}

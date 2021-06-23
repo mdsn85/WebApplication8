@@ -77,6 +77,15 @@
     <Reference Include="Microsoft.Data.OData, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Data.OData.5.6.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=6.11.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.6.11.1\lib\net461\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=6.11.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.6.11.1\lib\net461\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=6.11.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.6.11.1\lib\net461\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.3.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.1.3.6\lib\net46\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
     </Reference>
@@ -87,6 +96,9 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=6.11.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.6.11.1\lib\net461\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.FileSystem.Primitives.4.0.1\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
@@ -238,6 +250,7 @@
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\generalController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvoicesController.cs" />
     <Compile Include="Controllers\LpoesController.cs" />
     <Compile Include="Controllers\LpoLocations1Controller.cs" />
     <Compile Include="Controllers\LpoLocationsController.cs" />
@@ -250,6 +263,8 @@
     <Compile Include="Controllers\PaymentMoodSuppliersController.cs" />
     <Compile Include="Controllers\PaymentsController.cs" />
     <Compile Include="Controllers\PermissionUsersController.cs" />
+    <Compile Include="Controllers\Products1Controller.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\Project2Controller.cs" />
     <Compile Include="Controllers\ProjectPaymentTerms1Controller.cs" />
     <Compile Include="Controllers\ProjectPaymentTerms2Controller.cs" />
@@ -263,6 +278,7 @@
     <Compile Include="Controllers\Resources\KeyValuePair.cs" />
     <Compile Include="Controllers\Resources\MaterialFull.cs" />
     <Compile Include="Controllers\SalesMenController.cs" />
+    <Compile Include="Controllers\SalesModuleController.cs" />
     <Compile Include="Controllers\SalesTypesController.cs" />
     <Compile Include="Controllers\StockIssuesController.cs" />
     <Compile Include="Controllers\StockIssueTypesController.cs" />
@@ -875,11 +891,105 @@
     <Compile Include="Migrations\202103221324228_Invoice-product-join-table.designer.cs">
       <DependentUpon>202103221324228_Invoice-product-join-table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103240957133_invoiceModify.cs" />
+    <Compile Include="Migrations\202103240957133_invoiceModify.designer.cs">
+      <DependentUpon>202103240957133_invoiceModify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103241204291_ModifyTotalInvoice.cs" />
+    <Compile Include="Migrations\202103241204291_ModifyTotalInvoice.designer.cs">
+      <DependentUpon>202103241204291_ModifyTotalInvoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103241415443_ModifyTotalInvoicedate.cs" />
+    <Compile Include="Migrations\202103241415443_ModifyTotalInvoicedate.designer.cs">
+      <DependentUpon>202103241415443_ModifyTotalInvoicedate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103241458568_ModifyTotalInvoicedateww.cs" />
+    <Compile Include="Migrations\202103241458568_ModifyTotalInvoicedateww.designer.cs">
+      <DependentUpon>202103241458568_ModifyTotalInvoicedateww.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103250838566_jj1.cs" />
+    <Compile Include="Migrations\202103250838566_jj1.designer.cs">
+      <DependentUpon>202103250838566_jj1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105100853316_lead.cs" />
+    <Compile Include="Migrations\202105100853316_lead.designer.cs">
+      <DependentUpon>202105100853316_lead.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105120906560_lead_lastmeeting_Optional.cs" />
+    <Compile Include="Migrations\202105120906560_lead_lastmeeting_Optional.designer.cs">
+      <DependentUpon>202105120906560_lead_lastmeeting_Optional.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105120913220_lead_AreaAndSalesman_Optional.cs" />
+    <Compile Include="Migrations\202105120913220_lead_AreaAndSalesman_Optional.designer.cs">
+      <DependentUpon>202105120913220_lead_AreaAndSalesman_Optional.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105120914448_lead_NatureOfBusinessId_Optional.cs" />
+    <Compile Include="Migrations\202105120914448_lead_NatureOfBusinessId_Optional.designer.cs">
+      <DependentUpon>202105120914448_lead_NatureOfBusinessId_Optional.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105121005113_leadsfile.cs" />
+    <Compile Include="Migrations\202105121005113_leadsfile.designer.cs">
+      <DependentUpon>202105121005113_leadsfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105130024368_leadsRename.cs" />
+    <Compile Include="Migrations\202105130024368_leadsRename.designer.cs">
+      <DependentUpon>202105130024368_leadsRename.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105131618265_leadsLastUpdate.cs" />
+    <Compile Include="Migrations\202105131618265_leadsLastUpdate.designer.cs">
+      <DependentUpon>202105131618265_leadsLastUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105171049223_ss2.cs" />
+    <Compile Include="Migrations\202105171049223_ss2.designer.cs">
+      <DependentUpon>202105171049223_ss2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105171123177_leadFile.cs" />
+    <Compile Include="Migrations\202105171123177_leadFile.designer.cs">
+      <DependentUpon>202105171123177_leadFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105171124428_leadFilesChangeName.cs" />
+    <Compile Include="Migrations\202105171124428_leadFilesChangeName.designer.cs">
+      <DependentUpon>202105171124428_leadFilesChangeName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105171244184_natureofbusiness.cs" />
+    <Compile Include="Migrations\202105171244184_natureofbusiness.designer.cs">
+      <DependentUpon>202105171244184_natureofbusiness.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105221836049_AddCountrytoLead.cs" />
+    <Compile Include="Migrations\202105221836049_AddCountrytoLead.designer.cs">
+      <DependentUpon>202105221836049_AddCountrytoLead.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105260817341_leaddata.cs" />
+    <Compile Include="Migrations\202105260817341_leaddata.designer.cs">
+      <DependentUpon>202105260817341_leaddata.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105300913112_leadoptionalfield.cs" />
+    <Compile Include="Migrations\202105300913112_leadoptionalfield.designer.cs">
+      <DependentUpon>202105300913112_leadoptionalfield.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105300928154_leadaddStamp.cs" />
+    <Compile Include="Migrations\202105300928154_leadaddStamp.designer.cs">
+      <DependentUpon>202105300928154_leadaddStamp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105301224299_totalQoutationValueLead.cs" />
+    <Compile Include="Migrations\202105301224299_totalQoutationValueLead.designer.cs">
+      <DependentUpon>202105301224299_totalQoutationValueLead.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105310827171_beforeLeaddeploy.cs" />
+    <Compile Include="Migrations\202105310827171_beforeLeaddeploy.designer.cs">
+      <DependentUpon>202105310827171_beforeLeaddeploy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106230622379_QuotationModel.cs" />
+    <Compile Include="Migrations\202106230622379_QuotationModel.designer.cs">
+      <DependentUpon>202106230622379_QuotationModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApprovalType.cs" />
     <Compile Include="Models\Area.cs" />
+    <Compile Include="Models\BankAccountDetail.cs" />
     <Compile Include="Models\ContractFile.cs" />
+    <Compile Include="Models\Country.cs" />
     <Compile Include="Models\CreditTerm.cs" />
     <Compile Include="Models\CreditTermSupplier.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -893,10 +1003,14 @@
     <Compile Include="Models\EmailSetting.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeUser.cs" />
+    <Compile Include="Models\Fillter\InvoiceFillter.cs" />
     <Compile Include="Models\FolderPath.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\InvoiceProduct.cs" />
+    <Compile Include="Models\InvoiceSequense.cs" />
+    <Compile Include="Models\Lead.cs" />
+    <Compile Include="Models\LeadFile.cs" />
     <Compile Include="Models\Lpo.cs" />
     <Compile Include="Models\LpoDetail.cs" />
     <Compile Include="Models\LpoLocation.cs" />
@@ -909,6 +1023,8 @@
     <Compile Include="Models\MaterialCategory.cs" />
     <Compile Include="Models\MaterialType.cs" />
     <Compile Include="Models\MaterialUnit.cs" />
+    <Compile Include="Models\ModeOfLead.cs" />
+    <Compile Include="Models\NatureOfBusiness.cs" />
     <Compile Include="Models\Notification1.cs" />
     <Compile Include="Models\NotificationCategory.cs" />
     <Compile Include="Models\NotificationCatUser.cs" />
@@ -927,7 +1043,10 @@
     <Compile Include="Models\ProjectPaymentTerm.cs" />
     <Compile Include="Models\ProjectSequense.cs" />
     <Compile Include="Models\ProjectStatus.cs" />
+    <Compile Include="Models\QuotaionProduct.cs" />
+    <Compile Include="Models\QuotaionProductFile.cs" />
     <Compile Include="Models\Quotation.cs" />
+    <Compile Include="Models\Repository\IInvoiceRepository.cs" />
     <Compile Include="Models\Repository\IMaterialRepository.cs" />
     <Compile Include="Models\Repository\INotificationCategoryRepository.cs" />
     <Compile Include="Models\Repository\IUnitOfWork.cs" />
@@ -937,6 +1056,7 @@
     <Compile Include="Models\SalesMan.cs" />
     <Compile Include="Models\SalesTeam.cs" />
     <Compile Include="Models\SalesType.cs" />
+    <Compile Include="Models\StatusOFLead.cs" />
     <Compile Include="Models\StockIssue.cs" />
     <Compile Include="Models\StockIssueDetail.cs" />
     <Compile Include="Models\StockIssueSequense.cs" />
@@ -946,11 +1066,14 @@
     <Compile Include="Models\Unit.cs" />
     <Compile Include="Models\UserHubModels.cs" />
     <Compile Include="Models\Warehouse.cs" />
+    <Compile Include="Models\QuotationTerms.cs" />
+    <Compile Include="Persistence\InvoiceRepository.cs" />
     <Compile Include="Persistence\MaterialRepository.cs" />
     <Compile Include="Persistence\NotificationCategoryRepository.cs" />
     <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Persistence\NotificationRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Setting\JWTcs.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1591,6 +1714,24 @@
     <Content Include="Views\LpoNatures\Edit.cshtml" />
     <Content Include="Views\LpoNatures\Index.cshtml" />
     <Content Include="Views\LpoNatures\CreateShort.cshtml" />
+    <Content Include="Views\Invoices\Create.cshtml" />
+    <Content Include="Views\Invoices\Delete.cshtml" />
+    <Content Include="Views\Invoices\Details.cshtml" />
+    <Content Include="Views\Invoices\Edit.cshtml" />
+    <Content Include="Views\Invoices\Index.cshtml" />
+    <Content Include="Views\Invoices\CreateFromProject.cshtml" />
+    <Content Include="Views\Products\Create.cshtml" />
+    <Content Include="Views\Products\Delete.cshtml" />
+    <Content Include="Views\Products\Details.cshtml" />
+    <Content Include="Views\Products\Edit.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Products\IndexShort.cshtml" />
+    <Content Include="Views\Invoices\PrintNewTableWithLetterHead.cshtml" />
+    <Content Include="Views\Products1\Create.cshtml" />
+    <Content Include="Views\Products1\Delete.cshtml" />
+    <Content Include="Views\Products1\Details.cshtml" />
+    <Content Include="Views\Products1\Edit.cshtml" />
+    <Content Include="Views\Products1\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2060,6 +2201,75 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103221324228_Invoice-product-join-table.resx">
       <DependentUpon>202103221324228_Invoice-product-join-table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103240957133_invoiceModify.resx">
+      <DependentUpon>202103240957133_invoiceModify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103241204291_ModifyTotalInvoice.resx">
+      <DependentUpon>202103241204291_ModifyTotalInvoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103241415443_ModifyTotalInvoicedate.resx">
+      <DependentUpon>202103241415443_ModifyTotalInvoicedate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103241458568_ModifyTotalInvoicedateww.resx">
+      <DependentUpon>202103241458568_ModifyTotalInvoicedateww.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103250838566_jj1.resx">
+      <DependentUpon>202103250838566_jj1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105100853316_lead.resx">
+      <DependentUpon>202105100853316_lead.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105120906560_lead_lastmeeting_Optional.resx">
+      <DependentUpon>202105120906560_lead_lastmeeting_Optional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105120913220_lead_AreaAndSalesman_Optional.resx">
+      <DependentUpon>202105120913220_lead_AreaAndSalesman_Optional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105120914448_lead_NatureOfBusinessId_Optional.resx">
+      <DependentUpon>202105120914448_lead_NatureOfBusinessId_Optional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105121005113_leadsfile.resx">
+      <DependentUpon>202105121005113_leadsfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105130024368_leadsRename.resx">
+      <DependentUpon>202105130024368_leadsRename.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105131618265_leadsLastUpdate.resx">
+      <DependentUpon>202105131618265_leadsLastUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105171049223_ss2.resx">
+      <DependentUpon>202105171049223_ss2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105171123177_leadFile.resx">
+      <DependentUpon>202105171123177_leadFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105171124428_leadFilesChangeName.resx">
+      <DependentUpon>202105171124428_leadFilesChangeName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105171244184_natureofbusiness.resx">
+      <DependentUpon>202105171244184_natureofbusiness.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105221836049_AddCountrytoLead.resx">
+      <DependentUpon>202105221836049_AddCountrytoLead.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105260817341_leaddata.resx">
+      <DependentUpon>202105260817341_leaddata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105300913112_leadoptionalfield.resx">
+      <DependentUpon>202105300913112_leadoptionalfield.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105300928154_leadaddStamp.resx">
+      <DependentUpon>202105300928154_leadaddStamp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105301224299_totalQoutationValueLead.resx">
+      <DependentUpon>202105301224299_totalQoutationValueLead.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105310827171_beforeLeaddeploy.resx">
+      <DependentUpon>202105310827171_beforeLeaddeploy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106230622379_QuotationModel.resx">
+      <DependentUpon>202106230622379_QuotationModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -37,7 +37,7 @@ namespace WebApplication8.Controllers
 
         // GET: Projects
         [Authorize(Roles = RoleNames.ROLE_ProjectView + "," + RoleNames.ROLE_ADMINISTRATOR)]
-        public ActionResult Index(bool? NotApproved,string CustomerId, string st, string SearchCode, string StatusId,string SearchValue1,string SearchValue2)
+        public ActionResult Index(bool? NotApproved,string CustomerId, string st, string SearchCode, string StatusId,string SearchValue1,string SearchValue2, string StartDate, string EndDate)
         {
             ViewBag.title1 = "Project List";
             ViewBag.SearchCode = SearchCode;
@@ -45,12 +45,16 @@ namespace WebApplication8.Controllers
             ViewBag.SearchValue1 = SearchValue1;
             ViewBag.SearchValue2 = SearchValue2;
 
+            ViewBag.StartDate = StartDate;
+            ViewBag.endDate = EndDate;
+
             ViewBag.StatusId = new SelectList(db.ProjectStatus, "ProjectStatusId", "Name", StatusId);
             ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "Name", CustomerId);
 
             int search = 0;
 
-            List<Project> projects = db.Projects.Include(p => p.ProjectStatus).Include(p => p.SalesType).Include(p => p.CustomersType).Include(p => p.Customer).Include(p => p.Designer).Include(p => p.ProjectPaymentTerm).Include(p => p.SalesMan).ToList(); ;
+            List<Project> projects = db.Projects.Include(p => p.ProjectStatus).Include(p => p.SalesType).Include(p => p.CustomersType).Include(p => p.Customer).Include(p => p.Designer)
+                .Include(p => p.ProjectPaymentTerm).Include(p => p.SalesMan).ToList(); ;
 
             if (NotApproved == true)
             {
@@ -97,6 +101,25 @@ namespace WebApplication8.Controllers
                 search = 1;
             }
 
+            if (!String.IsNullOrEmpty(StartDate))
+            {
+                if (!String.IsNullOrEmpty(EndDate))
+                {
+                    DateTime ddStart = DateTime.ParseExact(StartDate, "yyyy-MM-dd", null);
+                    DateTime ddEnd = DateTime.ParseExact(EndDate, "yyyy-MM-dd", null);
+                    ddEnd = ddEnd.AddDays(1);
+                    projects = projects.Where(cb => cb.CreateDate >= ddStart && cb.CreateDate < ddEnd).ToList();
+                }
+                else
+                {
+                    //on selected day
+                    DateTime ddStart = DateTime.ParseExact(StartDate, "yyyy-MM-dd", null);
+                    DateTime ddEnd = ddStart.AddDays(1);
+                    projects = projects.Where(cb => cb.CreateDate >= ddStart && cb.CreateDate < ddEnd).ToList();
+                }
+                search = 1;
+            }
+
 
             if (search == 1)
             {
@@ -133,6 +156,19 @@ namespace WebApplication8.Controllers
 
             List<Project> projects = db.Projects.Include(p => p.ProjectStatus).Include(p => p.SalesType).Include(p => p.CustomersType).Include(p => p.Customer).Include(p => p.Designer).Include(p => p.ProjectPaymentTerm).Include(p => p.SalesMan)
                 .ToList(); ;
+            //    ProjectStatusId Name
+            //1   INITIATED
+            //2   ADVANCE PAYMENT
+            //3   PRODUCTION
+            //4   CUTTING SHEET
+            //5   PURCHASE
+            //6   MANUFACTURE
+            //7   COMPLETE
+            //8   DELIVERED
+            //9   FINAL PAYMENT
+            //10  CANCEL
+
+            projects = projects.Where(p => p.AccountApproval == true).ToList();
 
             if (NotApproved == true)
             {
@@ -623,7 +659,7 @@ namespace WebApplication8.Controllers
 
                 RemoveFiles(project.ProjectId);
                 //save uploaded files record
-                if (FileName.Count() > 0)
+                if (FileName!=null && FileName.Count() > 0)
                 {
                     SaveAttachedFiles(FileName, project.ProjectId);
                 }

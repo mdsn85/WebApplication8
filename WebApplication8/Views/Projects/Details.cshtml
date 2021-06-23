@@ -249,7 +249,10 @@
                 </td>
 
                 <td>
-                    model.Total-model.Deduction
+                    @{ 
+                        float netVal = Model.Total - Model.Deduction ?? 0;
+                    }
+                    @Html.Raw(netVal)
                 </td>
             </tr>
 
@@ -450,7 +453,15 @@
 
             </table>
 
-
+            <div class="center" style="margin-top:30px">
+                @Html.ActionLink("Create Invoice", "CreateFromProject", "Invoices", new
+                    {
+                        CustomerId = Model.Customer.CustomerId,
+                        ProjectId = Model.ProjectId,
+                        CustomerName = Model.Customer.Name,
+                        Code = Model.Code
+                    },  htmlAttributes: new { @class = "btn btn-default" })
+            </div>
 
 
         </div>

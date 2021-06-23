@@ -14,6 +14,15 @@ namespace WebApplication8.Models
         [StringLength(80)]
         public String Name { get; set; }
 
+
+
+
         public virtual ICollection<InvoiceProduct> InvoiceProducts { get; set; }
+
+        //public ICollection<Quotation> Quotations { get; set; }
+        //public List<QuotaionProduct> QuotaionProducts { get; set; }
+
+        public ICollection<QuotaionProduct> QuotaionProducts { get; set; }
+
     }
 }

@@ -78,6 +78,7 @@ namespace WebApplication8.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
+            
             var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
@@ -606,7 +607,15 @@ namespace WebApplication8.Controllers
             user.PhoneNumber = model.PhoneNumber;
 
             user.Mobile = model.Mobile;
+
+            
             user.IsEnabled = model.IsEnabled;
+            if (model.IsEnabled == false)
+            {
+                // Locking out a user for 10 minutes 
+                user.LockoutEnabled = true;
+                user.LockoutEndDateUtc = DateTime.MaxValue;
+            }
             user.PasswordHash = user.PasswordHash;
             // var user = UserManager.FindByName(model.UserName);
 

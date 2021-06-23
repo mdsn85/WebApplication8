@@ -1,0 +1,178 @@
+﻿@model IEnumerable<WebApplication8.Models.Product>
+
+@{
+    ViewBag.Title = "Products List";
+}
+
+@{
+
+    Layout = "~/Views/Shared/_Layout - Temp - Table - Short.cshtml";
+}
+
+<style>
+    th, td {
+        padding: 0px 4px 4px 14px;
+    }
+</style>
+
+
+<label class="button-collapse">
+
+    @*@Html.ActionLink("Create New", "Create", null, htmlAttributes: new { @class = " btn btn-default " })*@
+
+</label>
+<!-- START SEARCH -->
+<!-- START SEARCH -->
+@using (Html.BeginForm())
+{
+
+    @*<div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row stacked  ">
+                    <div style="display:;vertical-align: middle;">
+                        <div class="input-group push-down-3 inner col-md-3 " style="float:left">
+                            <span class="input-group-addon"><span class="fa fa-search"></span></span>
+
+
+                            <input type="text" name="searchStringName" class="form-control" placeholder="Material Name..." />
+                            <div class="input-group-btn">
+                                <button class="btn btn-primary">Search</button>
+                            </div>
+                        </div>
+
+                        <div class="input-group push-down-4 inner col-md-3" style="float:left">
+                            <span class="input-group-addon"><span class="fa fa-search"></span></span>
+
+
+                            <input type="text" name="searchStringBarcode" class="form-control" placeholder="Barcode" />
+                            <div class="input-group-btn">
+                                <button class="btn btn-primary">Search</button>
+                            </div>
+                        </div>
+
+                        <div class="input-group push-down-4 inner col-md-3" style="float:left">
+                            <span class="input-group-addon"><span class="fa fa-search"></span></span>
+
+
+                            <input type="text" name="searchStringCode" class="form-control" placeholder="Code..." />
+                            <div class="input-group-btn">
+                                <button class="btn btn-primary">Search</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+
+
+                    </div>
+                </div>
+            </div>
+        </div>*@
+}
+<!-- END SEARCH -->
+
+<table class="table-hover table-bordered table-striped" id="dataTables-example">
+    <thead>
+        <tr>
+            <th width="5%"></th>
+            <th >
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <span class="btn btn-info cid" id="@item.ProductId"><i class="glyphicon glyphicon-check"></i> </span>
+                    @*<span class="btn btn-info cid" id="@item.MaterialId"></span>*@
+
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name) - @item.ProductId
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script src="~/Scripts/js/jquery1.7.1Google.min.js"></script>
+
+<script>
+    $("#dataTables-example").on("click", ".cid ", function selectM() {
+
+        var name = "";
+        var unit = "";
+        var oVal = this.id;
+        var Material = {};
+        let material = {};
+        $.ajax({
+            type: "GET",
+            traditional: true,
+            async: false,
+            cache: false,
+            url: '/Products/get',
+            //context: JSON,
+            context: document.body,
+
+            data: { "id": oVal /* add other additional parameters */ },
+
+            //data: '{ enquery:' + JSON.stringify(Enquery) + '}',
+            success: function (result) {
+                material = result;
+                console.log("result : " + JSON.stringify(material));
+
+
+                //name = result.Name;
+                //unit = result.Unit;
+                //unit2 = result.Unit2;
+                //Dimension = result.Dimension;
+                //Price = result.Price;
+                //QtyApproved = result.QtyApproved;
+                //Approval = result.QtyApproved;
+                //AvalableQty = result.AvalableQty;
+            },
+            error: function (xhr) {
+                //debugger;
+                console.log(xhr.responseText);
+                alert("Error has occurred of Getting material..");
+            }
+        });
+
+        // window.opener.setValue(oVal, name, unit, Dimension, Price, QtyApproved, Approval, AvalableQty,CatId,TypeId);
+        window.opener.setValue(material);
+        // window.close();
+
+        return false;
+    });
+
+
+
+    $(document).ready(function () {
+        $('#dataTables-example').dataTable({
+            "order": [1, "asc"]
+        });
+
+    });
+</script>
+
+<script type="text/javascript">
+
+    function OnClose() {
+
+        if (window.opener != null && !window.opener.closed) {
+
+            window.opener.HideModalDiv();
+
+        }
+
+    }
+
+    window.onunload = OnClose;
+     //   window.close = OnClose;
+</script>
+
+
